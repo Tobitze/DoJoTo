@@ -1,5 +1,7 @@
 #include <Gosu/Gosu.hpp>
 #include <Gosu/AutoLink.hpp>
+#include <iostream>
+
 
 
 class GameWindow : public Gosu::Window
@@ -90,6 +92,11 @@ public:
 			
 		}
 		else if (!input().down(Gosu::KB_SPACE)) { pressed = false; }
+
+		if (input().down(Gosu::KB_F) && health <= 0) //Respawn
+		{
+			health = 3;
+		}
 
 	}
 };
