@@ -3,12 +3,35 @@
 #include <iostream>
 
 
-
 class GameWindow : public Gosu::Window
 {
 public:
+
+	struct Objekt_fest
+	{
+		double breite, hoehe, posx, posy, startx, starty;
+		void reset() 
+		{
+			this->posx = startx;
+			this->posy = starty;
+		}
+	};
+	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy)
+	{
+		Objekt_fest temp;
+		temp.breite = breite;
+		temp.hoehe = hoehe;
+		temp.posx = posx;
+		temp.posy = posy;
+		temp.startx = posx;
+		temp.starty = posy;
+		return temp;
+	}
+
 	int health = 3;
-	//Level Design
+
+	bool pressed = false;
+
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
 	Gosu::Image hintergrund;
@@ -18,7 +41,10 @@ public:
 	Gosu::Image hudHP1;
 	Gosu::Image hudHP0;
 	Gosu::Image GameOver;
-	bool pressed = false;
+
+	Objekt_fest ibodenR = erstelle_Objekt_fest(575, 100, 600, 575); //breite und höhe müssen noch an reale pixel angepasst werden
+	Objekt_fest ibodenL = erstelle_Objekt_fest(575, 100, 200, 575);
+
 	//Game Window
 	GameWindow()
 		: Window(800, 600)
@@ -43,10 +69,10 @@ public:
 		hintergrund.draw_rot(400, 320, 100.0,
 			0.0,
 			0.5, 0.5);
-		bodenR.draw_rot(600, 575, 100.0,
+		bodenR.draw_rot(ibodenR.posx , ibodenR.posy, 100.0,
 			0.0,
 			0.5, 0.5);
-		bodenL.draw_rot(200, 575, 100.0,
+		bodenL.draw_rot(ibodenL.posx, ibodenL.posy, 100.0,
 			0.0,
 			0.5, 0.5);
 		//HUD
@@ -95,7 +121,20 @@ public:
 
 		if (input().down(Gosu::KB_F) && health <= 0) //Respawn
 		{
-			health = 3;
+			health = 3;			//Player heilen
+			ibodenL.reset();	//Zurücksetzen der Objektpositionen und damit des Spielers auf Startwert
+			ibodenR.reset();
+		}
+
+		if (input().down(Gosu::KB_LEFT))
+		{
+			ibodenL.posx = ibodenL.posx + 5;
+			ibodenR.posx = ibodenR.posx + 5;
+		}
+		if (input().down(Gosu::KB_RIGHT))
+		{
+			ibodenL.posx = ibodenL.posx - 5;
+			ibodenR.posx = ibodenR.posx - 5;
 		}
 
 	}
@@ -104,6 +143,12 @@ public:
 // C++ Hauptprogramm
 int main()
 {
+	/*std::vector<Objekt_fest> Objektliste;
+	Objekt_fest ibodenR(575, 100, 600, 575);
+
+	Objektliste.push_back(ibodenR);*/
+
+
 	GameWindow window;
 	window.show();
 }
