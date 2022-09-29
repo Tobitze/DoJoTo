@@ -43,7 +43,7 @@ public:
 	Gosu::Image GameOver;
 
 	Objekt_fest ibodenR = erstelle_Objekt_fest(575, 100, 600, 575); //breite und höhe müssen noch an reale pixel angepasst werden
-	Objekt_fest ibodenL = erstelle_Objekt_fest(575, 100, 200, 575);
+	Objekt_fest ibodenL = erstelle_Objekt_fest(575, 100, 200, 575);  //Todo: Linked list über pointer
 
 	//Game Window
 	GameWindow()
