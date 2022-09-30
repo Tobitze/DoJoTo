@@ -15,15 +15,16 @@ public:
 
 	struct Objekt_fest
 	{
-		double breite, hoehe, posx, posy, startx, starty;
-		
+		double breite, hoehe, posx, posy, startx, starty, posz;
+		Objekt_fest *next;
+		Gosu::Image* image;
 		void reset() 
 		{
 			this->posx = startx;
 			this->posy = starty;
-		}
+		}		
 	};
-	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy)
+	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, struct Objekt_fest* next, Gosu::Image* image)
 	{
 		Objekt_fest temp;
 		temp.breite = breite;
@@ -32,8 +33,12 @@ public:
 		temp.posy = posy;
 		temp.startx = posx;
 		temp.starty = posy;
+		temp.posz = posz;
+		temp.next = next;
+		temp.image = image;
 		return temp;
 	}
+	Objekt_fest* elem_O_f;
 
 	int health = 3;
 
@@ -41,6 +46,7 @@ public:
 	 
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
+	Gosu::Image Wand;
 	Gosu::Image hintergrund;
 	//HUD
 	Gosu::Image hudHP;
@@ -49,8 +55,12 @@ public:
 	Gosu::Image hudHP0;
 	Gosu::Image GameOver;
 
-	Objekt_fest ibodenR = erstelle_Objekt_fest(575, 100, 600, 575); //breite und höhe müssen noch an reale pixel angepasst werden
-	Objekt_fest ibodenL = erstelle_Objekt_fest(575, 100, 200, 575);  //Todo: Linked list über pointer
+	Objekt_fest ilistenproblenloeser = erstelle_Objekt_fest(0, 0, 0, 0, 0, NULL, NULL);  //Einfach nicht hinterfragen
+	Objekt_fest ibodenR = erstelle_Objekt_fest(575, 100, 600, 575, 100, &ilistenproblenloeser, &bodenR); //breite und höhe müssen noch an reale pixel angepasst werden
+	Objekt_fest ibodenL = erstelle_Objekt_fest(575, 100, 200, 575, 100, &ibodenR, &bodenL);  //Todo: Linked list über pointer
+	Objekt_fest iWand = erstelle_Objekt_fest(575, 100, 300, 300, 100, &ibodenL, &Wand);
+	//Bei erstellung eines neuen Objektes unten Listenschleife anpassen!
+
 
 	//Game Window
 	GameWindow()
@@ -58,6 +68,7 @@ public:
 		//Level Design
 		, bodenR("boden1.jpg")
 		, bodenL("boden1.jpg")
+		, Wand("boden1.jpg")
 		, hintergrund("hintergrund.jfif")
 		//HUD
 		, hudHP("hud_hp.png")
@@ -72,16 +83,28 @@ public:
 	
 	void draw() override
 	{
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		while (elem_O_f->next != NULL) 
+		{
+			elem_O_f->image->draw_rot(elem_O_f->posx, elem_O_f->posy, elem_O_f->posz,
+				0.0,
+				0.5, 0.5);
+			elem_O_f = elem_O_f->next;
+		}
+
 		//Level Design
 		hintergrund.draw_rot(400, 320, 100.0,
 			0.0,
 			0.5, 0.5);
-		bodenR.draw_rot(ibodenR.posx , ibodenR.posy, 100.0,
+		/*bodenR.draw_rot(ibodenR.posx, ibodenR.posy, 100.0,
 			0.0,
 			0.5, 0.5);
 		bodenL.draw_rot(ibodenL.posx, ibodenL.posy, 100.0,
 			0.0,
 			0.5, 0.5);
+		Wand.draw_rot(iWand.posx, iWand.posy, 100.0,
+			0.0,
+			0.5, 0.5);*/
 		//HUD
 		if (health == 3)
 		{
