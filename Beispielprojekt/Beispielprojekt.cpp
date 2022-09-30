@@ -95,6 +95,7 @@ public:
 	
 	void draw() override
 	{
+		//Level Design
 		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL) 
 		{
@@ -103,20 +104,9 @@ public:
 				0.5, 0.5);
 			elem_O_f = elem_O_f->next;
 		}
-
-		//Level Design
 		hintergrund.draw_rot(400, 320, 10.0,
 			0.0,
 			0.5, 0.5);
-		/*bodenR.draw_rot(ibodenR.posx, ibodenR.posy, 100.0,
-			0.0,
-			0.5, 0.5);
-		bodenL.draw_rot(ibodenL.posx, ibodenL.posy, 100.0,
-			0.0,
-			0.5, 0.5);
-		Wand.draw_rot(iWand.posx, iWand.posy, 100.0,
-			0.0,
-			0.5, 0.5);*/
 		//HUD
 		if (health == 3)
 		{
