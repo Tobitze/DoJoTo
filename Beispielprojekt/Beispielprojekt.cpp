@@ -1,63 +1,11 @@
 #include <Gosu/Gosu.hpp>
 #include <Gosu/AutoLink.hpp>
 #include <iostream>
+#include "Spieler.cpp"
 
-		bool y_down = false; // sprung?
-		bool x_down = false; // ist waagerecht gedrückt ?
-class Spieler // Doris ding Anfang :D
-	{
-	public:
-		double player_x;// Bewegung x-Achse
-		double player_y;// Bewegung y-achse
-		double player_v_x;// Geschwindigkeit x-richtung
-		const double player_v_xmax; // max geschwindigket x
-		double player_v_y;// Geschwindigkeit y-richtung
-		const double player_v_ymax; // max geschwindigkeit y
-		double player_g;// gravitationskonstante
-		
-		
-		int sprung_t; // zählt die zeit des sprungs
-
-		//player Bewegung
-			// bewegung in x richtung 
-		double player_beschleungung() {}; 
-		
-		// sprung timer - zählt, wie lange der player springt.
-		int sprung_dauer(bool y) {
-			while (y = true) {
-				switch (y) {
-				case true:
-					return this->sprung_t = this->sprung_t + 1;;
-					break;
-				case false:
-					return this->sprung_t = 0;
-					break;
-				default:
-					break;
-				};
-				
-			}
-		};
-			// bewegug in y richtung
-		double player_sprung(double x, double y, double v, double t){
-			double zeit_sprung = t;
-			x_down;
-			for (double u; u < zeit_sprung; u++) { // berechnen von x-Koordinaten derPunkte der Wurfparabel 
-				switch (x_down) {
-				case true:
-					return this->player_v_x == 0;//this->beschleunigung()  ;// berechnen der x-Geschwinigkeit -> koordinate = vx(t) / t
-					break;
-				case false:
-					return this->player_v_x == 0;
-					break;
-				default: 
-					break;
-				};
-			};
-		};
-		
-	}; // Doris ding ende :D
-Spieler p1;
+bool y_down = false; // sprung?
+bool x_down = false; // ist waagerecht gedrückt ?
+//Spieler::Spieler;
 
 class GameWindow : public Gosu::Window
 {
@@ -200,7 +148,7 @@ public:
 			// ist up gedrückt?
 		while (true) {
 			bool platzh;
-			if (input().down(Gosu::KB_UP)) {
+			if (input().down(Gosu::KB_W)) {
 				bool platzh = true;
 			}
 			else { platzh = false; }

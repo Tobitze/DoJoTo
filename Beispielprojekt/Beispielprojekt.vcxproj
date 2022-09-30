@@ -169,6 +169,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Beispielprojekt.cpp" />
+    <ClCompile Include="Spieler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="rakete.png" />
