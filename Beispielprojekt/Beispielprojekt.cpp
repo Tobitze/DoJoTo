@@ -37,6 +37,9 @@ public:
 	int health = 3;
 
 	bool pressed = false;
+	bool w_pressed = false;// player sprung
+	bool a_pressed = false;// player links
+	bool d_pressed = false;// player rechts
 
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
@@ -143,29 +146,59 @@ public:
 			ibodenR.posx = ibodenR.posx - 5;
 		}
 
-		/*Player
+		/*//Player
+		
 		//sprungdauer
-			// ist up gedrückt?
-		while (true) {
-			bool platzh;
-			if (input().down(Gosu::KB_W)) {
-				bool platzh = true;
-			}
-			else { platzh = false; }
-			switch (platzh) {
-			case true:
-				y_down = true;
-				p1.sprung_dauer(y_down);
-				break;
-			case false:
-				y_down = false;
-				p1.sprung_dauer(y_down);
-				break;
-			default: 
-				break;
-			};
-			std::cout << p1.sprung_t << std::endl;
+			// ist w gedrückt?
+		if (input().down(Gosu::KB_W)) {
+			w_pressed = true;
+			p1.sprung_t = p1.sprung_t + 1;
+			//debug
+			//std::cout << p1.sprung_t << std::endl;
+		}
+		else {
+			w_pressed = false;
+			p1.sprung_t = 0;
+		}
+
+		//rechtsdauer
+			// ist d gedrückt?
+		if (input().down(Gosu::KB_D)) {
+			d_pressed = true;
+			p1.player_t_x = p1.sprung_t - 1;
+			//debug
+			//std::cout << p1.sprung_t << std::endl;
+		}
+		else {
+			d_pressed = false;
+			p1.player_t_x = 0;
+		}
+		//linksdauer
+			// ist a gedrückt?
+		if (input().down(Gosu::KB_A)) {
+			a_pressed = true;
+			p1.player_t_x = p1.player_t_x + 1;
+			//debug
+			//std::cout << p1.sprung_t << std::endl;
+		}
+		else {
+			a_pressed = false;
+			p1.player_t_x = 0;
+		}
+		//sprung
+		// 
+		//bewegung x (tobis code kopiert und mit beschleunigung versehen)
+		if (input().down(Gosu::KB_A))
+		{
+			ibodenL.posx = ibodenL.posx + (p1.player_beschleunigung(ibodenL.posx, p1.player_t_x, p1.player_v_xmax) * 1);
+			ibodenR.posx = ibodenR.posx + (p1.player_beschleunigung(ibodenR.posx, p1.player_t_x, p1.player_v_xmax) * 1);
+		}
+		if (input().down(Gosu::KB_D))
+		{
+			ibodenL.posx = ibodenL.posx - (p1.player_beschleunigung(ibodenL.posx,p1.player_t_x, p1.player_v_xmax) * 1);
+			ibodenR.posx = ibodenR.posx - (p1.player_beschleunigung(ibodenR.posx, p1.player_t_x, p1.player_v_xmax) * 1);
 		}*/
+		
 	}
 };
 
