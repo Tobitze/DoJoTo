@@ -6,6 +6,38 @@
 class GameWindow : public Gosu::Window
 {
 public:
+	class Spieler // Doris ding Anfang :D
+	{
+	public:
+		double player_x;// Bewegung x-Achse
+		double player_y;// Bewegung y-achse
+		double player_v_x;// Geschwindigkeit x-richtung
+		double player_v_xmax; // max geschwindigket x
+		double player_v_y;// Geschwindigkeit y-richtung
+		double player_v_ymax; // max geschwindigkeit y
+		double player_g;// gravitationskonstante
+		bool x_down = true;
+		
+		//player Bewegung
+			// bewegung in x richtung 
+		double player_beschleungung() {}; 
+
+			// bewegug in y richtung
+		double player_sprung(double x, double y, double v, double t){
+			double zeit_sprung = t;
+			this->x_down;
+			for (double u; u < zeit_sprung; u++) { // berechnen von x-Koordinaten derPunkte der Wurfparabel 
+				switch (x_down) {
+				case true:
+					return this->player_v_x == 0;//this->beschleunigung()  ;// berechnen der x-Geschwinigkeit -> koordinate = vx(t) / t
+					break;
+				case false:
+					return this->player_v_x == 0;
+					break;
+				};
+			};
+		};
+	}; // Doris ding ende :D
 
 	struct Objekt_fest
 	{
