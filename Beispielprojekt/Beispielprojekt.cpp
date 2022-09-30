@@ -10,9 +10,9 @@ class Spieler // Doris ding Anfang :D
 		double player_x;// Bewegung x-Achse
 		double player_y;// Bewegung y-achse
 		double player_v_x;// Geschwindigkeit x-richtung
-		double player_v_xmax; // max geschwindigket x
+		const double player_v_xmax; // max geschwindigket x
 		double player_v_y;// Geschwindigkeit y-richtung
-		double player_v_ymax; // max geschwindigkeit y
+		const double player_v_ymax; // max geschwindigkeit y
 		double player_g;// gravitationskonstante
 		
 		
@@ -24,17 +24,18 @@ class Spieler // Doris ding Anfang :D
 		
 		// sprung timer - zählt, wie lange der player springt.
 		int sprung_dauer(bool y) {
-			while (y_down = true) {
-				y_down = true;
-				switch (y_down) {
+			while (y = true) {
+				switch (y) {
 				case true:
 					return this->sprung_t = this->sprung_t + 1;;
 					break;
-				default:
+				case false:
 					return this->sprung_t = 0;
 					break;
+				default:
+					break;
 				};
-				std::cout << this->sprung_t << std::endl;
+				
 			}
 		};
 			// bewegug in y richtung
@@ -48,6 +49,8 @@ class Spieler // Doris ding Anfang :D
 					break;
 				case false:
 					return this->player_v_x == 0;
+					break;
+				default: 
 					break;
 				};
 			};
@@ -195,14 +198,26 @@ public:
 		// Player 
 		//sprungdauer
 			// ist up gedrückt?
-		switch(input().down(Gosu::KB_UP)) {
+		while (true) {
+			bool platzh;
+			if (input().down(Gosu::KB_UP)) {
+				bool platzh = true;
+			}
+			else { platzh = false; }
+			switch (platzh) {
 			case true:
 				y_down = true;
 				p1.sprung_dauer(y_down);
+				break;
 			case false:
 				y_down = false;
 				p1.sprung_dauer(y_down);
-		};
+				break;
+			default: 
+				break;
+			};
+			std::cout << p1.sprung_t << std::endl;
+		}
 	}
 };
 
