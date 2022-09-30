@@ -59,8 +59,17 @@ public:
 	Objekt_fest ibodenR = erstelle_Objekt_fest(575, 100, 600, 575, 100, &ilistenproblenloeser, &bodenR); //breite und höhe müssen noch an reale pixel angepasst werden
 	Objekt_fest ibodenL = erstelle_Objekt_fest(575, 100, 200, 575, 100, &ibodenR, &bodenL);  //Todo: Linked list über pointer
 	Objekt_fest iWand = erstelle_Objekt_fest(575, 100, 300, 300, 100, &ibodenL, &Wand);
-	//Bei erstellung eines neuen Objektes unten Listenschleife anpassen!
+	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!
 
+	void map_reset()
+	{
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		while (elem_O_f->next != NULL)
+		{
+			elem_O_f->reset();
+			elem_O_f = elem_O_f->next;
+		}
+	}
 
 	//Game Window
 	GameWindow()
@@ -152,8 +161,8 @@ public:
 		if (input().down(Gosu::KB_F) && health <= 0) //Respawn
 		{
 			health = 3;			//Player heilen
-			ibodenL.reset();	//Zurücksetzen der Objektpositionen und damit des Spielers auf Startwert
-			ibodenR.reset();
+			map_reset();	//Zurücksetzen der Objektpositionen und damit des Spielers auf Startwert
+			
 		}
 
 		if (input().down(Gosu::KB_LEFT))
