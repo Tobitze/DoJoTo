@@ -2,12 +2,9 @@
 #include <Gosu/AutoLink.hpp>
 #include <iostream>
 
-
-class GameWindow : public Gosu::Window
-{
-public:
-	
-	class Spieler // Doris ding Anfang :D
+		bool y_down = false; // sprung?
+		bool x_down = false; // ist waagerecht gedrückt ?
+class Spieler // Doris ding Anfang :D
 	{
 	public:
 		double player_x;// Bewegung x-Achse
@@ -17,17 +14,33 @@ public:
 		double player_v_y;// Geschwindigkeit y-richtung
 		double player_v_ymax; // max geschwindigkeit y
 		double player_g;// gravitationskonstante
-		int sprung_dauer = 0; // dauer des sprungs
-		bool x_down = true;
 		
+		
+		int sprung_t; // zählt die zeit des sprungs
+
 		//player Bewegung
 			// bewegung in x richtung 
 		double player_beschleungung() {}; 
-
+		
+		// sprung timer - zählt, wie lange der player springt.
+		int sprung_dauer(bool y) {
+			while (y_down = true) {
+				y_down = true;
+				switch (y_down) {
+				case true:
+					return this->sprung_t = this->sprung_t + 1;;
+					break;
+				default:
+					return this->sprung_t = 0;
+					break;
+				};
+				std::cout << this->sprung_t << std::endl;
+			}
+		};
 			// bewegug in y richtung
 		double player_sprung(double x, double y, double v, double t){
 			double zeit_sprung = t;
-			this->x_down;
+			x_down;
 			for (double u; u < zeit_sprung; u++) { // berechnen von x-Koordinaten derPunkte der Wurfparabel 
 				switch (x_down) {
 				case true:
@@ -39,24 +52,15 @@ public:
 				};
 			};
 		};
-		// sprung timer - zählt, wie lange der player springt.
-		bool sprung_t = false;
-
-		/*int sprung_dauer(sprung_t) {
-			while (input().down(Gosu::KB_UP)) {
-				sprung_t = true;
-				std::cout << sprung_t << std::endl;
-			}
-			switch (sprung_t) {
-			case true:
-				sprung_dauer = sprung_dauer + 1;;
-				break;
-			default:
-				sprung_t = 0;
-				break;
-			};
-		};*/
+		
 	}; // Doris ding ende :D
+Spieler p1;
+
+class GameWindow : public Gosu::Window
+{
+public:
+	
+	
 
 	struct Objekt_fest
 	{
@@ -187,6 +191,18 @@ public:
 			ibodenL.posx = ibodenL.posx - 5;
 			ibodenR.posx = ibodenR.posx - 5;
 		}
+
+		// Player 
+		//sprungdauer
+			// ist up gedrückt?
+		switch(input().down(Gosu::KB_UP)) {
+			case true:
+				y_down = true;
+				p1.sprung_dauer(y_down);
+			case false:
+				y_down = false;
+				p1.sprung_dauer(y_down);
+		};
 	}
 };
 
@@ -198,7 +214,8 @@ int main()
 
 	Objektliste.push_back(ibodenR);*/
 
-
+	
 	GameWindow window;
 	window.show();
+	
 }
