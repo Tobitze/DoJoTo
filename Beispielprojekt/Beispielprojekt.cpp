@@ -66,12 +66,13 @@ public:
 
 	void map_reset()
 	{
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!     //Wenn Player fertig, unnötig weil rendering automatisch von Player-pos abhängig
 		while (elem_O_f->next != NULL)
 		{
 			elem_O_f->reset();
 			elem_O_f = elem_O_f->next;
 		}
+		 
 		//p1.player_x = 0;         Auskommentieren wenn Player fertig
 		//p1.player_y = 0;
 	}
