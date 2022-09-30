@@ -6,6 +6,7 @@
 class GameWindow : public Gosu::Window
 {
 public:
+	
 	class Spieler // Doris ding Anfang :D
 	{
 	public:
@@ -16,6 +17,7 @@ public:
 		double player_v_y;// Geschwindigkeit y-richtung
 		double player_v_ymax; // max geschwindigkeit y
 		double player_g;// gravitationskonstante
+		int sprung_dauer = 0; // dauer des sprungs
 		bool x_down = true;
 		
 		//player Bewegung
@@ -37,6 +39,23 @@ public:
 				};
 			};
 		};
+		// sprung timer - zählt, wie lange der player springt.
+		bool sprung_t = false;
+
+		/*int sprung_dauer(sprung_t) {
+			while (input().down(Gosu::KB_UP)) {
+				sprung_t = true;
+				std::cout << sprung_t << std::endl;
+			}
+			switch (sprung_t) {
+			case true:
+				sprung_dauer = sprung_dauer + 1;;
+				break;
+			default:
+				sprung_t = 0;
+				break;
+			};
+		};*/
 	}; // Doris ding ende :D
 
 	struct Objekt_fest
@@ -168,7 +187,6 @@ public:
 			ibodenL.posx = ibodenL.posx - 5;
 			ibodenR.posx = ibodenR.posx - 5;
 		}
-
 	}
 };
 
