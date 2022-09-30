@@ -5,7 +5,7 @@
 
 bool y_down = false; // sprung?
 bool x_down = false; // ist waagerecht gedrückt ?
-//Spieler::Spieler;
+Spieler p1;
 
 class GameWindow : public Gosu::Window
 {
@@ -143,7 +143,7 @@ public:
 			ibodenR.posx = ibodenR.posx - 5;
 		}
 
-		// Player 
+		/*Player
 		//sprungdauer
 			// ist up gedrückt?
 		while (true) {
@@ -165,7 +165,7 @@ public:
 				break;
 			};
 			std::cout << p1.sprung_t << std::endl;
-		}
+		}*/
 	}
 };
 
