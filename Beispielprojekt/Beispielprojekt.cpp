@@ -16,6 +16,7 @@ public:
 	struct Objekt_fest
 	{
 		double breite, hoehe, posx, posy, startx, starty;
+		
 		void reset() 
 		{
 			this->posx = startx;
@@ -36,8 +37,8 @@ public:
 
 	int health = 3;
 
-	bool pressed = false;
-
+	bool pressed = false; //temp für Kill via K
+	 
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
 	Gosu::Image hintergrund;
@@ -117,13 +118,13 @@ public:
 	void update() override
 	{
 		//HUD
-		if (input().down(Gosu::KB_SPACE)&& !pressed)
+		if (input().down(Gosu::KB_K)&& !pressed)
 		{
 			pressed = true;
 			health = health - 1;
 			
 		}
-		else if (!input().down(Gosu::KB_SPACE)) { pressed = false; }
+		else if (!input().down(Gosu::KB_K)) { pressed = false; }
 
 		if (input().down(Gosu::KB_F) && health <= 0) //Respawn
 		{
