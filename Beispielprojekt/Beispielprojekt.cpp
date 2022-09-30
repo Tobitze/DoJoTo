@@ -61,7 +61,7 @@ public:
 	Objekt_fest ilistenproblenloeser = erstelle_Objekt_fest(0, 0, 0, 0, 0, NULL, NULL);  //Einfach nicht hinterfragen
 	Objekt_fest ibodenR = erstelle_Objekt_fest(575, 100, 600, 575, 100, &ilistenproblenloeser, &bodenR); //breite und höhe müssen noch an reale pixel angepasst werden
 	Objekt_fest ibodenL = erstelle_Objekt_fest(575, 100, 200, 575, 100, &ibodenR, &bodenL);  //Todo: Linked list über pointer
-	Objekt_fest iWand = erstelle_Objekt_fest(575, 100, 300, 300, 100, &ibodenL, &Wand);
+	Objekt_fest iWand = erstelle_Objekt_fest(575, 100, 700, 525, 100, &ibodenL, &Wand);
 	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!
 
 	void map_reset()
@@ -105,7 +105,7 @@ public:
 		}
 
 		//Level Design
-		hintergrund.draw_rot(400, 320, 100.0,
+		hintergrund.draw_rot(400, 320, 10.0,
 			0.0,
 			0.5, 0.5);
 		/*bodenR.draw_rot(ibodenR.posx, ibodenR.posy, 100.0,
@@ -168,16 +168,35 @@ public:
 			
 		}
 
+
+		//Reine Test-Features, können bei working Player weg
 		if (input().down(Gosu::KB_LEFT))
 		{
-			ibodenL.posx = ibodenL.posx + 5;
-			ibodenR.posx = ibodenR.posx + 5;
+			elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+			while (elem_O_f->next != NULL)
+			{
+				elem_O_f->posx = elem_O_f->posx + 5;
+				elem_O_f = elem_O_f->next;
+			}
 		}
 		if (input().down(Gosu::KB_RIGHT))
 		{
-			ibodenL.posx = ibodenL.posx - 5;
-			ibodenR.posx = ibodenR.posx - 5;
+			elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+			while (elem_O_f->next != NULL)
+			{
+				elem_O_f->posx = elem_O_f->posx - 5;
+				elem_O_f = elem_O_f->next;
+			}
 		}
+
+		////Haupt-Map-Move-Funktionen                                            Diesen Teil entkommentieren sobald player fertig
+		//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		//while (elem_O_f->next != NULL)
+		//{
+		//	elem_O_f->posx = elem_O_f->startx - p1.player_x;
+		//	elem_O_f->posx = elem_O_f->starty - p1.player_y;
+		//	elem_O_f = elem_O_f->next;
+		//}
 
 		/*//Player
 		
