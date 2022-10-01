@@ -2,18 +2,21 @@ class Spieler // Doris ding Anfang :D
 {
 public:
 	double player_x;// Bewegung x-Achse
-	int player_t_x; // zeit, die in x beschleunigt wird
 	double player_y;// Bewegung y-achse
-	int player_t_y; // zeit, die in y beschleunigt wird 
+	
 	double player_a_x;// Geschwindigkeit x-richtung
-	const double player_v_xmax = 10; // max geschwindigket x
+	const double player_v_xmax = 3; // max geschwindigket x
+	
 	double player_a_y;// Geschwindigkeit y-richtung
 	const double player_v_ymax = 3; // max geschwindigkeit y
+	
 	const double player_g = 9.81;// gravitationskonstante
 
 
 	int sprung_t; // zählt die zeit des sprungs
-
+	int player_t_x_a; // zeit, die in x beschleunigt wird
+	int player_t_x_d;
+	
 	//Konstruktor
 	Spieler(){
 		this->player_x = 0;
@@ -23,14 +26,16 @@ public:
 		// bewegung in x richtung 
 	
 	
-	double player_beschleunigung(double bx,double tx, double txm) {
+	double player_beschleunigung(double bx,double tx, const double txm) {
+		double ax;
 		if (tx < txm) {
-			tx = tx * 1;
+			ax = bx * (tx / 5);
 		}
 		else {
-			tx = txm;
+			ax = bx * (txm / 5);
 		}
-		return this->player_a_x = bx * tx;
+		return ax;
+		//std::cout << ax << std::endl;
 	};
 
 	// sprung timer - zählt, wie lange der player springt.

@@ -191,7 +191,7 @@ public:
 		//	elem_O_f = elem_O_f->next;
 		//}
 
-		/*//Player
+		//Player
 		
 		//sprungdauer
 			// ist w gedrückt?
@@ -199,51 +199,68 @@ public:
 			w_pressed = true;
 			p1.sprung_t = p1.sprung_t + 1;
 			//debug
-			//std::cout << p1.sprung_t << std::endl;
+			std::cout << p1.sprung_t << std::endl;
 		}
 		else {
 			w_pressed = false;
 			p1.sprung_t = 0;
 		}
 
-		//rechtsdauer
+		//rechtsdauer // bildschirm nach links
 			// ist d gedrückt?
 		if (input().down(Gosu::KB_D)) {
 			d_pressed = true;
-			p1.player_t_x = p1.sprung_t - 1;
+			p1.player_t_x_d = p1.player_t_x_d - 1;
 			//debug
-			//std::cout << p1.sprung_t << std::endl;
+			//std::cout << "zeit taste d" << p1.player_t_x_d << std::endl;
 		}
 		else {
 			d_pressed = false;
-			p1.player_t_x = 0;
+			p1.player_t_x_d = 0;
 		}
-		//linksdauer
+		//linksdauer //Bildschirm nach rechts
 			// ist a gedrückt?
 		if (input().down(Gosu::KB_A)) {
 			a_pressed = true;
-			p1.player_t_x = p1.player_t_x + 1;
+			p1.player_t_x_a = p1.player_t_x_a - 1;
 			//debug
-			//std::cout << p1.sprung_t << std::endl;
+			//std::cout << "Zeit taste a"<< p1.player_t_x_a << std::endl;
 		}
 		else {
 			a_pressed = false;
-			p1.player_t_x = 0;
+			p1.player_t_x_a= 0;
 		}
 		//sprung
-		// 
-		//bewegung x (tobis code kopiert und mit beschleunigung versehen)
-		if (input().down(Gosu::KB_A))
-		{
-			ibodenL.posx = ibodenL.posx + (p1.player_beschleunigung(ibodenL.posx, p1.player_t_x, p1.player_v_xmax) * 1);
-			ibodenR.posx = ibodenR.posx + (p1.player_beschleunigung(ibodenR.posx, p1.player_t_x, p1.player_v_xmax) * 1);
-		}
-		if (input().down(Gosu::KB_D))
-		{
-			ibodenL.posx = ibodenL.posx - (p1.player_beschleunigung(ibodenL.posx,p1.player_t_x, p1.player_v_xmax) * 1);
-			ibodenR.posx = ibodenR.posx - (p1.player_beschleunigung(ibodenR.posx, p1.player_t_x, p1.player_v_xmax) * 1);
-		}*/
 		
+		//Beschleunigte bewegung x :D funktioniert 
+		if (input().down(Gosu::KB_D)&& (p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax) < 10)) {
+			//ibodenL.posx = ibodenL.posx + p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax);//bewegung x beschleunigt (tobis code kopiert und mit beschleunigung versehen)
+			//ibodenR.posx = ibodenR.posx + p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax);
+			p1.player_x = p1.player_x - p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax);
+			// debug
+			//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax) << std::endl;
+			//std::cout << "Player´s x:" << p1.player_x << std::endl;
+		}
+		else if (input().down(Gosu::KB_A) && (p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax) <= 10)) {
+			//ibodenL.posx = ibodenL.posx - p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax);
+			//ibodenR.posx = ibodenR.posx - p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax);
+			p1.player_x = p1.player_x + p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax);
+			// debug
+			//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax) << std::endl;
+			//std::cout << "Player´s x:" << p1.player_x << std::endl;
+		}
+		else if (input().down(Gosu::KB_D) && (p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax) > 10)) {
+			//ibodenL.posx = ibodenL.posx + 10;//bewegung x max beschleunigt (tobis code kopiert und mit beschleunigung versehen)
+			//ibodenR.posx = ibodenR.posx + 10;
+			p1.player_x = p1.player_x - 10; 
+			//std::cout << "Player´s x:" << p1.player_x << std::endl;
+		}
+		else if (input().down(Gosu::KB_A) && (p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax)) > 10) {
+			//ibodenL.posx = ibodenL.posx - 10;
+			//ibodenR.posx = ibodenR.posx - 10;
+			p1.player_x = p1.player_x + 10;
+			//std::cout << "Player´s x:" << p1.player_x << std::endl;
+		}
 	}
 };
 
