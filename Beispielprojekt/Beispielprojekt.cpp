@@ -18,7 +18,8 @@ public:
 
 	struct Objekt_fest
 	{
-		double breite, hoehe, posx, posy, startx, starty, posz;
+		double posx, posy, startx, starty, posz;
+		double breite, hoehe;
 		Objekt_fest *next;
 		Gosu::Image* image;
 		void reset() 
@@ -31,7 +32,9 @@ public:
 	{
 		Objekt_fest temp;
 		temp.breite = breite;
+		//temp.breite = image->width();
 		temp.hoehe = hoehe;
+		//temp.hoehe = image->height();
 		temp.posx = posx;
 		temp.posy = posy;
 		temp.startx = posx;
@@ -64,8 +67,28 @@ public:
 	//Player, temp
 	Gosu::Image Playertemp;
 
+	//Game Window
+	GameWindow()
+		: Window(800, 600)
+		//Level Design
+		, bodenR("boden1.jpg")
+		, bodenL("boden1.jpg")
+		, Wand("boden1.jpg")
+		, hintergrund("hintergrund.jfif")
+		//HUD
+		, hudHP("hud_hp.png")
+		, hudHP2("hud_hp-1.png")
+		, hudHP1("hud_hp-2.png")
+		, hudHP0("hud_hp-3.png")
+		, GameOver("GameOver.png")
+		//Player (temp)
+		, Playertemp("Forscher.jpg")
+	{
+		set_caption("Dr. Salzig und Mister Coco");
+	}
+
 	Objekt_fest ilistenproblenloeser = erstelle_Objekt_fest(0, 0, 0, 0, 0, NULL, NULL);					 //Einfach nicht hinterfragen
-	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 600, 575, 100, &ilistenproblenloeser, &bodenR);	 //breite und höhe müssen noch an reale pixel angepasst werden
+	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 600, 575, 100, &ilistenproblenloeser, &bodenR);	 
 	Objekt_fest ibodenL = erstelle_Objekt_fest(474, 58, 200, 575, 100, &ibodenR, &bodenL);				 //Linked list über pointer
 	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 525, 100, &ibodenL, &Wand);
 	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!   Oder neues Objekt iwo zwischenreinpfuschen
@@ -75,12 +98,12 @@ public:
 
 	void map_reset()
 	{
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!     //Wenn Player fertig, unnötig weil rendering automatisch von Player-pos abhängig
-		while (elem_O_f->next != NULL)
-		{
-			elem_O_f->reset();
-			elem_O_f = elem_O_f->next;
-		}
+		//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!     //Wenn Player fertig, unnötig weil rendering automatisch von Player-pos abhängig
+		//while (elem_O_f->next != NULL)
+		//{
+		//	elem_O_f->reset();
+		//	elem_O_f = elem_O_f->next;
+		//}
 		 
 		p1.player_x = 300;         //Auskommentieren wenn Player fertig
 		p1.player_y = 500;
@@ -131,32 +154,11 @@ public:
 		return true;
 	}
 
-
-	//Game Window
-	GameWindow()
-		: Window(800, 600)
-		//Level Design
-		, bodenR("boden1.jpg")
-		, bodenL("boden1.jpg")
-		, Wand("boden1.jpg")
-		, hintergrund("hintergrund.jfif")
-		//HUD
-		, hudHP("hud_hp.png")
-		, hudHP2("hud_hp-1.png")
-		, hudHP1("hud_hp-2.png")
-		, hudHP0("hud_hp-3.png")
-		, GameOver("GameOver.png")
-		//Player (temp)
-		, Playertemp("Forscher.jpg")
-	{
-		set_caption("Dr. Salzig und Mister Coco");
-	}
-
 	
 	void draw() override
 	{
 		//Level Design
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
 		while (elem_O_f->next != NULL) 
 		{
 			elem_O_f->image->draw_rot(elem_O_f->posx, elem_O_f->posy, elem_O_f->posz,
@@ -273,14 +275,14 @@ public:
 		//debug-Käse
 		std::cout << p1.player_x << "	" << iWand.startx << "	" << collision_rechts << "	" << p1.player_y << "	" << iWand.starty << "\n";
 
-		////Haupt-Map-Move-Funktionen                                            Diesen Teil entkommentieren sobald player fertig
-		//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
-		//while (elem_O_f->next != NULL)
-		//{
-		//	elem_O_f->posx = elem_O_f->startx - p1.player_x;
-		//	elem_O_f->posx = elem_O_f->starty - p1.player_y;
-		//	elem_O_f = elem_O_f->next;
-		//}
+		//Haupt-Map-Move-Funktionen                                            Diesen Teil entkommentieren sobald player fertig
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		while (elem_O_f->next != NULL)
+		{
+			elem_O_f->posx = elem_O_f->startx - p1.player_x;
+			elem_O_f->posy = elem_O_f->starty - p1.player_y;
+			elem_O_f = elem_O_f->next;
+		}
 
 		/*//Player
 		
