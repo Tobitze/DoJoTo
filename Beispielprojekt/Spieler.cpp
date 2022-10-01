@@ -19,8 +19,8 @@ public:
 	
 	//Konstruktor
 	Spieler(){
-		this->player_x = 0;
-		this->player_y = 0;
+		this->player_x = 300;
+		this->player_y = 500;
 	}
 		//player Bewegung
 		// bewegung in x richtung 
