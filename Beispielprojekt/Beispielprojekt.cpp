@@ -2,16 +2,19 @@
 #include <Gosu/AutoLink.hpp>
 #include <iostream>
 #include "Spieler.cpp"
+#include <math.h>
 
 bool y_down = false; // sprung?
 bool x_down = false; // ist waagerecht gedrückt ?
+bool collision_rechts = false;
+bool collision_links = false;
+bool collision_oben = false;
+bool collision_unten = true;
 Spieler p1;
 
 class GameWindow : public Gosu::Window
 {
 public:
-	
-	
 
 	struct Objekt_fest
 	{
@@ -22,7 +25,7 @@ public:
 		{
 			this->posx = startx;
 			this->posy = starty;
-		}		
+		}	
 	};
 	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, struct Objekt_fest* next, Gosu::Image* image)
 	{
@@ -38,6 +41,7 @@ public:
 		temp.image = image;
 		return temp;
 	}
+	
 	Objekt_fest* elem_O_f;
 
 	int health = 3;
@@ -57,12 +61,17 @@ public:
 	Gosu::Image hudHP1;
 	Gosu::Image hudHP0;
 	Gosu::Image GameOver;
+	//Player, temp
+	Gosu::Image Playertemp;
 
-	Objekt_fest ilistenproblenloeser = erstelle_Objekt_fest(0, 0, 0, 0, 0, NULL, NULL);  //Einfach nicht hinterfragen
-	Objekt_fest ibodenR = erstelle_Objekt_fest(575, 100, 600, 575, 100, &ilistenproblenloeser, &bodenR); //breite und höhe müssen noch an reale pixel angepasst werden
-	Objekt_fest ibodenL = erstelle_Objekt_fest(575, 100, 200, 575, 100, &ibodenR, &bodenL);  //Todo: Linked list über pointer
-	Objekt_fest iWand = erstelle_Objekt_fest(575, 100, 700, 525, 100, &ibodenL, &Wand);
-	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!
+	Objekt_fest ilistenproblenloeser = erstelle_Objekt_fest(0, 0, 0, 0, 0, NULL, NULL);					 //Einfach nicht hinterfragen
+	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 600, 575, 100, &ilistenproblenloeser, &bodenR);	 //breite und höhe müssen noch an reale pixel angepasst werden
+	Objekt_fest ibodenL = erstelle_Objekt_fest(474, 58, 200, 575, 100, &ibodenR, &bodenL);				 //Linked list über pointer
+	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 525, 100, &ibodenL, &Wand);
+	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!   Oder neues Objekt iwo zwischenreinpfuschen
+
+	//Liste für Player
+	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 500, 100, &ilistenproblenloeser, &Playertemp);
 
 	void map_reset()
 	{
@@ -73,9 +82,55 @@ public:
 			elem_O_f = elem_O_f->next;
 		}
 		 
-		//p1.player_x = 0;         Auskommentieren wenn Player fertig
-		//p1.player_y = 0;
+		p1.player_x = 300;         //Auskommentieren wenn Player fertig
+		p1.player_y = 500;
 	}
+
+	double distance_from_player(Objekt_fest* o2)
+	{
+		return sqrt(pow((p1.player_x - o2->posx), 2) + pow((p1.player_y - o2->posy), 2));
+	}
+
+	bool kollision_rechts()
+	{
+		bool tmp = false;
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		while (elem_O_f->next != NULL)
+		{
+			if (distance_from_player(elem_O_f) < 1000)
+			{
+				if ((p1.player_x + iplayertemp.breite + 5) > elem_O_f->startx && (p1.player_x + iplayertemp.breite) < (elem_O_f->startx + elem_O_f->breite))
+				{
+					std::cout << "Stufe 1" << "	";
+					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
+					{
+						tmp = true;
+					}
+				}
+			}
+			elem_O_f = elem_O_f->next;
+		}
+		return tmp;
+	}
+
+	bool kollision_links()
+	{
+
+		return true;
+	}
+
+	bool kollision_oben()
+	{
+
+		return true;
+	}
+
+	bool kollision_unten()
+	{
+
+		return true;
+	}
+
 
 	//Game Window
 	GameWindow()
@@ -91,6 +146,8 @@ public:
 		, hudHP1("hud_hp-2.png")
 		, hudHP0("hud_hp-3.png")
 		, GameOver("GameOver.png")
+		//Player (temp)
+		, Playertemp("Forscher.jpg")
 	{
 		set_caption("Dr. Salzig und Mister Coco");
 	}
@@ -99,7 +156,7 @@ public:
 	void draw() override
 	{
 		//Level Design
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr
 		while (elem_O_f->next != NULL) 
 		{
 			elem_O_f->image->draw_rot(elem_O_f->posx, elem_O_f->posy, elem_O_f->posz,
@@ -140,11 +197,16 @@ public:
 
 
 		}
+		Playertemp.draw_rot(300, 500, 100, 0.0, 0.5, 0.5, 0.2, 0.2);
 	}
-
 	
 	void update() override
 	{
+		collision_rechts = kollision_rechts();
+		collision_links = kollision_links();
+		collision_oben = kollision_oben();
+		collision_unten = kollision_unten();
+
 		//HUD
 		if (input().down(Gosu::KB_K)&& !pressed)
 		{
@@ -170,17 +232,46 @@ public:
 			{
 				elem_O_f->posx = elem_O_f->posx + 5;
 				elem_O_f = elem_O_f->next;
+				p1.player_x = p1.player_x - 5;
 			}
 		}
 		if (input().down(Gosu::KB_RIGHT))
 		{
+			if (collision_rechts == false) 
+			{
+				elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+				while (elem_O_f->next != NULL)
+				{
+					elem_O_f->posx = elem_O_f->posx - 5;
+					elem_O_f = elem_O_f->next;
+					p1.player_x = p1.player_x + 5;
+				}
+			}
+			
+		}
+		if (input().down(Gosu::KB_UP))
+		{
 			elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
 			while (elem_O_f->next != NULL)
 			{
-				elem_O_f->posx = elem_O_f->posx - 5;
+				elem_O_f->posy = elem_O_f->posy + 5;
 				elem_O_f = elem_O_f->next;
+				p1.player_y = p1.player_y - 5;
 			}
 		}
+		if (input().down(Gosu::KB_DOWN))
+		{
+			elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+			while (elem_O_f->next != NULL)
+			{
+				elem_O_f->posy = elem_O_f->posy - 5;
+				elem_O_f = elem_O_f->next;
+				p1.player_y = p1.player_y + 5;
+			}
+		}
+
+		//debug-Käse
+		std::cout << p1.player_x << "	" << iWand.startx << "	" << collision_rechts << "	" << p1.player_y << "	" << iWand.starty << "\n";
 
 		////Haupt-Map-Move-Funktionen                                            Diesen Teil entkommentieren sobald player fertig
 		//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
