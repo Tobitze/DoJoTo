@@ -1,6 +1,10 @@
 class Spieler // Doris ding Anfang :D
 {
 public:
+
+	double player_start_x = 300;
+	double player_start_y = 456;
+
 	double player_x;// Bewegung x-Achse
 	double player_y;// Bewegung y-achse
 	
@@ -19,8 +23,8 @@ public:
 	
 	//Konstruktor
 	Spieler(){
-		this->player_x = 300;
-		this->player_y = 500;
+		this->player_x = player_start_x;
+		this->player_y = player_start_y;
 	}
 		//player Bewegung
 		// bewegung in x richtung 

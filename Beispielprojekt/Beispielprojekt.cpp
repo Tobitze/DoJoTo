@@ -22,19 +22,20 @@ public:
 		double breite, hoehe;
 		Objekt_fest *next;
 		Gosu::Image* image;
-		void reset() 
+		void reset() //veraltet, löschen?
 		{
 			this->posx = startx;
 			this->posy = starty;
-		}	
+		}
 	};
 	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, struct Objekt_fest* next, Gosu::Image* image)
 	{
 		Objekt_fest temp;
+		//double breitetemp2 = (double)image->width();
 		temp.breite = breite;
-		//temp.breite = image->width();
+		//temp.breite = breitetemp2;
 		temp.hoehe = hoehe;
-		//temp.hoehe = image->height();
+		//temp.hoehe = (double)image->height();
 		temp.posx = posx;
 		temp.posy = posy;
 		temp.startx = posx;
@@ -44,7 +45,7 @@ public:
 		temp.image = image;
 		return temp;
 	}
-	
+
 	Objekt_fest* elem_O_f;
 
 	int health = 3;
@@ -88,13 +89,13 @@ public:
 	}
 
 	Objekt_fest ilistenproblenloeser = erstelle_Objekt_fest(0, 0, 0, 0, 0, NULL, NULL);					 //Einfach nicht hinterfragen
-	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 600, 575, 100, &ilistenproblenloeser, &bodenR);	 
-	Objekt_fest ibodenL = erstelle_Objekt_fest(474, 58, 200, 575, 100, &ibodenR, &bodenL);				 //Linked list über pointer
-	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 525, 100, &ibodenL, &Wand);
+	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 400, 550, 100, &ilistenproblenloeser, &bodenR);	 
+	Objekt_fest ibodenL = erstelle_Objekt_fest(474, 58, 0, 550, 100, &ibodenR, &bodenL);				 //Linked list über pointer
+	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 500, 100, &ibodenL, &Wand);
 	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!   Oder neues Objekt iwo zwischenreinpfuschen
 
 	//Liste für Player
-	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 500, 100, &ilistenproblenloeser, &Playertemp);
+	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 466, 100, &ilistenproblenloeser, &Playertemp);
 
 	void map_reset()
 	{
@@ -105,13 +106,13 @@ public:
 		//	elem_O_f = elem_O_f->next;
 		//}
 		 
-		p1.player_x = 300;         //Auskommentieren wenn Player fertig
-		p1.player_y = 500;
+		p1.player_x = 0;         //Auskommentieren wenn Player fertig
+		p1.player_y = 0;
 	}
 
 	double distance_from_player(Objekt_fest* o2)
 	{
-		return sqrt(pow((p1.player_x - o2->posx), 2) + pow((p1.player_y - o2->posy), 2));
+		return sqrt(pow((p1.player_x - o2->startx), 2) + pow((p1.player_y - o2->starty), 2));
 	}
 
 	bool kollision_rechts()
@@ -124,7 +125,6 @@ public:
 			{
 				if ((p1.player_x + iplayertemp.breite + 5) > elem_O_f->startx && (p1.player_x + iplayertemp.breite) < (elem_O_f->startx + elem_O_f->breite))
 				{
-					std::cout << "Stufe 1" << "	";
 					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
@@ -135,11 +135,28 @@ public:
 		}
 		return tmp;
 	}
-
 	bool kollision_links()
 	{
-
-		return true;
+		bool tmp = false;
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		while (elem_O_f->next != NULL)
+		{
+			if (distance_from_player(elem_O_f) < 1000)
+			{
+				//debug-Käse
+				//std::cout << p1.player_x << "	" << (iWand.startx + iWand.breite) << "	" << collision_links << "	" << p1.player_y << "	" << iWand.starty << "\n";
+				if ((p1.player_x - 5) < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) > (elem_O_f->startx))
+				{
+					std::cout << "Stufe 1" << "	";
+					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
+					{
+						tmp = true;
+					}
+				}
+			}
+			elem_O_f = elem_O_f->next;
+		}
+		return tmp;
 	}
 
 	bool kollision_oben()
@@ -161,9 +178,7 @@ public:
 		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
 		while (elem_O_f->next != NULL) 
 		{
-			elem_O_f->image->draw_rot(elem_O_f->posx, elem_O_f->posy, elem_O_f->posz,
-				0.0,
-				0.5, 0.5);
+			elem_O_f->image->draw(elem_O_f->posx, elem_O_f->posy, elem_O_f->posz);
 			elem_O_f = elem_O_f->next;
 		}
 		hintergrund.draw_rot(400, 320, 10.0,
@@ -199,7 +214,7 @@ public:
 
 
 		}
-		Playertemp.draw_rot(300, 500, 100, 0.0, 0.5, 0.5, 0.2, 0.2);
+		Playertemp.draw(p1.player_start_x, p1.player_start_y, 100, 0.2, 0.2);
 	}
 	
 	void update() override
@@ -229,11 +244,15 @@ public:
 		//Reine Test-Features, können bei working Player weg
 		if (input().down(Gosu::KB_LEFT))
 		{
-			elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
-			while (elem_O_f->next != NULL)
+			//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+			//while (elem_O_f->next != NULL)
+			//{
+			//	elem_O_f->posx = elem_O_f->posx + 5;
+			//	elem_O_f = elem_O_f->next;
+			//	p1.player_x = p1.player_x - 5;
+			//}
+			if (collision_links == false)
 			{
-				elem_O_f->posx = elem_O_f->posx + 5;
-				elem_O_f = elem_O_f->next;
 				p1.player_x = p1.player_x - 5;
 			}
 		}
@@ -241,46 +260,47 @@ public:
 		{
 			if (collision_rechts == false) 
 			{
-				elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
-				while (elem_O_f->next != NULL)
-				{
-					elem_O_f->posx = elem_O_f->posx - 5;
-					elem_O_f = elem_O_f->next;
-					p1.player_x = p1.player_x + 5;
-				}
+			//	elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+			//	while (elem_O_f->next != NULL)
+			//	{
+			//		elem_O_f->posx = elem_O_f->posx - 5;
+			//		elem_O_f = elem_O_f->next;
+			//		p1.player_x = p1.player_x + 5;
+			//	}
+				p1.player_x = p1.player_x + 5;
 			}
 			
 		}
 		if (input().down(Gosu::KB_UP))
 		{
-			elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
-			while (elem_O_f->next != NULL)
-			{
-				elem_O_f->posy = elem_O_f->posy + 5;
-				elem_O_f = elem_O_f->next;
-				p1.player_y = p1.player_y - 5;
-			}
+			//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+			//while (elem_O_f->next != NULL)
+			//{
+			//	elem_O_f->posy = elem_O_f->posy + 5;
+			//	elem_O_f = elem_O_f->next;
+			//	p1.player_y = p1.player_y - 5;
+			//}
+			p1.player_y = p1.player_y - 5;
 		}
 		if (input().down(Gosu::KB_DOWN))
 		{
-			elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
-			while (elem_O_f->next != NULL)
-			{
-				elem_O_f->posy = elem_O_f->posy - 5;
-				elem_O_f = elem_O_f->next;
-				p1.player_y = p1.player_y + 5;
-			}
+			//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+			//while (elem_O_f->next != NULL)
+			//{
+			//	elem_O_f->posy = elem_O_f->posy - 5;
+			//	elem_O_f = elem_O_f->next;
+			//	p1.player_y = p1.player_y + 5;
+			//}
+			p1.player_y = p1.player_y + 5;
 		}
 
-		//debug-Käse
-		std::cout << p1.player_x << "	" << iWand.startx << "	" << collision_rechts << "	" << p1.player_y << "	" << iWand.starty << "\n";
 
 		//Haupt-Map-Move-Funktionen                                            Diesen Teil entkommentieren sobald player fertig
 		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
-			elem_O_f->posx = elem_O_f->startx - p1.player_x;
-			elem_O_f->posy = elem_O_f->starty - p1.player_y;
+			elem_O_f->posx = elem_O_f->startx - (p1.player_x - p1.player_start_x);
+			elem_O_f->posy = elem_O_f->starty - (p1.player_y - p1.player_start_y);
 			elem_O_f = elem_O_f->next;
 		}
 
@@ -364,7 +384,6 @@ int main()
 	Objekt_fest ibodenR(575, 100, 600, 575);
 
 	Objektliste.push_back(ibodenR);*/
-
 	
 	GameWindow window;
 	window.show();
