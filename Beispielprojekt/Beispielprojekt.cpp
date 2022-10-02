@@ -12,6 +12,8 @@ bool collision_oben = false;
 bool collision_unten = true;
 Spieler p1;
 
+const double MAX_SPEED = 15; //Maximale Geschwindikkeit Spieler x-Richtung
+
 class GameWindow : public Gosu::Window
 {
 public:
@@ -147,7 +149,7 @@ public:
 				//std::cout << p1.player_x << "	" << (iWand.startx + iWand.breite) << "	" << collision_links << "	" << p1.player_y << "	" << iWand.starty << "\n";
 				if ((p1.player_x - 5) < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) > (elem_O_f->startx))
 				{
-					std::cout << "Stufe 1" << "	";
+					//std::cout << "Stufe 1" << "	";
 					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
@@ -310,9 +312,6 @@ public:
 			// ist w gedrückt?
 		if (input().down(Gosu::KB_W)) {
 			w_pressed = true;
-			p1.sprung_t = p1.sprung_t + 1;
-			//debug
-			std::cout << p1.sprung_t << std::endl;
 		}
 		else {
 			w_pressed = false;
@@ -323,9 +322,6 @@ public:
 			// ist d gedrückt?
 		if (input().down(Gosu::KB_D)) {
 			d_pressed = true;
-			p1.player_t_x_d = p1.player_t_x_d - 1;
-			//debug
-			//std::cout << "zeit taste d" << p1.player_t_x_d << std::endl;
 		}
 		else {
 			d_pressed = false;
@@ -335,45 +331,53 @@ public:
 			// ist a gedrückt?
 		if (input().down(Gosu::KB_A)) {
 			a_pressed = true;
-			p1.player_t_x_a = p1.player_t_x_a - 1;
-			//debug
-			//std::cout << "Zeit taste a"<< p1.player_t_x_a << std::endl;
 		}
 		else {
 			a_pressed = false;
 			p1.player_t_x_a= 0;
 		}
+
 		//sprung
+		if (input().down(Gosu::KB_W)&& (p1.player_beschleunigung(1, p1.sprung_t) > 100)) {
+			double yt = p1.player_beschleunigung(1, p1.sprung_t);
+		p1.player_y = p1.player_y + p1.player_sprung_y(yt, p1.player_y, p1.sprung_t);
+		p1.sprung_t = p1.sprung_t - 1;
 		
-		//Beschleunigte bewegung x :D funktioniert 
-		if (input().down(Gosu::KB_D)&& (p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax) < 10)) {
-			//ibodenL.posx = ibodenL.posx + p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax);//bewegung x beschleunigt (tobis code kopiert und mit beschleunigung versehen)
-			//ibodenR.posx = ibodenR.posx + p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax);
-			p1.player_x = p1.player_x - p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax);
-			// debug
-			//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax) << std::endl;
+		
+		//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.sprung_t) << std::endl;
+		//std::cout << "Player´s y:" << p1.player_y << std::endl;
+		//std::cout << "zeit taste d" << p1.sprung_t << std::endl;
+		}
+		else if (input().down(Gosu::KB_W) && (p1.player_beschleunigung(1, p1.sprung_t) < 100)) {
+			p1.player_y = p1.player_y - 10;
+			
+			
 			//std::cout << "Player´s x:" << p1.player_x << std::endl;
 		}
-		else if (input().down(Gosu::KB_A) && (p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax) <= 10)) {
-			//ibodenL.posx = ibodenL.posx - p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax);
-			//ibodenR.posx = ibodenR.posx - p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax);
-			p1.player_x = p1.player_x + p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax);
-			// debug
-			//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax) << std::endl;
+
+		//Beschleunigte bewegung x :D funktioniert, aber noch nicht begrenzt beschleunigt ( warum auch immer
+		
+		if (input().down(Gosu::KB_D)) {
+			p1.speedPlayer = (p1.player_beschleunigung(1, p1.player_t_x_d) < MAX_SPEED) ? p1.player_beschleunigung(1, p1.player_t_x_d) : MAX_SPEED;// wenn beschl. kleiner als 10, dann beschleunigung, sonst 10 (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
+			p1.player_x = p1.player_x + p1.speedPlayer; 
+			p1.player_t_x_d = p1.player_t_x_d + 1;
+			
+			
+			//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_d) << std::endl;
 			//std::cout << "Player´s x:" << p1.player_x << std::endl;
+			//std::cout << "zeit taste d" << p1.player_t_x_d << std::endl;
 		}
-		else if (input().down(Gosu::KB_D) && (p1.player_beschleunigung(1, p1.player_t_x_d, p1.player_v_xmax) > 10)) {
-			//ibodenL.posx = ibodenL.posx + 10;//bewegung x max beschleunigt (tobis code kopiert und mit beschleunigung versehen)
-			//ibodenR.posx = ibodenR.posx + 10;
-			p1.player_x = p1.player_x - 10; 
+		if (input().down(Gosu::KB_A)) {
+			p1.speedPlayer = (p1.player_beschleunigung(1, p1.player_t_x_a) < MAX_SPEED) ? p1.player_beschleunigung(1, p1.player_t_x_a) : MAX_SPEED;
+			p1.player_x = p1.player_x - p1.speedPlayer;
+			p1.player_t_x_a = p1.player_t_x_a + 1;
+			
+			
+			//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_a) << std::endl;
 			//std::cout << "Player´s x:" << p1.player_x << std::endl;
+			//std::cout << "Zeit taste a"<< p1.player_t_x_a << std::endl;
 		}
-		else if (input().down(Gosu::KB_A) && (p1.player_beschleunigung(1, p1.player_t_x_a, p1.player_v_xmax)) > 10) {
-			//ibodenL.posx = ibodenL.posx - 10;
-			//ibodenR.posx = ibodenR.posx - 10;
-			p1.player_x = p1.player_x + 10;
-			//std::cout << "Player´s x:" << p1.player_x << std::endl;
-		}
+		
 	}
 };
 
