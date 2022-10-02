@@ -147,7 +147,6 @@ public:
 				//std::cout << p1.player_x << "	" << (iWand.startx + iWand.breite) << "	" << collision_links << "	" << p1.player_y << "	" << iWand.starty << "\n";
 				if ((p1.player_x - 5) < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) > (elem_O_f->startx))
 				{
-					std::cout << "Stufe 1" << "	";
 					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
@@ -158,17 +157,45 @@ public:
 		}
 		return tmp;
 	}
-
 	bool kollision_oben()
 	{
-
-		return true;
+		bool tmp = false;
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		while (elem_O_f->next != NULL)
+		{
+			if (distance_from_player(elem_O_f) < 1000)
+			{
+				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) >(elem_O_f->startx))
+				{
+					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y - 5) < (elem_O_f->starty + elem_O_f->hoehe))
+					{
+						tmp = true;
+					}
+				}
+			}
+			elem_O_f = elem_O_f->next;
+		}
+		return tmp;
 	}
-
 	bool kollision_unten()
 	{
-
-		return true;
+		bool tmp = false;
+		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		while (elem_O_f->next != NULL)
+		{
+			if (distance_from_player(elem_O_f) < 1000)
+			{
+				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) >(elem_O_f->startx))
+				{
+					if ((p1.player_y + iplayertemp.hoehe + 5) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
+					{
+						tmp = true;
+					}
+				}
+			}
+			elem_O_f = elem_O_f->next;
+		}
+		return tmp;
 	}
 
 	
@@ -178,7 +205,10 @@ public:
 		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
 		while (elem_O_f->next != NULL) 
 		{
-			elem_O_f->image->draw(elem_O_f->posx, elem_O_f->posy, elem_O_f->posz);
+			if (distance_from_player(elem_O_f) < 5000)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
+			{
+				elem_O_f->image->draw(elem_O_f->posx, elem_O_f->posy, elem_O_f->posz);
+			}
 			elem_O_f = elem_O_f->next;
 		}
 		hintergrund.draw_rot(400, 320, 10.0,
@@ -280,7 +310,10 @@ public:
 			//	elem_O_f = elem_O_f->next;
 			//	p1.player_y = p1.player_y - 5;
 			//}
-			p1.player_y = p1.player_y - 5;
+			if (collision_oben == false)
+			{
+				p1.player_y = p1.player_y - 5;
+			}
 		}
 		if (input().down(Gosu::KB_DOWN))
 		{
@@ -291,7 +324,10 @@ public:
 			//	elem_O_f = elem_O_f->next;
 			//	p1.player_y = p1.player_y + 5;
 			//}
-			p1.player_y = p1.player_y + 5;
+			if (collision_unten == false)
+			{
+				p1.player_y = p1.player_y + 5;
+			}
 		}
 
 
