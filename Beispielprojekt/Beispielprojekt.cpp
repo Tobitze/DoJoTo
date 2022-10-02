@@ -21,7 +21,7 @@ public:
 	struct Objekt_fest
 	{
 		double posx, posy, startx, starty, posz;
-		double breite, hoehe;
+		double breite, hoehe, scale_x, scale_y;
 		Objekt_fest *next;
 		Gosu::Image* image;
 		void reset() //veraltet, löschen?
@@ -30,13 +30,14 @@ public:
 			this->posy = starty;
 		}
 	};
-	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, struct Objekt_fest* next, Gosu::Image* image)
+
+	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, struct Objekt_fest* next, Gosu::Image* image, double scale_x = 1, double scale_y = 1)
 	{
 		Objekt_fest temp;
 		//double breitetemp2 = (double)image->width();
-		temp.breite = breite;
+		temp.breite = breite * scale_x;
 		//temp.breite = breitetemp2;
-		temp.hoehe = hoehe;
+		temp.hoehe = hoehe * scale_y;
 		//temp.hoehe = (double)image->height();
 		temp.posx = posx;
 		temp.posy = posy;
@@ -45,10 +46,10 @@ public:
 		temp.posz = posz;
 		temp.next = next;
 		temp.image = image;
+		temp.scale_x = scale_x;
+		temp.scale_y = scale_y;
 		return temp;
 	}
-
-	Objekt_fest* elem_O_f;
 
 	int health = 3;
 
@@ -94,22 +95,18 @@ public:
 	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 400, 550, 100, &ilistenproblenloeser, &bodenR);	 
 	Objekt_fest ibodenL = erstelle_Objekt_fest(474, 58, 0, 550, 100, &ibodenR, &bodenL);				 //Linked list über pointer
 	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 500, 100, &ibodenL, &Wand);
+
+	Objekt_fest* elem_O_f;
+	Objekt_fest* listenstart = &iWand;
 	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!   Oder neues Objekt iwo zwischenreinpfuschen
 
 	//Liste für Player
 	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 466, 100, &ilistenproblenloeser, &Playertemp);
 
-	void map_reset()
-	{
-		//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!     //Wenn Player fertig, unnötig weil rendering automatisch von Player-pos abhängig
-		//while (elem_O_f->next != NULL)
-		//{
-		//	elem_O_f->reset();
-		//	elem_O_f = elem_O_f->next;
-		//}
-		 
+	void map_reset() //brauchen wir das noch? Glaub nicht...
+	{	 
 		p1.player_x = 0;         //Auskommentieren wenn Player fertig
-		p1.player_y = 0;
+		p1.player_y = 0;		
 	}
 
 	double distance_from_player(Objekt_fest* o2)
@@ -120,7 +117,7 @@ public:
 	bool kollision_rechts()
 	{
 		bool tmp = false;
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
 			if (distance_from_player(elem_O_f) < 1000)
@@ -140,7 +137,7 @@ public:
 	bool kollision_links()
 	{
 		bool tmp = false;
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
 			if (distance_from_player(elem_O_f) < 1000)
@@ -163,7 +160,7 @@ public:
 	bool kollision_oben()
 	{
 		bool tmp = false;
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
 			if (distance_from_player(elem_O_f) < 1000)
@@ -183,7 +180,7 @@ public:
 	bool kollision_unten()
 	{
 		bool tmp = false;
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
 			if (distance_from_player(elem_O_f) < 1000)
@@ -205,7 +202,7 @@ public:
 	void draw() override
 	{
 		//Level Design
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
+		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
 		while (elem_O_f->next != NULL) 
 		{
 			if (distance_from_player(elem_O_f) < 5000)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
@@ -277,13 +274,6 @@ public:
 		//Reine Test-Features, können bei working Player weg
 		if (input().down(Gosu::KB_LEFT))
 		{
-			//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
-			//while (elem_O_f->next != NULL)
-			//{
-			//	elem_O_f->posx = elem_O_f->posx + 5;
-			//	elem_O_f = elem_O_f->next;
-			//	p1.player_x = p1.player_x - 5;
-			//}
 			if (collision_links == false)
 			{
 				p1.player_x = p1.player_x - 5;
@@ -293,26 +283,12 @@ public:
 		{
 			if (collision_rechts == false) 
 			{
-			//	elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
-			//	while (elem_O_f->next != NULL)
-			//	{
-			//		elem_O_f->posx = elem_O_f->posx - 5;
-			//		elem_O_f = elem_O_f->next;
-			//		p1.player_x = p1.player_x + 5;
-			//	}
 				p1.player_x = p1.player_x + 5;
 			}
 			
 		}
 		if (input().down(Gosu::KB_UP))
 		{
-			//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
-			//while (elem_O_f->next != NULL)
-			//{
-			//	elem_O_f->posy = elem_O_f->posy + 5;
-			//	elem_O_f = elem_O_f->next;
-			//	p1.player_y = p1.player_y - 5;
-			//}
 			if (collision_oben == false)
 			{
 				p1.player_y = p1.player_y - 5;
@@ -320,13 +296,6 @@ public:
 		}
 		if (input().down(Gosu::KB_DOWN))
 		{
-			//elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
-			//while (elem_O_f->next != NULL)
-			//{
-			//	elem_O_f->posy = elem_O_f->posy - 5;
-			//	elem_O_f = elem_O_f->next;
-			//	p1.player_y = p1.player_y + 5;
-			//}
 			if (collision_unten == false)
 			{
 				p1.player_y = p1.player_y + 5;
@@ -335,7 +304,7 @@ public:
 
 
 		//Haupt-Map-Move-Funktionen                                            Diesen Teil entkommentieren sobald player fertig
-		elem_O_f = &iWand; //Hier immer letztes Element hinschreiben!
+		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
 			elem_O_f->posx = elem_O_f->startx - (p1.player_x - p1.player_start_x);
@@ -420,12 +389,7 @@ public:
 
 // C++ Hauptprogramm
 int main()
-{
-	/*std::vector<Objekt_fest> Objektliste;
-	Objekt_fest ibodenR(575, 100, 600, 575);
-
-	Objektliste.push_back(ibodenR);*/
-	
+{	
 	GameWindow window;
 	window.show();
 	
