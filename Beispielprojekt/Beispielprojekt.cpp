@@ -21,6 +21,7 @@ public:
 		, Wand("boden1.jpg")
 		, hintergrund("hintergrund.jfif")
 		, Kiste("Block.png")
+		, Plattform1("Plattform1.png")
 		//HUD
 		, hudHP("hud_hp.png")
 		, hudHP2("hud_hp-1.png")
@@ -74,6 +75,7 @@ public:
 	Gosu::Image Wand;
 	Gosu::Image hintergrund;
 	Gosu::Image Kiste;
+	Gosu::Image Plattform1;
 	//HUD
 	Gosu::Image hudHP;
 	Gosu::Image hudHP2;
@@ -92,7 +94,8 @@ public:
 	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 400, 550, 100, &ilistenproblenloeser, &bodenR);
 	Objekt_fest ibodenL = erstelle_Objekt_fest(474, 58, 0, 550, 100, &ibodenR, &bodenL);				 //Linked list über pointer
 	Objekt_fest iKiste = erstelle_Objekt_fest(168, 168, 730, 300, 100, &ibodenL, &Kiste);
-	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 500, 100, &iKiste, &Wand);
+	Objekt_fest iPlattform1 = erstelle_Objekt_fest(1075, 233, 300, 200, 100, &iKiste, &Plattform1);
+	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 500, 100, &iPlattform1, &Wand);
 	
 	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!   Oder neues Objekt iwo zwischenreinpfuschen
 
