@@ -4,6 +4,9 @@
 #include "Spieler.cpp"
 #include <math.h>
 
+#define debugSpielerX
+#define debugSpielerY
+
 bool y_down = false; // sprung?
 bool x_down = false; // ist waagerecht gedrückt ?
 bool collision_rechts = false;
@@ -363,75 +366,58 @@ public:
 		}
 
 		//Player
-		
-		//sprungdauer
-			// ist w gedrückt?
+	
+		//Sprung
 		if (input().down(Gosu::KB_W)) {
 			game.w_pressed = true;
+			p1.heightPlayer = p1.heightPlayer;
+			double yt = p1.player_beschleunigung(1, p1.sprung_t);
+		p1.player_y = p1.player_y + p1.player_sprung_y(yt, p1.player_y, p1.sprung_t);
+		p1.sprung_t = p1.sprung_t - 1;
+		
+		#ifdef debugSpielerY 
+			std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.sprung_t) << std::endl;
+			std::cout << "Player´s y:" << p1.player_y << std::endl;
+			std::cout << "zeit taste d" << p1.sprung_t << std::endl; 
+		#endif
 		}
 		else {
 			game.w_pressed = false;
 			p1.sprung_t = 0;
 		}
 
-		//rechtsdauer // bildschirm nach links
-			// ist d gedrückt?
+		//Beschleunigte Bewegung in x
 		if (input().down(Gosu::KB_D)) {
 			game.d_pressed = true;
+			p1.speedPlayer = (p1.player_beschleunigung(1, p1.player_t_x_d) < MAX_SPEED) ? p1.player_beschleunigung(1, p1.player_t_x_d) : MAX_SPEED;// wenn beschl. kleiner als 10, dann beschleunigung, sonst 10 (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
+			p1.player_x = p1.player_x + p1.speedPlayer; 
+			p1.player_t_x_d = p1.player_t_x_d + 1;
+			
+		#ifdef debugSpielerX 	
+			std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_d) << std::endl;
+			std::cout << "Player´s x:" << p1.player_x << std::endl;
+			std::cout << "zeit taste d" << p1.player_t_x_d << std::endl;
+		#endif
 		}
 		else {
 			game.d_pressed = false;
 			p1.player_t_x_d = 0;
 		}
-		//linksdauer //Bildschirm nach rechts
-			// ist a gedrückt?
 		if (input().down(Gosu::KB_A)) {
 			game.a_pressed = true;
-		}
-		else {
-			game.a_pressed = false;
-			p1.player_t_x_a= 0;
-		}
-
-		//sprung
-		if (input().down(Gosu::KB_W)&& (p1.player_beschleunigung(1, p1.sprung_t) > 100)) {
-			double yt = p1.player_beschleunigung(1, p1.sprung_t);
-		p1.player_y = p1.player_y + p1.player_sprung_y(yt, p1.player_y, p1.sprung_t);
-		p1.sprung_t = p1.sprung_t - 1;
-		
-		
-		//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.sprung_t) << std::endl;
-		//std::cout << "Player´s y:" << p1.player_y << std::endl;
-		//std::cout << "zeit taste d" << p1.sprung_t << std::endl;
-		}
-		else if (input().down(Gosu::KB_W) && (p1.player_beschleunigung(1, p1.sprung_t) < 100)) {
-			p1.player_y = p1.player_y - 10;
-			
-			
-			//std::cout << "Player´s x:" << p1.player_x << std::endl;
-		}
-
-		//Beschleunigte bewegung x :D funktioniert, aber noch nicht begrenzt beschleunigt ( warum auch immer
-		
-		if (input().down(Gosu::KB_D)) {
-			p1.speedPlayer = (p1.player_beschleunigung(1, p1.player_t_x_d) < MAX_SPEED) ? p1.player_beschleunigung(1, p1.player_t_x_d) : MAX_SPEED;// wenn beschl. kleiner als 10, dann beschleunigung, sonst 10 (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
-			p1.player_x = p1.player_x + p1.speedPlayer; 
-			p1.player_t_x_d = p1.player_t_x_d + 1;
-			
-			
-			//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_d) << std::endl;
-			//std::cout << "Player´s x:" << p1.player_x << std::endl;
-			//std::cout << "zeit taste d" << p1.player_t_x_d << std::endl;
-		}
-		if (input().down(Gosu::KB_A)) {
 			p1.speedPlayer = (p1.player_beschleunigung(1, p1.player_t_x_a) < MAX_SPEED) ? p1.player_beschleunigung(1, p1.player_t_x_a) : MAX_SPEED;
 			p1.player_x = p1.player_x - p1.speedPlayer;
 			p1.player_t_x_a = p1.player_t_x_a + 1;
 			
-			
-			//std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_a) << std::endl;
-			//std::cout << "Player´s x:" << p1.player_x << std::endl;
-			//std::cout << "Zeit taste a"<< p1.player_t_x_a << std::endl;
+		#ifdef debugSpielerX
+			std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_a) << std::endl;
+			std::cout << "Player´s x:" << p1.player_x << std::endl;
+			std::cout << "Zeit taste a"<< p1.player_t_x_a << std::endl;
+		#endif
+		}
+		else {
+			game.a_pressed = false;
+			p1.player_t_x_a= 0;
 		}
 		
 	}
