@@ -46,10 +46,10 @@ public:
 	{
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
-		Objekt_fest* next;
-		Gosu::Image* image;
+		std::shared_ptr<Objekt_fest> next;
+		std::shared_ptr<Gosu::Image> image;
 	};
-	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, struct Objekt_fest* next, Gosu::Image* image, double scale_x = 1, double scale_y = 1)
+	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1)
 	{
 		Objekt_fest temp;
 		//double breitetemp2 = (double)image->width();
@@ -140,8 +140,8 @@ public:
 	Player_data* listenstart_P_d = &iplayertemp; //Hier immer letztes Element hinschreiben
 
 
-
-	double distance_from_player(Objekt_fest* o2)
+#pragma region 1 //Kollsionskäse
+	double distance_from_player(Objekt_fest * o2)
 	{
 		return sqrt(pow((p1.player_x - o2->startx), 2) + pow((p1.player_y - o2->starty), 2));
 	}
@@ -227,6 +227,7 @@ public:
 		}
 		return tmp;
 	}
+#pragma endregion	
 };
 
 class GameWindow : public Gosu::Window
@@ -285,13 +286,15 @@ public:
 
 		}
 		//game.rPlayertemp1.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
-		//game.rPlayertemp2.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
-		game.elem_P_d = game.listenstart_P_d; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
+		//game.rPlayertemp2.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);    //Veraltet
+		//Player rendering
+		game.elem_P_d = game.listenstart_P_d;
 		while (game.elem_P_d->next != NULL)
 		{
 			if (game.elem_P_d->active == true)  //Nur Playerbild rendern, welches aktiv ist
 			{
 				game.elem_P_d->image->draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
+				break;
 			}
 			game.elem_P_d = game.elem_P_d->next;
 		}
@@ -352,8 +355,8 @@ public:
 		}
 
 
-		//Haupt-Map-Move-Funktionen                                            Diesen Teil entkommentieren sobald player fertig
-		game.elem_O_f = game.listenstart_O_f; //Hier immer letztes Element hinschreiben!
+		//Haupt-Map-Move-Funktionen
+		game.elem_O_f = game.listenstart_O_f;
 		while (game.elem_O_f->next != NULL)
 		{
 			//Renderdistanz wieder adden
