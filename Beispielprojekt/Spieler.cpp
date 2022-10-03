@@ -1,5 +1,5 @@
 #include <math.h>
-class Spieler // Doris ding Anfang :D
+class Spieler 
 {
 public:
 
@@ -9,40 +9,45 @@ public:
 	double player_x;// Bewegung x-Achse
 	double player_y;// Bewegung y-achse
 	
-	//double player_a_x;// Geschwindigkeit x-richtung
-	double speedPlayer = 0;
-	double heightPlayer = 0;
-	
-	double player_a_y;// Geschwindigkeit y-richtung
-	
-	
-	const double player_g = 9.81;// gravitationskonstante
+	double speedPlayer = 0; // Gescchwindigkeit x-Richtung
+	double heightPlayer = 0;// Höhe y-Richtung
 
-
-	int sprung_t; // zählt die zeit des sprungs
-	int player_t_x_a; // zeit, die in x beschleunigt wird
-	int player_t_x_d;
+	int jumpTime; // zählt die zeit des sprungs
+	int playerTimeXA; // zeit, die in x beschleunigt wird
+	int playerTimeXD;
 	
 	//Konstruktor
 	Spieler(){
 		this->player_x = player_start_x;
 		this->player_y = player_start_y;
 	}
-	
-	//player Bewegung
 		
-	// bewegung in x richtung 
-	double player_beschleunigung(double bx,double tx) {
+	// Beschleunigung in x-Richtung 
+	double PlayerBeschleunigung(double bx,double tx) {
 		double ax;
 			ax = bx * (tx/5);
 		return ax;
 		//std::cout << ax << std::endl;
 	};
 	
-	// bewegug in y richtung
-	double player_sprung_y(double v,double y,double t) {
-		double yt;
-		yt = (-0.5 * 9, 81 * t * t) + (v * t) + y;
+	// Sprung in y richtung
+	double PlayerSprung(int t, const double MAX_H, double v,bool p) {
+		const double g = 9.81;
+		double yt = t * v;
+		double gt = -g * 0.1 * t;
+		
+		if ((yt < MAX_H)&&(p = true)) {
 			return yt;
+		}
+		else if ((yt >= MAX_H)&&(p = true)) {
+			return gt;
+		}
+		else if ((yt < MAX_H)&&(p = false)) {
+			return gt;
+		}
+		else if ((yt >= MAX_H) && (p = false)) {
+			return gt;
+		}
+			
 	};
-}; // Doris ding ende :D
+};

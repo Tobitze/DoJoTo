@@ -4,8 +4,7 @@
 #include "Spieler.cpp"
 #include <math.h>
 
-#define debugSpielerX
-#define debugSpielerY
+
 
 bool y_down = false; // sprung?
 bool x_down = false; // ist waagerecht gedrückt ?
@@ -13,9 +12,13 @@ bool collision_rechts = false;
 bool collision_links = false;
 bool collision_oben = false;
 bool collision_unten = true;
-Spieler p1;
 
+Spieler p1;
 const double MAX_SPEED = 15; //Maximale Geschwindikkeit Spieler x-Richtung
+const double MAX_HEIGHT = 100; // Maximale Sprunghöhe Spieler y-Richtung
+const double MAX_JUMP_TIME = 20; //Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
+#define debugSpielerX
+#define debugSpielerY
 
 class GameWindow;
 class GameState {
@@ -365,61 +368,72 @@ public:
 			game.elem_O_f = game.elem_O_f->next;
 		}
 
-		//Player
+/*------------------------------------------------------------------------------------------------------------
+													Player
+------------------------------------------------------------------------------------------------------------*/
 	
-		//Sprung
-		if (input().down(Gosu::KB_W)) {
-			game.w_pressed = true;
-			p1.heightPlayer = p1.heightPlayer;
-			double yt = p1.player_beschleunigung(1, p1.sprung_t);
-		p1.player_y = p1.player_y + p1.player_sprung_y(yt, p1.player_y, p1.sprung_t);
-		p1.sprung_t = p1.sprung_t - 1;
-		
-		#ifdef debugSpielerY 
-			std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.sprung_t) << std::endl;
-			std::cout << "Player´s y:" << p1.player_y << std::endl;
-			std::cout << "zeit taste d" << p1.sprung_t << std::endl; 
-		#endif
-		}
-		else {
-			game.w_pressed = false;
-			p1.sprung_t = 0;
-		}
-
-		//Beschleunigte Bewegung in x
-		if (input().down(Gosu::KB_D)) {
-			game.d_pressed = true;
-			p1.speedPlayer = (p1.player_beschleunigung(1, p1.player_t_x_d) < MAX_SPEED) ? p1.player_beschleunigung(1, p1.player_t_x_d) : MAX_SPEED;// wenn beschl. kleiner als 10, dann beschleunigung, sonst 10 (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
-			p1.player_x = p1.player_x + p1.speedPlayer; 
-			p1.player_t_x_d = p1.player_t_x_d + 1;
+		//Sprung ---------------------------------------------------------------------------------------------
 			
-		#ifdef debugSpielerX 	
-			std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_d) << std::endl;
-			std::cout << "Player´s x:" << p1.player_x << std::endl;
-			std::cout << "zeit taste d" << p1.player_t_x_d << std::endl;
-		#endif
+			// Taste W
+		
+		if (input().down(Gosu::KB_W)) {
+			
+			game.w_pressed = true;
+			
+			p1.jumpTime < MAX_JUMP_TIME ? p1.jumpTime : MAX_JUMP_TIME; // wie größ ist die Übergebene Sprungzeit?
+			p1.heightPlayer = (p1.PlayerSprung(p1.jumpTime, MAX_HEIGHT, p1.PlayerBeschleunigung(1, p1.jumpTime), game.w_pressed));
+			p1.player_y = p1.player_y - p1.heightPlayer; // y ist invertiert im Vergleich zu koordinatensystemen
+			p1.jumpTime = p1.jumpTime + 1;
+			
+
+#ifdef debugSpielerY 
+			std::cout << "beschleunigung: " << p1.PlayerSprung(p1.jumpTime, MAX_HEIGHT, p1.PlayerBeschleunigung(1, p1.jumpTime), game.w_pressed) << std::endl;
+			std::cout << "Player´s y: " << p1.player_y << std::endl;
+			std::cout << "zeit taste w: " << p1.jumpTime << std::endl;
+#endif
 		}
 		else {
-			game.d_pressed = false;
-			p1.player_t_x_d = 0;
+				game.w_pressed = false;
+				p1.jumpTime = 0;
 		}
+		//Beschleunigte Bewegung in x -------------------------------------------------------------------------
+				
+			// Taste A
 		if (input().down(Gosu::KB_A)) {
 			game.a_pressed = true;
-			p1.speedPlayer = (p1.player_beschleunigung(1, p1.player_t_x_a) < MAX_SPEED) ? p1.player_beschleunigung(1, p1.player_t_x_a) : MAX_SPEED;
+			p1.speedPlayer = (p1.PlayerBeschleunigung(1, p1.playerTimeXA) < MAX_SPEED) ? p1.PlayerBeschleunigung(1, p1.playerTimeXA) : MAX_SPEED;
 			p1.player_x = p1.player_x - p1.speedPlayer;
-			p1.player_t_x_a = p1.player_t_x_a + 1;
+			p1.playerTimeXA = p1.playerTimeXA + 1;
 			
-		#ifdef debugSpielerX
-			std::cout << "beschleunigung:" << p1.player_beschleunigung(1, p1.player_t_x_a) << std::endl;
+#ifdef debugSpielerX
+			std::cout << "beschleunigung:" << p1.PlayerBeschleunigung(1, p1.playerTimeXA) << std::endl;
 			std::cout << "Player´s x:" << p1.player_x << std::endl;
-			std::cout << "Zeit taste a"<< p1.player_t_x_a << std::endl;
-		#endif
+			std::cout << "Zeit taste a"<< p1.playerTimeXA << std::endl;
+#endif
 		}
 		else {
 			game.a_pressed = false;
-			p1.player_t_x_a= 0;
+			p1.playerTimeXA= 0;
 		}
-		
+			// Taste D
+		if (input().down(Gosu::KB_D)) {
+			game.d_pressed = true;
+			p1.speedPlayer = (p1.PlayerBeschleunigung(1, p1.playerTimeXD) < MAX_SPEED) ? p1.PlayerBeschleunigung(1, p1.playerTimeXD) : MAX_SPEED;	
+			// Zeile Drüber wenn beschl. kleiner als MAX_SPEED, dann beschleunigung, sonst MAX_SPEED (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
+			p1.player_x = p1.player_x + p1.speedPlayer; 
+			p1.playerTimeXD = p1.playerTimeXD + 1;
+			
+#ifdef debugSpielerX 	
+			std::cout << "beschleunigung:" << p1.PlayerBeschleunigung(1, p1.playerTimeXD) << std::endl;
+			std::cout << "Player´s x:" << p1.player_x << std::endl;
+			std::cout << "zeit taste d" << p1.playerTimeXD << std::endl;
+#endif
+		}
+		else {
+			game.d_pressed = false;
+			p1.playerTimeXD = 0;
+		} 
+		//------------------------------------------------------------------------------------------------------
 	}
 };
 
