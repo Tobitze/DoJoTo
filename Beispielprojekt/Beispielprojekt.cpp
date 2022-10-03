@@ -46,10 +46,10 @@ public:
 	{
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
-		std::shared_ptr<Objekt_fest> next;
-		std::shared_ptr<Gosu::Image> image;
+		Objekt_fest* next;
+		Gosu::Image* image;
 	};
-	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1)
+	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, Objekt_fest* next, Gosu::Image* image, double scale_x = 1, double scale_y = 1)
 	{
 		Objekt_fest temp;
 		//double breitetemp2 = (double)image->width();
