@@ -14,23 +14,46 @@ Spieler p1;
 
 const double MAX_SPEED = 15; //Maximale Geschwindikkeit Spieler x-Richtung
 
-class GameWindow : public Gosu::Window
-{
+class GameWindow;
+class GameState {
 public:
+	GameState()
+		//Level Design
+		: bodenR("boden1.jpg")
+		, bodenL("boden1.jpg")
+		, Wand("boden1.jpg")
+		, hintergrund("hintergrund.jfif")
+		, Kiste("Block.png")
+		, Plattform1("Plattform1.png")
+		//HUD
+		, hudHP("hud_hp.png")
+		, hudHP2("hud_hp-1.png")
+		, hudHP1("hud_hp-2.png")
+		, hudHP0("hud_hp-3.png")
+		, GameOver("GameOver.png")
+		//Player (temp)
+		, rPlayertemp1("r-Dr.Salzig1.png")
+		, rPlayertemp2("r-Dr.Salzig2.png")
+		, rPlayertempA1("r-Dr.Salzig1-attack.png")
+		, rPlayertempA2("r-Dr.Salzig2-attack.png")
+		, lPlayertemp1("l-Dr.Salzig1.png")
+		, lPlayertemp2("l-Dr.Salzig2.png")
+		, lPlayertempA1("l-Dr.Salzig1-attack.png")
+		, lPlayertempA2("l-Dr.Salzig2-attack.png")
+	{};
 
 	struct Objekt_fest
 	{
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
-		Objekt_fest *next;
+		Objekt_fest* next;
 		Gosu::Image* image;
-		void reset() //veraltet, löschen?
+		/*void reset() //veraltet, löschen?
 		{
 			this->posx = startx;
 			this->posy = starty;
-		}
+		}*/
 	};
-
 	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, struct Objekt_fest* next, Gosu::Image* image, double scale_x = 1, double scale_y = 1)
 	{
 		Objekt_fest temp;
@@ -62,6 +85,8 @@ public:
 	Gosu::Image bodenL;
 	Gosu::Image Wand;
 	Gosu::Image hintergrund;
+	Gosu::Image Kiste;
+	Gosu::Image Plattform1;
 	//HUD
 	Gosu::Image hudHP;
 	Gosu::Image hudHP2;
@@ -69,44 +94,38 @@ public:
 	Gosu::Image hudHP0;
 	Gosu::Image GameOver;
 	//Player, temp
-	Gosu::Image Playertemp;
+	Gosu::Image rPlayertemp1;
+	Gosu::Image rPlayertemp2;
+	Gosu::Image rPlayertempA1;
+	Gosu::Image rPlayertempA2;
+	Gosu::Image lPlayertemp1;
+	Gosu::Image lPlayertemp2;
+	Gosu::Image lPlayertempA1;
+	Gosu::Image lPlayertempA2;
 
 	//Game Window
-	GameWindow()
-		: Window(800, 600)
-		//Level Design
-		, bodenR("boden1.jpg")
-		, bodenL("boden1.jpg")
-		, Wand("boden1.jpg")
-		, hintergrund("hintergrund.jfif")
-		//HUD
-		, hudHP("hud_hp.png")
-		, hudHP2("hud_hp-1.png")
-		, hudHP1("hud_hp-2.png")
-		, hudHP0("hud_hp-3.png")
-		, GameOver("GameOver.png")
-		//Player (temp)
-		, Playertemp("Forscher.jpg")
-	{
-		set_caption("Dr. Salzig und Mister Coco");
-	}
+
+
+
 
 	Objekt_fest ilistenproblenloeser = erstelle_Objekt_fest(0, 0, 0, 0, 0, NULL, NULL);					 //Einfach nicht hinterfragen
-	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 400, 550, 100, &ilistenproblenloeser, &bodenR);	 
+	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 400, 550, 100, &ilistenproblenloeser, &bodenR);
 	Objekt_fest ibodenL = erstelle_Objekt_fest(474, 58, 0, 550, 100, &ibodenR, &bodenL);				 //Linked list über pointer
-	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 500, 100, &ibodenL, &Wand);
+	Objekt_fest iKiste = erstelle_Objekt_fest(168, 168, 730, 300, 100, &ibodenL, &Kiste);
+	Objekt_fest iPlattform1 = erstelle_Objekt_fest(1075, 233, 300, 200, 100, &iKiste, &Plattform1);
+	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 500, 100, &iPlattform1, &Wand);
 
 	Objekt_fest* elem_O_f;
 	Objekt_fest* listenstart = &iWand;
 	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!   Oder neues Objekt iwo zwischenreinpfuschen
 
 	//Liste für Player
-	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 466, 100, &ilistenproblenloeser, &Playertemp);
+	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 466, 100, &ilistenproblenloeser, &rPlayertemp1);
 
 	void map_reset() //brauchen wir das noch? Glaub nicht...
-	{	 
-		p1.player_x = 0;         //Auskommentieren wenn Player fertig
-		p1.player_y = 0;		
+	{
+		//p1.player_x = 0;         //Auskommentieren wenn Player fertig
+		//p1.player_y = 0;
 	}
 
 	double distance_from_player(Objekt_fest* o2)
@@ -146,7 +165,6 @@ public:
 				//std::cout << p1.player_x << "	" << (iWand.startx + iWand.breite) << "	" << collision_links << "	" << p1.player_y << "	" << iWand.starty << "\n";
 				if ((p1.player_x - 5) < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) > (elem_O_f->startx))
 				{
-					//std::cout << "Stufe 1" << "	";
 					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
@@ -197,77 +215,86 @@ public:
 		}
 		return tmp;
 	}
+};
 
-	
+class GameWindow : public Gosu::Window
+{
+public:
+	GameState game;
+	GameWindow()
+		: Window(800, 600)
+		, game()
+	{
+		set_caption("Dr. Salzig und Mister Coco");
+	};
 	void draw() override
 	{
 		//Level Design
-		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
-		while (elem_O_f->next != NULL) 
+		game.elem_O_f = game.listenstart; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
+		while (game.elem_O_f->next != NULL) 
 		{
-			if (distance_from_player(elem_O_f) < 5000)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
+			if (game.distance_from_player(game.elem_O_f) < 5000)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
 			{
-				elem_O_f->image->draw(elem_O_f->posx, elem_O_f->posy, elem_O_f->posz);
+				game.elem_O_f->image->draw(game.elem_O_f->posx, game.elem_O_f->posy, game.elem_O_f->posz);
 			}
-			elem_O_f = elem_O_f->next;
+			game.elem_O_f = game.elem_O_f->next;
 		}
-		hintergrund.draw_rot(400, 320, 10.0,
+		game.hintergrund.draw_rot(400, 320, 10.0,
 			0.0,
 			0.5, 0.5);
 		//HUD
-		if (health == 3)
+		if (game.health == 3)
 		{
-			hudHP.draw_rot(120, 40, 100.0,
+			game.hudHP.draw_rot(120, 40, 100.0,
 				0.0,
 				0.5, 0.5);
 		}
-		else if (health == 2)
+		else if (game.health == 2)
 		{
-			hudHP2.draw_rot(120, 40, 100.0,
+			game.hudHP2.draw_rot(120, 40, 100.0,
 				0.0,
 				0.5, 0.5);
 		}
-		else if (health == 1)
+		else if (game.health == 1)
 		{
-			hudHP1.draw_rot(120, 40, 100.0,
+			game.hudHP1.draw_rot(120, 40, 100.0,
 				0.0,
 				0.5, 0.5);
 		}
-		else if (health <= 0)
+		else if (game.health <= 0)
 		{
-			hudHP0.draw_rot(120, 40, 100.0,
+			game.hudHP0.draw_rot(120, 40, 100.0,
 				0.0,
 				0.5, 0.5);
-			GameOver.draw_rot(400, 300, 100.0,
+			game.GameOver.draw_rot(400, 300, 100.0,
 				0.0,
 				0.5, 0.5);
 
 
 		}
-		Playertemp.draw(p1.player_start_x, p1.player_start_y, 100, 0.2, 0.2);
+		game.rPlayertemp1.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
+		//game.rPlayertemp2.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
 	}
 	
 	void update() override
 	{
-		collision_rechts = kollision_rechts();
-		collision_links = kollision_links();
-		collision_oben = kollision_oben();
-		collision_unten = kollision_unten();
+		collision_rechts = game.kollision_rechts();
+		collision_links = game.kollision_links();
+		collision_oben = game.kollision_oben();
+		collision_unten = game.kollision_unten();
 
 		//HUD
-		if (input().down(Gosu::KB_K)&& !pressed)
+		if (input().down(Gosu::KB_K)&& !game.pressed)
 		{
-			pressed = true;
-			health = health - 1;
+			game.pressed = true;
+			game.health = game.health - 1;
 			
 		}
-		else if (!input().down(Gosu::KB_K)) { pressed = false; }
+		else if (!input().down(Gosu::KB_K)) { game.pressed = false; }
 
-		if (input().down(Gosu::KB_F) && health <= 0) //Respawn
+		if (input().down(Gosu::KB_F) && game.health <= 0) //Respawn
 		{
-			health = 3;			//Player heilen
-			map_reset();	//Zurücksetzen der Objektpositionen und damit des Spielers auf Startwert
-			
+			game = GameState(); //Neues Spiel erzeugen
 		}
 
 
@@ -304,12 +331,12 @@ public:
 
 
 		//Haupt-Map-Move-Funktionen                                            Diesen Teil entkommentieren sobald player fertig
-		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
-		while (elem_O_f->next != NULL)
+		game.elem_O_f = game.listenstart; //Hier immer letztes Element hinschreiben!
+		while (game.elem_O_f->next != NULL)
 		{
-			elem_O_f->posx = elem_O_f->startx - (p1.player_x - p1.player_start_x);
-			elem_O_f->posy = elem_O_f->starty - (p1.player_y - p1.player_start_y);
-			elem_O_f = elem_O_f->next;
+			game.elem_O_f->posx = game.elem_O_f->startx - (p1.player_x - p1.player_start_x);
+			game.elem_O_f->posy = game.elem_O_f->starty - (p1.player_y - p1.player_start_y);
+			game.elem_O_f = game.elem_O_f->next;
 		}
 
 		//Player
@@ -317,29 +344,29 @@ public:
 		//sprungdauer
 			// ist w gedrückt?
 		if (input().down(Gosu::KB_W)) {
-			w_pressed = true;
+			game.w_pressed = true;
 		}
 		else {
-			w_pressed = false;
+			game.w_pressed = false;
 			p1.sprung_t = 0;
 		}
 
 		//rechtsdauer // bildschirm nach links
 			// ist d gedrückt?
 		if (input().down(Gosu::KB_D)) {
-			d_pressed = true;
+			game.d_pressed = true;
 		}
 		else {
-			d_pressed = false;
+			game.d_pressed = false;
 			p1.player_t_x_d = 0;
 		}
 		//linksdauer //Bildschirm nach rechts
 			// ist a gedrückt?
 		if (input().down(Gosu::KB_A)) {
-			a_pressed = true;
+			game.a_pressed = true;
 		}
 		else {
-			a_pressed = false;
+			game.a_pressed = false;
 			p1.player_t_x_a= 0;
 		}
 
