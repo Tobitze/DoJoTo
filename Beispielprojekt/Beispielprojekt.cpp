@@ -48,11 +48,6 @@ public:
 		double breite, hoehe, scale_x, scale_y;
 		Objekt_fest* next;
 		Gosu::Image* image;
-		/*void reset() //veraltet, löschen?
-		{
-			this->posx = startx;
-			this->posy = starty;
-		}*/
 	};
 	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, struct Objekt_fest* next, Gosu::Image* image, double scale_x = 1, double scale_y = 1)
 	{
@@ -116,30 +111,22 @@ public:
 	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 500, 100, &iPlattform1, &Wand);
 
 	Objekt_fest* elem_O_f;
-	Objekt_fest* listenstart = &iWand;
-	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!   Oder neues Objekt iwo zwischenreinpfuschen
+	Objekt_fest* listenstart = &iWand; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 466, 100, &ilistenproblenloeser, &rPlayertemp1);
-
-	void map_reset() //brauchen wir das noch? Glaub nicht...
-	{
-		//p1.player_x = 0;         //Auskommentieren wenn Player fertig
-		//p1.player_y = 0;
-	}
 
 	double distance_from_player(Objekt_fest* o2)
 	{
 		return sqrt(pow((p1.player_x - o2->startx), 2) + pow((p1.player_y - o2->starty), 2));
 	}
-
 	bool kollision_rechts()
 	{
 		bool tmp = false;
 		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
-			if (distance_from_player(elem_O_f) < 1000)
+			if (distance_from_player(elem_O_f) < 5000)
 			{
 				if ((p1.player_x + iplayertemp.breite + 5) > elem_O_f->startx && (p1.player_x + iplayertemp.breite) < (elem_O_f->startx + elem_O_f->breite))
 				{
@@ -159,7 +146,7 @@ public:
 		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
-			if (distance_from_player(elem_O_f) < 1000)
+			if (distance_from_player(elem_O_f) < 5000)
 			{
 				//debug-Käse
 				//std::cout << p1.player_x << "	" << (iWand.startx + iWand.breite) << "	" << collision_links << "	" << p1.player_y << "	" << iWand.starty << "\n";
@@ -181,7 +168,7 @@ public:
 		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
-			if (distance_from_player(elem_O_f) < 1000)
+			if (distance_from_player(elem_O_f) < 5000)
 			{
 				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) >(elem_O_f->startx))
 				{
@@ -201,7 +188,7 @@ public:
 		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
-			if (distance_from_player(elem_O_f) < 1000)
+			if (distance_from_player(elem_O_f) < 5000)
 			{
 				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) >(elem_O_f->startx))
 				{
@@ -334,6 +321,7 @@ public:
 		game.elem_O_f = game.listenstart; //Hier immer letztes Element hinschreiben!
 		while (game.elem_O_f->next != NULL)
 		{
+			//Renderdistanz wieder adden
 			game.elem_O_f->posx = game.elem_O_f->startx - (p1.player_x - p1.player_start_x);
 			game.elem_O_f->posy = game.elem_O_f->starty - (p1.player_y - p1.player_start_y);
 			game.elem_O_f = game.elem_O_f->next;
