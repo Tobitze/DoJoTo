@@ -159,7 +159,7 @@ public:
 		{
 			if (distance_from_player(elem_O_f) < 5000)
 			{
-				if ((p1.player_x + iplayertemp.breite + 5) > elem_O_f->startx && (p1.player_x + iplayertemp.breite) < (elem_O_f->startx + elem_O_f->breite))
+				if ((p1.player_x + iplayertemp.breite + 3 + p1.speedPlayer) > elem_O_f->startx && (p1.player_x) < (elem_O_f->startx + elem_O_f->breite) - 5)
 				{
 					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
@@ -179,9 +179,7 @@ public:
 		{
 			if (distance_from_player(elem_O_f) < 5000)
 			{
-				//debug-Käse
-				//std::cout << p1.player_x << "	" << (iWand.startx + iWand.breite) << "	" << collision_links << "	" << p1.player_y << "	" << iWand.starty << "\n";
-				if ((p1.player_x - 5) < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) > (elem_O_f->startx))
+				if ((p1.player_x - (3 + p1.speedPlayer)) < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) > (elem_O_f->startx + 5))
 				{
 					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
@@ -365,10 +363,12 @@ public:
 		game.elem_O_f = game.listenstart_O_f;
 		while (game.elem_O_f->next != NULL)
 		{
-			//Renderdistanz wieder adden
-			game.elem_O_f->posx = game.elem_O_f->startx - (p1.player_x - p1.player_start_x);
-			game.elem_O_f->posy = game.elem_O_f->starty - (p1.player_y - p1.player_start_y);
-			game.elem_O_f = game.elem_O_f->next;
+			if (game.distance_from_player(game.elem_O_f) < 10000)	//Renderdistanz
+			{
+				game.elem_O_f->posx = game.elem_O_f->startx - (p1.player_x - p1.player_start_x);
+				game.elem_O_f->posy = game.elem_O_f->starty - (p1.player_y - p1.player_start_y);
+				game.elem_O_f = game.elem_O_f->next;
+			}
 		}
 
 /*------------------------------------------------------------------------------------------------------------
