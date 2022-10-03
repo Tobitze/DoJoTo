@@ -29,7 +29,15 @@ public:
 		, hudHP0("hud_hp-3.png")
 		, GameOver("GameOver.png")
 		//Player (temp)
-		, Playertemp("Forscher.png"){};
+		, rPlayertemp1("r-Dr.Salzig1.png")
+		, rPlayertemp2("r-Dr.Salzig2.png")
+		, rPlayertempA1("r-Dr.Salzig1-attack.png")
+		, rPlayertempA2("r-Dr.Salzig2-attack.png")
+		, lPlayertemp1("l-Dr.Salzig1.png")
+		, lPlayertemp2("l-Dr.Salzig2.png")
+		, lPlayertempA1("l-Dr.Salzig1-attack.png")
+		, lPlayertempA2("l-Dr.Salzig2-attack.png")
+	{};
 	
 	struct Objekt_fest
 	{
@@ -83,7 +91,14 @@ public:
 	Gosu::Image hudHP0;
 	Gosu::Image GameOver;
 	//Player, temp
-	Gosu::Image Playertemp;
+	Gosu::Image rPlayertemp1;
+	Gosu::Image rPlayertemp2;
+	Gosu::Image rPlayertempA1;
+	Gosu::Image rPlayertempA2;
+	Gosu::Image lPlayertemp1;
+	Gosu::Image lPlayertemp2;
+	Gosu::Image lPlayertempA1;
+	Gosu::Image lPlayertempA2;
 
 	//Game Window
 
@@ -100,7 +115,7 @@ public:
 	//Bei erstellung eines neuen Objektes immer die Listenschleifen anpassen!   Oder neues Objekt iwo zwischenreinpfuschen
 
 	//Liste für Player
-	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 466, 100, &ilistenproblenloeser, &Playertemp);
+	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 466, 100, &ilistenproblenloeser, &rPlayertemp1);
 
 	void map_reset()
 	{
@@ -262,7 +277,8 @@ public:
 
 
 		}
-		game.Playertemp.draw(p1.player_start_x, p1.player_start_y, 100, 0.2, 0.2);
+		game.rPlayertemp1.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
+		//game.rPlayertemp2.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
 	}
 	
 	void update() override
