@@ -303,6 +303,7 @@ public:
 		{
 			if (collision_links == false)
 			{
+				
 				p1.player_x = p1.player_x - 5;
 			}
 		}
