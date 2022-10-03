@@ -68,6 +68,28 @@ public:
 		temp.scale_y = scale_y;
 		return temp;
 	}
+	struct Player_data
+	{
+		bool active;
+		double breite, hoehe, scale_x, scale_y;
+		Player_data* next;
+		Gosu::Image* image;
+	};
+	Player_data erstelle_Player_data(double breite, double hoehe, struct Player_data* next, Gosu::Image* image, bool active, double scale_x = 1, double scale_y = 1)
+	{
+		Player_data temp;
+		//double breitetemp2 = (double)image->width();
+		temp.breite = breite * scale_x;
+		//temp.breite = breitetemp2;
+		temp.hoehe = hoehe * scale_y;
+		//temp.hoehe = (double)image->height();
+		temp.next = next;
+		temp.image = image;
+		temp.scale_x = scale_x;
+		temp.scale_y = scale_y;
+		temp.active = active;
+		return temp;
+	}
 
 	int health = 3;
 
@@ -100,9 +122,6 @@ public:
 
 	//Game Window
 
-
-
-
 	Objekt_fest ilistenproblenloeser = erstelle_Objekt_fest(0, 0, 0, 0, 0, NULL, NULL);					 //Einfach nicht hinterfragen
 	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 400, 550, 100, &ilistenproblenloeser, &bodenR);
 	Objekt_fest ibodenL = erstelle_Objekt_fest(474, 58, 0, 550, 100, &ibodenR, &bodenL);				 //Linked list über pointer
@@ -111,10 +130,16 @@ public:
 	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 500, 100, &iPlattform1, &Wand);
 
 	Objekt_fest* elem_O_f;
-	Objekt_fest* listenstart = &iWand; //Hier immer letztes Element hinschreiben
+	Objekt_fest* listenstart_O_f = &iWand; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
-	Objekt_fest iplayertemp = erstelle_Objekt_fest(53, 94, 300, 466, 100, &ilistenproblenloeser, &rPlayertemp1);
+	Player_data ilistenproblenloeserplayer = erstelle_Player_data(0, 0, NULL, NULL, false);
+	Player_data iplayertemp = erstelle_Player_data(53, 94, &ilistenproblenloeserplayer, &rPlayertemp1, true);
+
+	Player_data* elem_P_d;
+	Player_data* listenstart_P_d = &iplayertemp; //Hier immer letztes Element hinschreiben
+
+
 
 	double distance_from_player(Objekt_fest* o2)
 	{
@@ -123,7 +148,7 @@ public:
 	bool kollision_rechts()
 	{
 		bool tmp = false;
-		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
+		elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
 			if (distance_from_player(elem_O_f) < 5000)
@@ -143,7 +168,7 @@ public:
 	bool kollision_links()
 	{
 		bool tmp = false;
-		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
+		elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
 			if (distance_from_player(elem_O_f) < 5000)
@@ -165,7 +190,7 @@ public:
 	bool kollision_oben()
 	{
 		bool tmp = false;
-		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
+		elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
 			if (distance_from_player(elem_O_f) < 5000)
@@ -185,7 +210,7 @@ public:
 	bool kollision_unten()
 	{
 		bool tmp = false;
-		elem_O_f = listenstart; //Hier immer letztes Element hinschreiben!
+		elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != NULL)
 		{
 			if (distance_from_player(elem_O_f) < 5000)
@@ -217,7 +242,7 @@ public:
 	void draw() override
 	{
 		//Level Design
-		game.elem_O_f = game.listenstart; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
+		game.elem_O_f = game.listenstart_O_f; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
 		while (game.elem_O_f->next != NULL) 
 		{
 			if (game.distance_from_player(game.elem_O_f) < 5000)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
@@ -259,8 +284,17 @@ public:
 
 
 		}
-		game.rPlayertemp1.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
+		//game.rPlayertemp1.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
 		//game.rPlayertemp2.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
+		game.elem_P_d = game.listenstart_P_d; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
+		while (game.elem_P_d->next != NULL)
+		{
+			if (game.elem_P_d->active == true)  //Nur Playerbild rendern, welches aktiv ist
+			{
+				game.elem_P_d->image->draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);
+			}
+			game.elem_P_d = game.elem_P_d->next;
+		}
 	}
 	
 	void update() override
@@ -318,7 +352,7 @@ public:
 
 
 		//Haupt-Map-Move-Funktionen                                            Diesen Teil entkommentieren sobald player fertig
-		game.elem_O_f = game.listenstart; //Hier immer letztes Element hinschreiben!
+		game.elem_O_f = game.listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (game.elem_O_f->next != NULL)
 		{
 			//Renderdistanz wieder adden
