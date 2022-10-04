@@ -17,7 +17,7 @@ Spieler p1;
 const double MAX_SPEED = 15; //Maximale Geschwindikkeit Spieler x-Richtung
 const double MAX_HEIGHT = 100; // Maximale Sprunghöhe Spieler y-Richtung
 const double MAX_JUMP_TIME = 20; //Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
-#define debugSpielerX
+//#define debugSpielerX
 #define debugSpielerY
 
 class GameWindow;
@@ -402,11 +402,12 @@ public:
 		//Beschleunigte Bewegung in x -------------------------------------------------------------------------
 				
 			// Taste A
-		if (input().down(Gosu::KB_A)) {
+		if (input().down(Gosu::KB_A) && collision_links == false) {
 			game.a_pressed = true;
 			p1.speedPlayer = (p1.PlayerBeschleunigung(1, p1.playerTimeXA) < MAX_SPEED) ? p1.PlayerBeschleunigung(1, p1.playerTimeXA) : MAX_SPEED;
 			p1.player_x = p1.player_x - p1.speedPlayer;
 			p1.playerTimeXA = p1.playerTimeXA + 1;
+			
 			
 #ifdef debugSpielerX
 			std::cout << "beschleunigung:" << p1.PlayerBeschleunigung(1, p1.playerTimeXA) << std::endl;
@@ -419,7 +420,7 @@ public:
 			p1.playerTimeXA= 0;
 		}
 			// Taste D
-		if (input().down(Gosu::KB_D)) {
+		if (input().down(Gosu::KB_D)&& collision_rechts == false) {
 			game.d_pressed = true;
 			p1.speedPlayer = (p1.PlayerBeschleunigung(1, p1.playerTimeXD) < MAX_SPEED) ? p1.PlayerBeschleunigung(1, p1.playerTimeXD) : MAX_SPEED;	
 			// Zeile Drüber wenn beschl. kleiner als MAX_SPEED, dann beschleunigung, sonst MAX_SPEED (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
