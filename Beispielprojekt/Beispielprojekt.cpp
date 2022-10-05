@@ -247,6 +247,11 @@ public:
 	{
 		set_caption("Dr. Salzig und Mister Coco");
 	};
+	void restart()
+	{
+		p1.reset();
+		game = GameState();
+	}
 	void draw() override
 	{
 		//Level Design
@@ -325,7 +330,7 @@ public:
 
 		if (input().down(Gosu::KB_F) && game.health <= 0) //Respawn
 		{
-			game = GameState(); //Neues Spiel erzeugen
+			restart();
 		}
 
 
@@ -374,6 +379,13 @@ public:
 			}
 		}
 
+
+		if (p1.player_y > 1000) //Player Killen und anhalten wenn er zu tief fällt
+		{
+			restart();
+			collision_unten = true;
+		}
+
 /*------------------------------------------------------------------------------------------------------------
 													Player
 ------------------------------------------------------------------------------------------------------------*/
@@ -384,22 +396,26 @@ public:
 		
 		if (collision_unten == false) {
 			p1.speedPlayerY = p1.speedPlayerY + p1.PlayerBeschleunigung(0.5, p1.fallTime);
-			p1.player_y = p1.player_y + p1.speedPlayerY;
 			p1.fallTime = p1.fallTime + 1;
 		}
-		else {
+		if (collision_unten == true && !(p1.speedPlayerY < 0))
+		{
 			p1.speedPlayerY = 0;
 			p1.fallTime = 0;
 		}
+		p1.player_y = p1.player_y + p1.speedPlayerY;
 		if (input().down(Gosu::KB_W)) {
 			
 			game.w_pressed = true;
 			
-			p1.jumpTime < MAX_JUMP_TIME ? p1.jumpTime : MAX_JUMP_TIME; // wie größ ist die Übergebene Sprungzeit?
-			p1.heightPlayer = (p1.PlayerSprung(p1.jumpTime, MAX_HEIGHT,20 - (p1.PlayerBeschleunigung(1, p1.jumpTime)), game.w_pressed));
-			p1.player_y = p1.player_y - p1.heightPlayer; // y ist invertiert im Vergleich zu koordinatensystemen
+			//p1.jumpTime < MAX_JUMP_TIME ? p1.jumpTime : MAX_JUMP_TIME; // wie größ ist die Übergebene Sprungzeit?
+			//p1.heightPlayer = (p1.PlayerSprung(p1.jumpTime, MAX_HEIGHT,20 - (p1.PlayerBeschleunigung(1, p1.jumpTime)), game.w_pressed));
+			//p1.player_y = p1.player_y - p1.heightPlayer; // y ist invertiert im Vergleich zu koordinatensystemen
 			p1.jumpTime = p1.jumpTime + 1;
-			
+			if (p1.jumpTime < MAX_JUMP_TIME)
+			{
+				p1.speedPlayerY = p1.speedPlayerY - 2;
+			}			
 
 #ifdef debugSpielerY 
 			std::cout << "beschleunigung: " << p1.PlayerSprung(p1.jumpTime, MAX_HEIGHT, p1.PlayerBeschleunigung(1, p1.jumpTime), game.w_pressed) << std::endl;

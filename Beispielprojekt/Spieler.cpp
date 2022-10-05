@@ -23,12 +23,17 @@ public:
 		this->player_x = player_start_x;
 		this->player_y = player_start_y;
 	}
+	void reset()
+	{
+		this->player_x = this->player_start_x;
+		this->player_y = this->player_start_y;
+		this->speedPlayer = 0;
+		this->speedPlayerY = 0;
+	}
 		
 	// Beschleunigung in x-Richtung 
 	double PlayerBeschleunigung(double bx,double tx) {
-		double vx;
-			vx = bx * (tx/5);
-		return vx;
+		return bx * (tx/5);
 		//std::cout << ax << std::endl;
 	};
 	
