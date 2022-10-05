@@ -10,8 +10,10 @@ public:
 	double player_y;// Bewegung y-achse
 	
 	double speedPlayer = 0; // Gescchwindigkeit x-Richtung
+	double speedPlayerY = 0; // Geschwindigkeit in y-Richtung
 	double heightPlayer = 0;// Höhe y-Richtung
 
+	int fallTime; //zählt die Fallzeit 
 	int jumpTime; // zählt die zeit des sprungs
 	int playerTimeXA; // zeit, die in x beschleunigt wird
 	int playerTimeXD;
@@ -24,30 +26,24 @@ public:
 		
 	// Beschleunigung in x-Richtung 
 	double PlayerBeschleunigung(double bx,double tx) {
-		double ax;
-			ax = bx * (tx/5);
-		return ax;
+		double vx;
+			vx = bx * (tx/5);
+		return vx;
 		//std::cout << ax << std::endl;
 	};
 	
 	// Sprung in y richtung
 	double PlayerSprung(int t, const double MAX_H, double v,bool p) {
 		const double g = 9.81;
-		double yt = t * v;
-		double gt = -g * 0.1 * t;
+		double yt = (v * v)/ (2 * g) ;
+		double gt = -((g*g)/(2*g));
+		double tmax = v / g;
 		
-		if ((yt < MAX_H)&&(p = true)) {
+		if(t <= tmax) {
 			return yt;
 		}
-		else if ((yt >= MAX_H)&&(p = true)) {
+		else {
 			return gt;
 		}
-		else if ((yt < MAX_H)&&(p = false)) {
-			return gt;
-		}
-		else if ((yt >= MAX_H) && (p = false)) {
-			return gt;
-		}
-			
 	};
 };

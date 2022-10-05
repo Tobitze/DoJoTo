@@ -14,7 +14,7 @@ bool collision_oben = false;
 bool collision_unten = true;
 
 Spieler p1;
-const double MAX_SPEED = 15; //Maximale Geschwindikkeit Spieler x-Richtung
+const double MAX_SPEED = 5; //Maximale Geschwindikkeit Spieler x-Richtung
 const double MAX_HEIGHT = 100; // Maximale Sprunghöhe Spieler y-Richtung
 const double MAX_JUMP_TIME = 20; //Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
 //#define debugSpielerX
@@ -379,12 +379,21 @@ public:
 			
 			// Taste W
 		
+		if (collision_unten == false) {
+			p1.speedPlayerY = p1.speedPlayerY + p1.PlayerBeschleunigung(0.5, p1.fallTime);
+			p1.player_y = p1.player_y + p1.speedPlayerY;
+			p1.fallTime = p1.fallTime + 1;
+		}
+		else {
+			p1.speedPlayerY = 0;
+			p1.fallTime = 0;
+		}
 		if (input().down(Gosu::KB_W)) {
 			
 			game.w_pressed = true;
 			
 			p1.jumpTime < MAX_JUMP_TIME ? p1.jumpTime : MAX_JUMP_TIME; // wie größ ist die Übergebene Sprungzeit?
-			p1.heightPlayer = (p1.PlayerSprung(p1.jumpTime, MAX_HEIGHT, p1.PlayerBeschleunigung(1, p1.jumpTime), game.w_pressed));
+			p1.heightPlayer = (p1.PlayerSprung(p1.jumpTime, MAX_HEIGHT,20 - (p1.PlayerBeschleunigung(1, p1.jumpTime)), game.w_pressed));
 			p1.player_y = p1.player_y - p1.heightPlayer; // y ist invertiert im Vergleich zu koordinatensystemen
 			p1.jumpTime = p1.jumpTime + 1;
 			
