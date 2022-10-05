@@ -21,6 +21,12 @@
     <ClCompile Include="Spieler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="rakete.png">
@@ -35,6 +41,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Objekt_fest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spieler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

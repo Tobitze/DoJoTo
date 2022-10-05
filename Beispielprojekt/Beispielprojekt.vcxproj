@@ -169,14 +169,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Beispielprojekt.cpp" />
+    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Spieler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="rakete.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="Objekte_fest.h" />
     <ClInclude Include="Objekt_fest.h" />
+    <ClInclude Include="Spieler.h" />
     <ClInclude Include="Startup.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
