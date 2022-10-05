@@ -18,7 +18,7 @@ const double MAX_SPEED = 5; //Maximale Geschwindikkeit Spieler x-Richtung
 const double MAX_HEIGHT = 100; // Maximale Sprunghöhe Spieler y-Richtung
 const double MAX_JUMP_TIME = 20; //Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
 //#define debugSpielerX
-#define debugSpielerY
+//#define debugSpielerY
 
 class GameWindow;
 class GameState {
@@ -204,7 +204,7 @@ public:
 			{
 				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
-					if ((p1.player_y + iplayertemp->hoehe) > elem_O_f->starty && (p1.player_y - (5 + p1.speedPlayerY)) < (elem_O_f->starty + elem_O_f->hoehe))
+					if ((p1.player_y + iplayertemp->hoehe) > elem_O_f->starty && (p1.player_y - (5 + abs(p1.speedPlayerY))) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
 					}
@@ -224,7 +224,7 @@ public:
 			{
 				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
-					if ((p1.player_y + iplayertemp->hoehe + 5 + p1.speedPlayerY) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
+					if ((p1.player_y + iplayertemp->hoehe + 5 + abs(p1.speedPlayerY)) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
 					}
@@ -379,7 +379,6 @@ public:
 			}
 		}
 
-
 		if (p1.player_y > 1000) //Player Killen und anhalten wenn er zu tief fällt
 		{
 			restart();
@@ -393,7 +392,12 @@ public:
 		//Sprung ---------------------------------------------------------------------------------------------
 			
 			// Taste W
-		
+		if (collision_oben == true && p1.speedPlayerY < 0)
+		{
+			p1.speedPlayerY = 0;
+			p1.jumpTime = MAX_JUMP_TIME;
+		}
+
 		if (collision_unten == false) {
 			p1.speedPlayerY = p1.speedPlayerY + p1.PlayerBeschleunigung(0.5, p1.fallTime);
 			p1.fallTime = p1.fallTime + 1;
@@ -412,7 +416,7 @@ public:
 			//p1.heightPlayer = (p1.PlayerSprung(p1.jumpTime, MAX_HEIGHT,20 - (p1.PlayerBeschleunigung(1, p1.jumpTime)), game.w_pressed));
 			//p1.player_y = p1.player_y - p1.heightPlayer; // y ist invertiert im Vergleich zu koordinatensystemen
 			p1.jumpTime = p1.jumpTime + 1;
-			if (p1.jumpTime < MAX_JUMP_TIME)
+			if (p1.jumpTime < MAX_JUMP_TIME && collision_oben == false)
 			{
 				p1.speedPlayerY = p1.speedPlayerY - 2;
 			}			
