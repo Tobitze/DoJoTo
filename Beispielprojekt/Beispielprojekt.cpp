@@ -204,7 +204,7 @@ public:
 			{
 				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
-					if ((p1.player_y + iplayertemp->hoehe) > elem_O_f->starty && (p1.player_y - 5) < (elem_O_f->starty + elem_O_f->hoehe))
+					if ((p1.player_y + iplayertemp->hoehe) > elem_O_f->starty && (p1.player_y - (5 + p1.speedPlayerY)) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
 					}
@@ -224,7 +224,7 @@ public:
 			{
 				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
-					if ((p1.player_y + iplayertemp->hoehe + 5) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
+					if ((p1.player_y + iplayertemp->hoehe + 5 + p1.speedPlayerY) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
 					}
