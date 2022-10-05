@@ -52,10 +52,12 @@ public:
 	{
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
-		Objekt_fest* next;
-		Gosu::Image* image;
+		std::shared_ptr<Objekt_fest> next;
+		std::shared_ptr<Gosu::Image> image;
+		//Objekt_fest* next;
+		//Gosu::Image* image;
 	};
-	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, Objekt_fest* next, Gosu::Image* image, double scale_x = 1, double scale_y = 1)
+	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1)
 	{
 		Objekt_fest temp;
 		//double breitetemp2 = (double)image->width();
@@ -68,20 +70,21 @@ public:
 		temp.startx = posx;
 		temp.starty = posy;
 		temp.posz = posz;
+		
 		temp.next = next;
 		temp.image = image;
 		temp.scale_x = scale_x;
 		temp.scale_y = scale_y;
-		return temp;
+		return std::make_shared<Objekt_fest>(temp);
 	}
 	struct Player_data
 	{
 		bool active;
 		double breite, hoehe, scale_x, scale_y;
-		Player_data* next;
-		Gosu::Image* image;
+		std::shared_ptr<Player_data> next;
+		std::shared_ptr<Gosu::Image> image;
 	};
-	Player_data erstelle_Player_data(double breite, double hoehe, struct Player_data* next, Gosu::Image* image, bool active, double scale_x = 1, double scale_y = 1)
+	std::shared_ptr<Player_data> erstelle_Player_data_ptr(double breite, double hoehe, std::shared_ptr<Player_data> next, std::shared_ptr<Gosu::Image> image, bool active, double scale_x = 1, double scale_y = 1)
 	{
 		Player_data temp;
 		//double breitetemp2 = (double)image->width();
@@ -94,7 +97,7 @@ public:
 		temp.scale_x = scale_x;
 		temp.scale_y = scale_y;
 		temp.active = active;
-		return temp;
+		return std::make_shared<Player_data>(temp);
 	}
 
 	int health = 3;
@@ -128,26 +131,26 @@ public:
 
 	//Game Window
 
-	Objekt_fest ilistenproblenloeser = erstelle_Objekt_fest(0, 0, 0, 0, 0, NULL, NULL);					 //Einfach nicht hinterfragen
-	Objekt_fest ibodenR = erstelle_Objekt_fest(474, 58, 400, 550, 100, &ilistenproblenloeser, &bodenR);
-	Objekt_fest ibodenL = erstelle_Objekt_fest(474, 58, 0, 550, 100, &ibodenR, &bodenL);				 //Linked list über pointer
-	Objekt_fest iKiste = erstelle_Objekt_fest(168, 168, 730, 300, 100, &ibodenL, &Kiste);
-	Objekt_fest iPlattform1 = erstelle_Objekt_fest(1075, 233, 300, 200, 100, &iKiste, &Plattform1);
-	Objekt_fest iWand = erstelle_Objekt_fest(474, 58, 700, 500, 100, &iPlattform1, &Wand);
+	std::shared_ptr<Objekt_fest> ilistenproblenloeser = erstelle_Objekt_fest_ptr(0, 0, 0, 0, 0, nullptr, nullptr);					 //Einfach nicht hinterfragen
+	std::shared_ptr<Objekt_fest> ibodenR = erstelle_Objekt_fest_ptr(474, 58, 400, 550, 100, ilistenproblenloeser, std::make_shared<Gosu::Image>(bodenR));
+	std::shared_ptr<Objekt_fest> ibodenL = erstelle_Objekt_fest_ptr(474, 58, 0, 550, 100, ibodenR, std::make_shared<Gosu::Image>(bodenL));				 //Linked list über pointer
+	std::shared_ptr<Objekt_fest> iKiste = erstelle_Objekt_fest_ptr(168, 168, 730, 300, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste));
+	std::shared_ptr<Objekt_fest> iPlattform1 = erstelle_Objekt_fest_ptr(1075, 233, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1));
+	std::shared_ptr<Objekt_fest> iWand = erstelle_Objekt_fest_ptr(474, 58, 700, 500, 100, iPlattform1, std::make_shared<Gosu::Image>(Wand));
 
-	Objekt_fest* elem_O_f;
-	Objekt_fest* listenstart_O_f = &iWand; //Hier immer letztes Element hinschreiben
+	std::shared_ptr<Objekt_fest> elem_O_f = std::make_shared<Objekt_fest>();
+	std::shared_ptr<Objekt_fest> listenstart_O_f = iWand; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
-	Player_data ilistenproblenloeserplayer = erstelle_Player_data(0, 0, NULL, NULL, false);
-	Player_data iplayertemp = erstelle_Player_data(53, 94, &ilistenproblenloeserplayer, &rPlayertemp1, true);
+	std::shared_ptr<Player_data> ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false);
+	std::shared_ptr<Player_data> iplayertemp = erstelle_Player_data_ptr(53, 94, ilistenproblenloeserplayer, std::make_shared<Gosu::Image>(rPlayertemp1), true);
 
-	Player_data* elem_P_d;
-	Player_data* listenstart_P_d = &iplayertemp; //Hier immer letztes Element hinschreiben
+	std::shared_ptr<Player_data> elem_P_d;
+	std::shared_ptr<Player_data> listenstart_P_d = iplayertemp; //Hier immer letztes Element hinschreiben
 
 
 #pragma region 1 //Kollsionskäse
-	double distance_from_player(Objekt_fest * o2)
+	double distance_from_player(std::shared_ptr<Objekt_fest> o2)
 	{
 		return sqrt(pow((p1.player_x - o2->startx), 2) + pow((p1.player_y - o2->starty), 2));
 	}
@@ -155,13 +158,13 @@ public:
 	{
 		bool tmp = false;
 		elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
-		while (elem_O_f->next != NULL)
+		while (elem_O_f->next != nullptr)
 		{
 			if (distance_from_player(elem_O_f) < 5000)
 			{
-				if ((p1.player_x + iplayertemp.breite + 3 + p1.speedPlayer) > elem_O_f->startx && (p1.player_x) < (elem_O_f->startx + elem_O_f->breite) - 5)
+				if ((p1.player_x + iplayertemp->breite + 3 + p1.speedPlayer) > elem_O_f->startx && (p1.player_x) < (elem_O_f->startx + elem_O_f->breite) - 5)
 				{
-					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
+					if ((p1.player_y + iplayertemp->hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
 					}
@@ -175,13 +178,13 @@ public:
 	{
 		bool tmp = false;
 		elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
-		while (elem_O_f->next != NULL)
+		while (elem_O_f->next != nullptr)
 		{
 			if (distance_from_player(elem_O_f) < 5000)
 			{
-				if ((p1.player_x - (3 + p1.speedPlayer)) < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) > (elem_O_f->startx + 5))
+				if ((p1.player_x - (3 + p1.speedPlayer)) < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp->breite) > (elem_O_f->startx + 5))
 				{
-					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
+					if ((p1.player_y + iplayertemp->hoehe) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
 					}
@@ -195,13 +198,13 @@ public:
 	{
 		bool tmp = false;
 		elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
-		while (elem_O_f->next != NULL)
+		while (elem_O_f->next != nullptr)
 		{
 			if (distance_from_player(elem_O_f) < 5000)
 			{
-				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) >(elem_O_f->startx))
+				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
-					if ((p1.player_y + iplayertemp.hoehe) > elem_O_f->starty && (p1.player_y - 5) < (elem_O_f->starty + elem_O_f->hoehe))
+					if ((p1.player_y + iplayertemp->hoehe) > elem_O_f->starty && (p1.player_y - 5) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
 					}
@@ -215,13 +218,13 @@ public:
 	{
 		bool tmp = false;
 		elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
-		while (elem_O_f->next != NULL)
+		while (elem_O_f->next != nullptr)
 		{
 			if (distance_from_player(elem_O_f) < 5000)
 			{
-				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp.breite) >(elem_O_f->startx))
+				if (p1.player_x < (elem_O_f->startx + elem_O_f->breite) && (p1.player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
-					if ((p1.player_y + iplayertemp.hoehe + 5) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
+					if ((p1.player_y + iplayertemp->hoehe + 5) > elem_O_f->starty && (p1.player_y) < (elem_O_f->starty + elem_O_f->hoehe))
 					{
 						tmp = true;
 					}
@@ -248,7 +251,7 @@ public:
 	{
 		//Level Design
 		game.elem_O_f = game.listenstart_O_f; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
-		while (game.elem_O_f->next != NULL) 
+		while (game.elem_O_f->next != nullptr)
 		{
 			if (game.distance_from_player(game.elem_O_f) < 5000)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
 			{
@@ -293,7 +296,7 @@ public:
 		//game.rPlayertemp2.draw(p1.player_start_x, p1.player_start_y, 100, 1, 1);    //Veraltet
 		//Player rendering
 		game.elem_P_d = game.listenstart_P_d;
-		while (game.elem_P_d->next != NULL)
+		while (game.elem_P_d->next != nullptr)
 		{
 			if (game.elem_P_d->active == true)  //Nur Playerbild rendern, welches aktiv ist
 			{
@@ -361,7 +364,7 @@ public:
 
 		//Haupt-Map-Move-Funktionen
 		game.elem_O_f = game.listenstart_O_f;
-		while (game.elem_O_f->next != NULL)
+		while (game.elem_O_f->next != nullptr)
 		{
 			if (game.distance_from_player(game.elem_O_f) < 10000)	//Renderdistanz
 			{
