@@ -5,8 +5,8 @@
 //Konstruktor
 Spieler::Spieler() 
 {
-	this->player_x = 300;			//Später wieder anpassen in Spieler::player_start_x oder nur player_start_x
-	this->player_y = 456; //Spieler::player_start_y;
+	this->player_x = player_start_x;
+	this->player_y = player_start_y;
 	this->fallTime = 0;
 	this->jumpTime = 0;
 	this->playerTimeXA = 0;
@@ -14,15 +14,13 @@ Spieler::Spieler()
 }
 
 // Beschleunigung in x-Richtung 
-double Spieler::PlayerBeschleunigung(double bx, double tx) {
-	double ax;
-	ax = bx * (tx / 5);
-	return ax;
+double Spieler::PlayerBeschleunigung(const double bx, double tx) {
+	return bx * (tx / 5);
 	//std::cout << ax << std::endl;
 };
 
 // Sprung in y richtung
-double Spieler::PlayerSprung(int t, const double MAX_H, double v, bool p) {
+double Spieler::PlayerSprung(int t, const double MAX_H, double v, bool p) {		//noch in verwendung?
 	const double g = 9.81;
 	double yt = t * v;
 	double gt = -g * 0.1 * t;
@@ -38,9 +36,6 @@ double Spieler::PlayerSprung(int t, const double MAX_H, double v, bool p) {
 	}
 	else if ((yt >= MAX_H) && (p = false)) {
 		return gt;
-	}
-	else {			//kann später wieder weg falls alles geht
-		return 1;
 	}
 };
 

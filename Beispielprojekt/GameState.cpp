@@ -31,10 +31,8 @@ GameState::GameState()
 	, lPlayertempA1("l-Dr.Salzig1-attack.png")
 	, lPlayertempA2("l-Dr.Salzig2-attack.png")
 {
-	//Spieler* p1 = (Spieler*) malloc(sizeof(Spieler));
+
 	p1 = new Spieler();
-	//Spieler p1;
-	//Spieler& p1ref = p1;
 
 	ilistenproblenloeser = erstelle_Objekt_fest_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);					 //Einfach nicht hinterfragen
 	ibodenR = erstelle_Objekt_fest_ptr(474, 58, 400, 550, 100, ilistenproblenloeser, std::make_shared<Gosu::Image>(bodenR),1 ,1);
@@ -122,10 +120,10 @@ std::shared_ptr<GameState::Player_data> GameState::erstelle_Player_data_ptr(doub
 
 	
 	 
-double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler* p1)
-{
-	return sqrt(pow((p1->player_x - o2->startx), 2) + pow((p1->player_y - o2->starty), 2));
-}
+	double GameState::distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2)
+	{
+		return sqrt(pow((this->p1->player_x - o2->startx), 2) + pow((this->p1->player_y - o2->starty), 2));
+	}
 	bool GameState::kollision_rechts(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp)//, std::shared_ptr<Spieler> p1)//std::shared_ptr<GameState::Objekt_fest> listenstart_O_f, Spieler p1, std::shared_ptr<GameState::Player_data> iplayertemp)
 	{
 		std::shared_ptr<GameState::Objekt_fest> elem_O_f = this->listenstart_O_f;
@@ -134,8 +132,8 @@ double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler*
 		//auto elem_O_f = GameState::get_listenstart_O_f();   //listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != nullptr)
 		{
-			//if (distance_from_player(elem_O_f, p1) < 5000)
-			//{
+			if (distance_from_player(elem_O_f) < 5000)
+			{
 				if ((this->p1->player_x + iplayertemp->breite + 3 + this->p1->speedPlayer) > elem_O_f->startx && (this->p1->player_x) < (elem_O_f->startx + elem_O_f->breite) - 5)
 				{
 					if ((this->p1->player_y + iplayertemp->hoehe) > elem_O_f->starty && (this->p1->player_y) < (elem_O_f->starty + elem_O_f->hoehe))
@@ -143,7 +141,7 @@ double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler*
 						tmp = true;
 					}
 				}
-			//}
+			}
 			elem_O_f = elem_O_f->next;
 		}
 		return tmp;
@@ -155,8 +153,8 @@ double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler*
 		//elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != nullptr)
 		{
-			//if (distance_from_player(elem_O_f, p1) < 5000)
-			//{
+			if (distance_from_player(elem_O_f) < 5000)
+			{
 				if ((this->p1->player_x - (3 + this->p1->speedPlayer)) < (elem_O_f->startx + elem_O_f->breite) && (this->p1->player_x + iplayertemp->breite) > (elem_O_f->startx + 5))
 				{
 					if ((this->p1->player_y + iplayertemp->hoehe) > elem_O_f->starty && (this->p1->player_y) < (elem_O_f->starty + elem_O_f->hoehe))
@@ -164,7 +162,7 @@ double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler*
 						tmp = true;
 					}
 				}
-			//}
+			}
 			elem_O_f = elem_O_f->next;
 		}
 		return tmp;
@@ -176,8 +174,8 @@ double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler*
 		//elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != nullptr)
 		{
-			//if (distance_from_player(elem_O_f, p1) < 5000)
-			//{
+			if (distance_from_player(elem_O_f) < 5000)
+			{
 				if (this->p1->player_x < (elem_O_f->startx + elem_O_f->breite) && (this->p1->player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
 					if ((this->p1->player_y + iplayertemp->hoehe) > elem_O_f->starty && (this->p1->player_y - (5 + abs(this->p1->speedPlayerY))) < (elem_O_f->starty + elem_O_f->hoehe))
@@ -185,7 +183,7 @@ double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler*
 						tmp = true;
 					}
 				}
-			//}
+			}
 			elem_O_f = elem_O_f->next;
 		}
 		return tmp;
@@ -197,8 +195,8 @@ double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler*
 		//elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != nullptr)
 		{
-			//if (distance_from_player(elem_O_f, p1) < 5000)
-			//{
+			if (distance_from_player(elem_O_f) < 5000)
+			{
 				if (this->p1->player_x < (elem_O_f->startx + elem_O_f->breite) && (this->p1->player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
 					if ((this->p1->player_y + iplayertemp->hoehe + 5 + abs(this->p1->speedPlayerY)) > elem_O_f->starty && (this->p1->player_y) < (elem_O_f->starty + elem_O_f->hoehe))
@@ -206,7 +204,7 @@ double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler*
 						tmp = true;
 					}
 				}
-			//}
+			}
 			elem_O_f = elem_O_f->next;
 		}
 		return tmp;

@@ -5,7 +5,6 @@ class GameState {
 	Spieler* p1;
 public:
 	//static Spieler p1;
-	//std::shared_ptr<Spieler> get_Spieler();
 	Spieler* get_Spieler();
 
 	struct Objekt_fest
@@ -87,7 +86,7 @@ public:
 
 
 #pragma region 1 //Kollsionskäse
-	double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler* p1);
+	double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2);// , Spieler* p1);
 	bool kollision_rechts(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, std::shared_ptr<Spieler> p1);
 	bool kollision_links(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_oben(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
