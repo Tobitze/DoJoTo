@@ -54,12 +54,12 @@ GameState::GameState()
 	iplayertempl2 = erstelle_Player_data_ptr(53, 94, iplayertempl1, std::make_shared<Gosu::Image>(lPlayertemp2), false, 1, 1);
 
 	elem_P_d = std::make_shared<Player_data>();
-	listenstart_P_d = iplayertemp2; //Hier immer letztes Element hinschreiben
+	listenstart_P_d = iplayertempl2; //Hier immer letztes Element hinschreiben
 	elem_P_d = listenstart_P_d;
 
 };
 
-void GameState:: SpielerAni() {
+void GameState:: SpielerAni() { //wenn spieler nach rechts schaut, lade animation für rechts. wenn nicht, dann die für links.
 	if (facing_r == true)
 	{
 		
@@ -83,7 +83,32 @@ void GameState:: SpielerAni() {
 		}
 		z = z - 1;
 	}
+	else if (facing_r == false)
+	{
+
+
+		if (z < 25)
+		{
+
+			this->iplayertempl1->active = false;
+			this->iplayertempl2->active = true;
+
+		}
+		else if (z >= 25)
+		{
+
+			this->iplayertempl1->active = true;
+			this->iplayertempl2->active = false;
+
+		}
+		if (z == 0) {
+			z = 50;
+		}
+		z = z - 1;
+	}
 }
+
+
 
 Spieler* GameState::get_Spieler()
 {
