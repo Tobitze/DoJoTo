@@ -12,6 +12,7 @@ GameState::GameState()
 	: bodenR("boden1.jpg")
 	, bodenL("boden1.jpg")
 	, Wand("boden1.jpg")
+	, Wand_r1("Wand rechts.png")
 	, hintergrund("hintergrund.jfif")
 	, Kiste("Block.png")
 	, Plattform1("Plattform1.png")
@@ -37,11 +38,12 @@ GameState::GameState()
 	//Spieler& p1ref = p1;
 
 	ilistenproblenloeser = erstelle_Objekt_fest_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);					 //Einfach nicht hinterfragen
-	ibodenR = erstelle_Objekt_fest_ptr(474, 58, 400, 550, 100, ilistenproblenloeser, std::make_shared<Gosu::Image>(bodenR),1 ,1);
+	ibodenR = erstelle_Objekt_fest_ptr(474, 58, 476, 550, 100, ilistenproblenloeser, std::make_shared<Gosu::Image>(bodenR),1 ,1);
 	ibodenL = erstelle_Objekt_fest_ptr(474, 58, 0, 550, 100, ibodenR, std::make_shared<Gosu::Image>(bodenL), 1, 1);				 //Linked list über pointer
-	iKiste = erstelle_Objekt_fest_ptr(168, 168, 730, 300, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste), 1, 1);
-	iPlattform1 = erstelle_Objekt_fest_ptr(1075, 233, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
-	iWand = erstelle_Objekt_fest_ptr(474, 58, 700, 500, 100, iPlattform1, std::make_shared<Gosu::Image>(Wand), 1, 1);
+	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste), 1, 1);
+	iPlattform1 = erstelle_Objekt_fest_ptr(200, 43, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
+	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 742, 490, 0, iPlattform1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand = erstelle_Objekt_fest_ptr(474, 58, 700, 500, 100, iWand_r1, std::make_shared<Gosu::Image>(Wand), 1, 1);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
 	listenstart_O_f = iWand; //Hier immer letztes Element hinschreiben

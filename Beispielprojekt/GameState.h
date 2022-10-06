@@ -39,6 +39,7 @@ public:
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
 	Gosu::Image Wand;
+	Gosu::Image Wand_r1; 
 	Gosu::Image hintergrund;
 	Gosu::Image Kiste;
 	Gosu::Image Plattform1;
@@ -65,6 +66,7 @@ public:
 	std::shared_ptr<Objekt_fest> ibodenL;				 //Linked list über pointer
 	std::shared_ptr<Objekt_fest> iKiste;
 	std::shared_ptr<Objekt_fest> iPlattform1;
+	std::shared_ptr<Objekt_fest> iWand_r1;
 	std::shared_ptr<Objekt_fest> iWand;
 
 	std::shared_ptr<Objekt_fest> elem_O_f;
