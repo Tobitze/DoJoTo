@@ -30,6 +30,8 @@ public:
 
 	int health = 3;
 
+	bool facing_r = true;
+
 	bool pressed = false;
 	bool w_pressed = false;// player sprung
 	bool a_pressed = false;// player links
@@ -74,6 +76,9 @@ public:
 	//Liste für Player
 	std::shared_ptr<Player_data> ilistenproblenloeserplayer;
 	std::shared_ptr<Player_data> iplayertemp;
+	std::shared_ptr<Player_data>	iplayertemp2;
+	std::shared_ptr<Player_data>	iplayertempl1;
+	std::shared_ptr<Player_data> iplayertempl2;
 
 	std::shared_ptr<Player_data> elem_P_d;
 	std::shared_ptr<Player_data> listenstart_P_d; //Hier immer letztes Element hinschreiben
@@ -84,6 +89,7 @@ public:
 
 	GameState();
 
+
 	
 
 
@@ -93,5 +99,6 @@ public:
 	bool kollision_links(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_oben(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_unten(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
+	void SpielerAni();
 #pragma endregion	
 };
