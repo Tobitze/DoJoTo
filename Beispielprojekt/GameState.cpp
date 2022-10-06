@@ -40,11 +40,11 @@ GameState::GameState()
 	ibodenL = erstelle_Objekt_fest_ptr(474, 58, 0, 550, 100, ibodenR, std::make_shared<Gosu::Image>(bodenL), 1, 1);				 //Linked list über pointer
 	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste), 1, 1);
 	iPlattform1 = erstelle_Objekt_fest_ptr(200, 43, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
-	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 742, 490, 0, iPlattform1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iPlattform1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	iWand = erstelle_Objekt_fest_ptr(474, 58, 700, 500, 100, iWand_r1, std::make_shared<Gosu::Image>(Wand), 1, 1);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = iWand; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = iWand_r1; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
