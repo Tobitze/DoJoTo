@@ -89,6 +89,8 @@ Spieler* GameState::get_Spieler()
 	return this->p1;
 }
 
+
+
 //std::shared_ptr<Spieler> GameState::get_Spieler()
 //{
 //	return std::make_shared<Spieler>(this->p1);
