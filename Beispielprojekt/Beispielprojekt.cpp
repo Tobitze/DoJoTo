@@ -15,12 +15,12 @@ bool collision_oben = false;
 bool collision_unten = true;
 
 
-const double MAX_SPEED = 15; //Maximale Geschwindikkeit Spieler x-Richtung
+const double MAX_SPEED = 5; //Maximale Geschwindikkeit Spieler x-Richtung
 const double MAX_HEIGHT = 100; // Maximale Sprunghöhe Spieler y-Richtung
 const double MAX_JUMP_TIME = 20; //Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
+const double PLAYER_ACC_UP = 2;
 //#define debugSpielerX
-#define debugSpielerY
-
+//#define debugSpielerY
 
 class GameWindow : public Gosu::Window
 {
@@ -47,18 +47,23 @@ public:
 			};
 		//}
 	
-	
+		void restart()
+		{
+			game.get_Spieler()->reset();
+			game = GameState();
+		}
+
 		void draw() override
 		{
 			//while (game_start == true) {
 				//Level Design
 				game.elem_O_f = game.listenstart_O_f; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
-				while (game.elem_O_f->next != NULL)
+				while (game.elem_O_f->next != nullptr)
 				{
-					if (game.distance_from_player(game.elem_O_f) < 5000)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
-					{
+					//if (game.distance_from_player(game.elem_O_f, game.get_Spieler()) < 5000)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
+					//{
 						game.elem_O_f->image->draw(game.elem_O_f->posx, game.elem_O_f->posy, game.elem_O_f->posz);
-					}
+					//}
 					game.elem_O_f = game.elem_O_f->next;
 				}
 				game.hintergrund.draw_rot(400, 320, 10.0,
@@ -98,7 +103,7 @@ public:
 				//game.rPlayertemp2.draw(p1.player_start_x,game.get_Spieler()->player_start_y, 100, 1, 1);    //Veraltet
 				//Player rendering
 				game.elem_P_d = game.listenstart_P_d;
-				while (game.elem_P_d->next != NULL)
+				while (game.elem_P_d->next != nullptr)
 				{
 					if (game.elem_P_d->active == true)  //Nur Playerbild rendern, welches aktiv ist
 					{
@@ -113,10 +118,10 @@ public:
 		void update() override
 		{
 			//while (game_start == true) {
-				collision_rechts = game.kollision_rechts();
-				collision_links = game.kollision_links();
-				collision_oben = game.kollision_oben();
-				collision_unten = game.kollision_unten();
+			collision_rechts = game.kollision_rechts(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
+			collision_links = game.kollision_links(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
+			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
+			collision_unten = game.kollision_unten(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 
 				//HUD
 				if (input().down(Gosu::KB_K) && !game.pressed)
@@ -168,14 +173,20 @@ public:
 
 				//Haupt-Map-Move-Funktionen
 				game.elem_O_f = game.listenstart_O_f;
-				while (game.elem_O_f->next != NULL)
+				while (game.elem_O_f->next != nullptr)
 				{
-					if (game.distance_from_player(game.elem_O_f) < 10000)	//Renderdistanz
-					{
-						game.elem_O_f->posx = game.elem_O_f->startx - (game.get_Spieler()->player_x -game.get_Spieler()->player_start_x);
-						game.elem_O_f->posy = game.elem_O_f->starty - (game.get_Spieler()->player_y -game.get_Spieler()->player_start_y);
+					//if (game.distance_from_player(game.elem_O_f, game.get_Spieler()) < 10000)	//Renderdistanz
+					//{
+						game.elem_O_f->posx = game.elem_O_f->startx - (game.get_Spieler()->player_x - game.get_Spieler()->player_start_x);
+						game.elem_O_f->posy = game.elem_O_f->starty - (game.get_Spieler()->player_y - game.get_Spieler()->player_start_y);
 						game.elem_O_f = game.elem_O_f->next;
-					}
+					//}
+				}
+
+				if (game.get_Spieler()->player_y > 1000) //Player Killen und anhalten wenn er zu tief fällt
+				{
+					restart();
+					collision_unten = true;
 				}
 
 				/*------------------------------------------------------------------------------------------------------------
@@ -186,14 +197,35 @@ public:
 
 					// Taste W
 
+				if (collision_oben == true && game.get_Spieler()->speedPlayerY < 0)
+				{
+					game.get_Spieler()->speedPlayerY = 0;
+					game.get_Spieler()->jumpTime = MAX_JUMP_TIME;
+				}
+
+				if (collision_unten == false) {
+					game.get_Spieler()->speedPlayerY = game.get_Spieler()->speedPlayerY + game.get_Spieler()->PlayerBeschleunigung(0.5, game.get_Spieler()->fallTime);
+					game.get_Spieler()->fallTime = game.get_Spieler()->fallTime + 1;
+				}
+				if (collision_unten == true && !(game.get_Spieler()->speedPlayerY < 0))
+				{
+					game.get_Spieler()->speedPlayerY = 0;
+					game.get_Spieler()->fallTime = 0;
+				}
+				game.get_Spieler()->player_y = game.get_Spieler()->player_y + game.get_Spieler()->speedPlayerY;
+
 				if (input().down(Gosu::KB_W)) {
 
 					game.w_pressed = true;
 
-					game.get_Spieler()->jumpTime < MAX_JUMP_TIME ? game.get_Spieler()->jumpTime : MAX_JUMP_TIME; // wie größ ist die Übergebene Sprungzeit?
-					game.get_Spieler()->heightPlayer = (game.get_Spieler()->PlayerSprung(game.get_Spieler()->jumpTime, MAX_HEIGHT,game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->jumpTime), game.w_pressed));
-					game.get_Spieler()->player_y =game.get_Spieler()->player_y -game.get_Spieler()->heightPlayer; // y ist invertiert im Vergleich zu koordinatensystemen
+					//game.get_Spieler()->jumpTime < MAX_JUMP_TIME ? game.get_Spieler()->jumpTime : MAX_JUMP_TIME; // wie größ ist die Übergebene Sprungzeit?
+					//game.get_Spieler()->heightPlayer = (game.get_Spieler()->PlayerSprung(game.get_Spieler()->jumpTime, MAX_HEIGHT,game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->jumpTime), game.w_pressed));
+					//game.get_Spieler()->player_y =game.get_Spieler()->player_y -game.get_Spieler()->heightPlayer; // y ist invertiert im Vergleich zu koordinatensystemen
 					game.get_Spieler()->jumpTime =game.get_Spieler()->jumpTime + 1;
+					if (game.get_Spieler()->jumpTime < MAX_JUMP_TIME && collision_oben == false)
+					{
+						game.get_Spieler()->speedPlayerY = game.get_Spieler()->speedPlayerY - PLAYER_ACC_UP;
+					}
 
 
 #ifdef debugSpielerY 

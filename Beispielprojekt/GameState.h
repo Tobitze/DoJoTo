@@ -5,24 +5,29 @@ class GameState {
 	Spieler* p1;
 public:
 	//static Spieler p1;
+	//std::shared_ptr<Spieler> get_Spieler();
 	Spieler* get_Spieler();
 
 	struct Objekt_fest
 	{
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
-		Objekt_fest* next;
-		Gosu::Image* image;
+		std::shared_ptr<Objekt_fest> next;
+		std::shared_ptr<Gosu::Image> image;
+		//Objekt_fest* next;
+		//Gosu::Image* image;
 	};
-	Objekt_fest erstelle_Objekt_fest(double breite, double hoehe, double posx, double posy, double posz, Objekt_fest* next, Gosu::Image* image, double scale_x = 1, double scale_y = 1);
+	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1);
 	struct Player_data
 	{
 		bool active;
 		double breite, hoehe, scale_x, scale_y;
-		Player_data* next;
-		Gosu::Image* image;
+		std::shared_ptr<Player_data> next;
+		std::shared_ptr<Gosu::Image> image;
 	};
-	Player_data erstelle_Player_data(double breite, double hoehe, Player_data* next, Gosu::Image* image, bool active, double scale_x = 1, double scale_y = 1);
+	std::shared_ptr<Player_data> erstelle_Player_data_ptr(double breite, double hoehe, std::shared_ptr<Player_data> next, std::shared_ptr<Gosu::Image> image, bool active, double scale_x = 1, double scale_y = 1);
+
+
 
 	int health = 3;
 
@@ -55,34 +60,37 @@ public:
 
 	//Game Window
 
-	Objekt_fest ilistenproblenloeser;					 //Einfach nicht hinterfragen
-	Objekt_fest ibodenR;
-	Objekt_fest ibodenL;				 //Linked list über pointer
-	Objekt_fest iKiste;
-	Objekt_fest iPlattform1;
-	Objekt_fest iWand;
+	std::shared_ptr<Objekt_fest> ilistenproblenloeser;					 //Einfach nicht hinterfragen
+	std::shared_ptr<Objekt_fest> ibodenR;
+	std::shared_ptr<Objekt_fest> ibodenL;				 //Linked list über pointer
+	std::shared_ptr<Objekt_fest> iKiste;
+	std::shared_ptr<Objekt_fest> iPlattform1;
+	std::shared_ptr<Objekt_fest> iWand;
 
-	Objekt_fest* elem_O_f;
-	Objekt_fest* listenstart_O_f; //Hier immer letztes Element hinschreiben
+	std::shared_ptr<Objekt_fest> elem_O_f;
+	std::shared_ptr<Objekt_fest> listenstart_O_f; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
-	Player_data ilistenproblenloeserplayer;
-	Player_data iplayertemp;
+	std::shared_ptr<Player_data> ilistenproblenloeserplayer;
+	std::shared_ptr<Player_data> iplayertemp;
 
-	Player_data* elem_P_d;
-	Player_data* listenstart_P_d; //Hier immer letztes Element hinschreiben
+	std::shared_ptr<Player_data> elem_P_d;
+	std::shared_ptr<Player_data> listenstart_P_d; //Hier immer letztes Element hinschreiben
 	
-	
+	std::shared_ptr<GameState::Objekt_fest> get_listenstart_O_f();
+	std::shared_ptr<GameState::Player_data> get_listenstart_P_d();
+
+
 	GameState();
 
 	
 
 
 #pragma region 1 //Kollsionskäse
-	double distance_from_player(Objekt_fest* o2);
-	bool kollision_rechts();
-	bool kollision_links();
-	bool kollision_oben();
-	bool kollision_unten();
+	double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2, Spieler* p1);
+	bool kollision_rechts(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, std::shared_ptr<Spieler> p1);
+	bool kollision_links(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
+	bool kollision_oben(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
+	bool kollision_unten(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 #pragma endregion	
 };

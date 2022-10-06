@@ -1,10 +1,16 @@
 #include <math.h>
 #include "Spieler.h"
+#include <memory>
 
 //Konstruktor
-Spieler::Spieler() {
-	this->player_x = player_start_x;
-	this->player_y = player_start_y;
+Spieler::Spieler() 
+{
+	this->player_x = 300;			//Später wieder anpassen in Spieler::player_start_x oder nur player_start_x
+	this->player_y = 456; //Spieler::player_start_y;
+	this->fallTime = 0;
+	this->jumpTime = 0;
+	this->playerTimeXA = 0;
+	this->playerTimeXD = 0;
 }
 
 // Beschleunigung in x-Richtung 
@@ -33,5 +39,15 @@ double Spieler::PlayerSprung(int t, const double MAX_H, double v, bool p) {
 	else if ((yt >= MAX_H) && (p = false)) {
 		return gt;
 	}
-
+	else {			//kann später wieder weg falls alles geht
+		return 1;
+	}
 };
+
+void Spieler::reset()
+{
+	this->player_x = this->player_start_x;
+	this->player_y = this->player_start_y;
+	this->speedPlayer = 0;
+	this->speedPlayerY = 0;
+}

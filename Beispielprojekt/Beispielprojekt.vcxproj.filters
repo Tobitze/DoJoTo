@@ -40,13 +40,10 @@
     <ClInclude Include="Startup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objekt_fest.h">
+    <ClInclude Include="GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Spieler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
