@@ -27,7 +27,7 @@ public:
 	std::shared_ptr<Player_data> erstelle_Player_data_ptr(double breite, double hoehe, std::shared_ptr<Player_data> next, std::shared_ptr<Gosu::Image> image, bool active, double scale_x = 1, double scale_y = 1);
 
 
-
+	int z = 10;
 	int health = 3;
 
 	bool facing_r = true;

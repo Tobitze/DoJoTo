@@ -49,12 +49,12 @@ GameState::GameState()
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
 	iplayertemp = erstelle_Player_data_ptr(53, 94, ilistenproblenloeserplayer, std::make_shared<Gosu::Image>(rPlayertemp1), true, 1, 1);
-	iplayertemp2 = erstelle_Player_data_ptr(53, 94, ilistenproblenloeserplayer, std::make_shared<Gosu::Image>(rPlayertemp2), false, 1, 1);
-	iplayertempl1 = erstelle_Player_data_ptr(53, 94, ilistenproblenloeserplayer, std::make_shared<Gosu::Image>(lPlayertemp1), false, 1, 1);
-	iplayertempl2 = erstelle_Player_data_ptr(53, 94, ilistenproblenloeserplayer, std::make_shared<Gosu::Image>(lPlayertemp2), false, 1, 1);
+	iplayertemp2 = erstelle_Player_data_ptr(53, 94, iplayertemp, std::make_shared<Gosu::Image>(rPlayertemp2), false, 1, 1);
+	iplayertempl1 = erstelle_Player_data_ptr(53, 94, iplayertemp2, std::make_shared<Gosu::Image>(lPlayertemp1), false, 1, 1);
+	iplayertempl2 = erstelle_Player_data_ptr(53, 94, iplayertempl1, std::make_shared<Gosu::Image>(lPlayertemp2), false, 1, 1);
 
 	elem_P_d = std::make_shared<Player_data>();
-	listenstart_P_d = iplayertemp; //Hier immer letztes Element hinschreiben
+	listenstart_P_d = iplayertemp2; //Hier immer letztes Element hinschreiben
 	elem_P_d = listenstart_P_d;
 
 };
@@ -62,9 +62,25 @@ GameState::GameState()
 void GameState:: SpielerAni() {
 	if (facing_r == true)
 	{
-		int z = 10;
-		this->iplayertemp->active = true;
+		
 		z = z - 1;
+		if (z < 5)
+		{
+			
+			this->iplayertemp->active = false;
+			this->iplayertemp2->active = true;
+
+		}
+		if (z >= 5)
+		{
+			
+			this->iplayertemp->active = true;
+			this->iplayertemp2->active = false;
+
+		}
+		if (z == 0) {
+			z = 10;
+		}
 	}
 }
 
