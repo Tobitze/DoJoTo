@@ -123,6 +123,7 @@ public:
 			collision_links = game.kollision_links(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_unten = game.kollision_unten(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
+			game.SpielerAni();
 
 				//HUD
 				if (input().down(Gosu::KB_K) && !game.pressed)

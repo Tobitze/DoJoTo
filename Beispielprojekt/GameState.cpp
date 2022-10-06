@@ -63,15 +63,15 @@ void GameState:: SpielerAni() {
 	if (facing_r == true)
 	{
 		
-		z = z - 1;
-		if (z < 5)
+		
+		if (z < 25)
 		{
 			
 			this->iplayertemp->active = false;
 			this->iplayertemp2->active = true;
 
 		}
-		if (z >= 5)
+		else if (z >= 25)
 		{
 			
 			this->iplayertemp->active = true;
@@ -79,8 +79,9 @@ void GameState:: SpielerAni() {
 
 		}
 		if (z == 0) {
-			z = 10;
+			z = 50;
 		}
+		z = z - 1;
 	}
 }
 
