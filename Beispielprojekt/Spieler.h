@@ -22,7 +22,7 @@ public:
 	Spieler();
 
 	// Beschleunigung in x-Richtung 
-	double PlayerBeschleunigung(double bx, double tx);
+	double PlayerBeschleunigung(const double bx, double tx);
 
 	// Sprung in y richtung
 	double PlayerSprung(int t, const double MAX_H, double v, bool p);
