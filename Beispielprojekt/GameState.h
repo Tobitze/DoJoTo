@@ -1,9 +1,13 @@
 #pragma once
 #include "Spieler.h"
 
+const int IMAGE_CYCLE_TIME = 20;
+
 class GameState {
 	Spieler* p1;
 public:
+
+	int t = 0;
 	//static Spieler p1;
 	Spieler* get_Spieler();
 
@@ -26,12 +30,10 @@ public:
 	};
 	std::shared_ptr<Player_data> erstelle_Player_data_ptr(double breite, double hoehe, std::shared_ptr<Player_data> next, std::shared_ptr<Gosu::Image> image, bool active, double scale_x = 1, double scale_y = 1);
 
-
-	int z = 50; //zähler für spieleranimation
 	int health = 3;
 
-	bool facing_r = false; //standardwert true, hier aber zu testzwecken false :D später soll der bool je nach tastendruck gesetzt werden
-
+	bool facing_r = true;
+	bool facing_l = false;
 	bool pressed = false;
 	bool w_pressed = false;// player sprung
 	bool a_pressed = false;// player links
@@ -75,16 +77,20 @@ public:
 
 	//Liste für Player
 	std::shared_ptr<Player_data> ilistenproblenloeserplayer;
-	std::shared_ptr<Player_data> iplayertemp;
-	std::shared_ptr<Player_data>	iplayertemp2;
-	std::shared_ptr<Player_data>	iplayertempl1;
+	std::shared_ptr<Player_data> iplayertempr1;
+	std::shared_ptr<Player_data> iplayertempr2;
+	std::shared_ptr<Player_data> iplayertempl1;
 	std::shared_ptr<Player_data> iplayertempl2;
+	std::shared_ptr<Player_data> iplayertempl1A;
+	std::shared_ptr<Player_data> iplayertempl2A;
+	std::shared_ptr<Player_data> iplayertempr1A;
+	std::shared_ptr<Player_data> iplayertempr2A;
 
 	std::shared_ptr<Player_data> elem_P_d;
 	std::shared_ptr<Player_data> listenstart_P_d; //Hier immer letztes Element hinschreiben
 	
-	std::shared_ptr<GameState::Objekt_fest> get_listenstart_O_f();
-	std::shared_ptr<GameState::Player_data> get_listenstart_P_d();
+	//std::shared_ptr<GameState::Objekt_fest> get_listenstart_O_f();
+	//std::shared_ptr<GameState::Player_data> get_listenstart_P_d();
 
 
 	GameState();
@@ -99,6 +105,6 @@ public:
 	bool kollision_links(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_oben(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_unten(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
-	void SpielerAni();
+	void SpielerModelupdate(bool attack);
 #pragma endregion	
 };

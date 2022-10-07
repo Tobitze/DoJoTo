@@ -6,7 +6,6 @@
 #include "GameState.h"
 
 
-
 GameState::GameState()
 //Level Design
 	: bodenR("boden1.jpg")
@@ -48,63 +47,66 @@ GameState::GameState()
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
-	iplayertemp = erstelle_Player_data_ptr(53, 94, ilistenproblenloeserplayer, std::make_shared<Gosu::Image>(rPlayertemp1), true, 1, 1);
-	iplayertemp2 = erstelle_Player_data_ptr(53, 94, iplayertemp, std::make_shared<Gosu::Image>(rPlayertemp2), false, 1, 1);
-	iplayertempl1 = erstelle_Player_data_ptr(53, 94, iplayertemp2, std::make_shared<Gosu::Image>(lPlayertemp1), false, 1, 1);
+	iplayertempr1 = erstelle_Player_data_ptr(53, 94, ilistenproblenloeserplayer, std::make_shared<Gosu::Image>(rPlayertemp1), true, 1, 1);
+	iplayertempr2 = erstelle_Player_data_ptr(53, 94, iplayertempr1, std::make_shared<Gosu::Image>(rPlayertemp2), false, 1, 1);
+	iplayertempl1 = erstelle_Player_data_ptr(53, 94, iplayertempr2, std::make_shared<Gosu::Image>(lPlayertemp1), false, 1, 1);
 	iplayertempl2 = erstelle_Player_data_ptr(53, 94, iplayertempl1, std::make_shared<Gosu::Image>(lPlayertemp2), false, 1, 1);
+	iplayertempl1A = erstelle_Player_data_ptr(53, 94, iplayertempl2, std::make_shared<Gosu::Image>(lPlayertempA1), false, 1, 1);
+	iplayertempl2A = erstelle_Player_data_ptr(53, 94, iplayertempl1A, std::make_shared<Gosu::Image>(lPlayertempA2), false, 1, 1);
+	iplayertempr1A = erstelle_Player_data_ptr(53, 94, iplayertempl2A, std::make_shared<Gosu::Image>(rPlayertempA1), false, 1, 1);
+	iplayertempr2A = erstelle_Player_data_ptr(53, 94, iplayertempr1A, std::make_shared<Gosu::Image>(rPlayertempA2), false, 1, 1);
 
 	elem_P_d = std::make_shared<Player_data>();
-	listenstart_P_d = iplayertempl2; //Hier immer letztes Element hinschreiben
+	listenstart_P_d = iplayertempr2A; //Hier immer letztes Element hinschreiben
 	elem_P_d = listenstart_P_d;
 
 };
 
-void GameState:: SpielerAni() { //wenn spieler nach rechts schaut, lade animation für rechts. wenn nicht, dann die für links.
-	if (facing_r == true)
+void GameState::SpielerModelupdate(bool attack) 
+	{ 
+	elem_P_d = listenstart_P_d;
+	while (elem_P_d->next != nullptr)	//Alle Grafiken deaktivieren
 	{
-		
-		
-		if (z < 25)
-		{
-			
-			this->iplayertemp->active = false;
-			this->iplayertemp2->active = true;
-
-		}
-		else if (z >= 25)
-		{
-			
-			this->iplayertemp->active = true;
-			this->iplayertemp2->active = false;
-
-		}
-		if (z == 0) {
-			z = 50;
-		}
-		z = z - 1;
+		elem_P_d->active = false;
+		elem_P_d = elem_P_d->next;
 	}
-	else if (facing_r == false)
+	t = (t == 0) ? IMAGE_CYCLE_TIME : t - 1;
+	if (attack)
 	{
-
-
-		if (z < 25)
+		if (facing_l && t < (IMAGE_CYCLE_TIME / 2))
 		{
-
-			this->iplayertempl1->active = false;
-			this->iplayertempl2->active = true;
-
+			iplayertempl1A->active = true;
 		}
-		else if (z >= 25)
+		else if (facing_l && t >= (IMAGE_CYCLE_TIME / 2))
 		{
-
-			this->iplayertempl1->active = true;
-			this->iplayertempl2->active = false;
-
+			iplayertempl2A->active = true;
 		}
-		if (z == 0) {
-			z = 50;
+		else if (facing_r && t < (IMAGE_CYCLE_TIME / 2))
+		{
+			iplayertempr1A->active = true;
 		}
-		z = z - 1;
+		else if (facing_r && t >= (IMAGE_CYCLE_TIME / 2))
+		{
+			iplayertempr2A->active = true;
+		}
+	}
+	else {
+		if (facing_l && t < (IMAGE_CYCLE_TIME / 2))
+		{
+			iplayertempl1->active = true;
+		}
+		else if (facing_l && t >= (IMAGE_CYCLE_TIME / 2))
+		{
+			iplayertempl2->active = true;
+		}
+		else if (facing_r && t < (IMAGE_CYCLE_TIME / 2))
+		{
+			iplayertempr1->active = true;
+		}
+		else if (facing_r && t >= (IMAGE_CYCLE_TIME / 2))
+		{
+			iplayertempr2->active = true;
+		}
 	}
 }
 

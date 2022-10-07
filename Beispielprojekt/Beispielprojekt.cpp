@@ -2,7 +2,7 @@
 #include <Gosu/AutoLink.hpp>
 #include <iostream>
 #include <math.h>
-//#include "Menu.cpp"
+//#include "Menu.cpp" //Also wenn, dann eh Menu.h ....		:P
 #include "GameState.h"
 
 
@@ -17,7 +17,7 @@ bool collision_unten = true;
 
 const double MAX_SPEED = 5;			//Maximale Geschwindikkeit Spieler x-Richtung
 const double MAX_HEIGHT = 100;		// Maximale Sprunghöhe Spieler y-Richtung
-const double MAX_JUMP_TIME = 7;	//Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
+const double MAX_JUMP_TIME = 7;		//Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
 const double PLAYER_ACC_UP = 1;		//Sprungkraft
 const double SCHWERKRAFT_G = 0.01;	//Schwerkraft
 //#define debugSpielerX
@@ -123,7 +123,7 @@ public:
 			collision_links = game.kollision_links(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_unten = game.kollision_unten(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
-			game.SpielerAni();
+			game.SpielerModelupdate(false);
 
 				//HUD
 				if (input().down(Gosu::KB_K) && !game.pressed)
@@ -136,7 +136,7 @@ public:
 
 				if (input().down(Gosu::KB_F) && game.health <= 0) //Respawn
 				{
-					game = GameState(); //Neues Spiel erzeugen
+					restart(); //Neues Spiel erzeugen
 				}
 
 
