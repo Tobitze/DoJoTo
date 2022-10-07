@@ -70,7 +70,7 @@ void GameState::SpielerModelupdate(bool attack)
 		elem_P_d->active = false;
 		elem_P_d = elem_P_d->next;
 	}
-	t = (t == 0) ? IMAGE_CYCLE_TIME : t - 1;
+	t = (t == 0) ? IMAGE_CYCLE_TIME : t - 1;	//Danke Grabriel :D
 	if (attack)
 	{
 		if (facing_l && t < (IMAGE_CYCLE_TIME / 2))
