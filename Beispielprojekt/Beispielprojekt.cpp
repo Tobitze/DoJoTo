@@ -246,6 +246,8 @@ public:
 					// Taste A
 				if (input().down(Gosu::KB_A) && collision_links == false) {
 					game.a_pressed = true;
+					game.facing_l = true;
+					game.facing_r = false;
 					game.get_Spieler()->speedPlayer = (game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXA) < MAX_SPEED) ?game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXA) : MAX_SPEED;
 					game.get_Spieler()->player_x =game.get_Spieler()->player_x -game.get_Spieler()->speedPlayer;
 					game.get_Spieler()->playerTimeXA =game.get_Spieler()->playerTimeXA + 1;
@@ -264,6 +266,8 @@ public:
 				// Taste D
 				if (input().down(Gosu::KB_D) && collision_rechts == false) {
 					game.d_pressed = true;
+					game.facing_l = false;
+					game.facing_r = true;
 					game.get_Spieler()->speedPlayer = (game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXD) < MAX_SPEED) ?game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXD) : MAX_SPEED;
 					// Zeile Drüber wenn beschl. kleiner als MAX_SPEED, dann beschleunigung, sonst MAX_SPEED (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
 					game.get_Spieler()->player_x =game.get_Spieler()->player_x +game.get_Spieler()->speedPlayer;
