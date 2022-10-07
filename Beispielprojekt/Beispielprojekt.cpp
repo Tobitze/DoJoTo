@@ -17,9 +17,9 @@ bool collision_unten = true;
 
 const double MAX_SPEED = 5;			//Maximale Geschwindikkeit Spieler x-Richtung
 const double MAX_HEIGHT = 100;		// Maximale Sprunghöhe Spieler y-Richtung
-const double MAX_JUMP_TIME = 10;	//Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
-const double PLAYER_ACC_UP = 2;		//Sprungkraft
-const double SCHWERKRAFT_G = 0.1;	//Schwerkraft
+const double MAX_JUMP_TIME = 7;	//Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
+const double PLAYER_ACC_UP = 1;		//Sprungkraft
+const double SCHWERKRAFT_G = 0.01;	//Schwerkraft
 //#define debugSpielerX
 //#define debugSpielerY
 
