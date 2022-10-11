@@ -2,7 +2,7 @@
 #include <Gosu/AutoLink.hpp>
 #include <iostream>
 #include <math.h>
-//#include "Menu.cpp"
+//#include "Menu.cpp" //Also wenn, dann eh Menu.h ....		:P
 #include "GameState.h"
 
 
@@ -13,13 +13,14 @@ bool collision_rechts = false;
 bool collision_links = false;
 bool collision_oben = false;
 bool collision_unten = true;
+bool newjumpallowed = true;
 
 
 const double MAX_SPEED = 5;			//Maximale Geschwindikkeit Spieler x-Richtung
 const double MAX_HEIGHT = 100;		// Maximale Sprunghöhe Spieler y-Richtung
-const double MAX_JUMP_TIME = 10;	//Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
-const double PLAYER_ACC_UP = 2;		//Sprungkraft
-const double SCHWERKRAFT_G = 0.1;	//Schwerkraft
+const double MAX_JUMP_TIME = 14;		//Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
+const double PLAYER_ACC_UP = 0.5;		//Sprungkraft
+const double SCHWERKRAFT_G = 0.01;	//Schwerkraft
 //#define debugSpielerX
 //#define debugSpielerY
 
@@ -123,7 +124,7 @@ public:
 			collision_links = game.kollision_links(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_unten = game.kollision_unten(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
-			game.SpielerAni();
+			game.SpielerModelupdate(false);
 
 				//HUD
 				if (input().down(Gosu::KB_K) && !game.pressed)
@@ -136,7 +137,7 @@ public:
 
 				if (input().down(Gosu::KB_F) && game.health <= 0) //Respawn
 				{
-					game = GameState(); //Neues Spiel erzeugen
+					restart(); //Neues Spiel erzeugen
 				}
 
 
@@ -209,6 +210,9 @@ public:
 					game.get_Spieler()->speedPlayerY = game.get_Spieler()->speedPlayerY + game.get_Spieler()->PlayerBeschleunigung(SCHWERKRAFT_G, game.get_Spieler()->fallTime);
 					game.get_Spieler()->fallTime = game.get_Spieler()->fallTime + 1;
 				}
+				else {
+					newjumpallowed = true;
+				}
 				if (collision_unten == true && !(game.get_Spieler()->speedPlayerY < 0))
 				{
 					game.get_Spieler()->speedPlayerY = 0;
@@ -224,10 +228,13 @@ public:
 					//game.get_Spieler()->jumpTime = (game.get_Spieler()->jumpTime < MAX_JUMP_TIME ? game.get_Spieler()->jumpTime : MAX_JUMP_TIME); // wie größ ist die Übergebene Sprungzeit?
 					//game.get_Spieler()->heightPlayer = (game.get_Spieler()->PlayerSprung(game.get_Spieler()->jumpTime, MAX_HEIGHT,game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->jumpTime), game.w_pressed));
 					//game.get_Spieler()->player_y =game.get_Spieler()->player_y -game.get_Spieler()->heightPlayer; // y ist invertiert im Vergleich zu koordinatensystemen
-					game.get_Spieler()->jumpTime = game.get_Spieler()->jumpTime + 1;
-					if (game.get_Spieler()->jumpTime < MAX_JUMP_TIME && collision_oben == false)
+					if (newjumpallowed)
 					{
-						game.get_Spieler()->speedPlayerY = game.get_Spieler()->speedPlayerY - PLAYER_ACC_UP;
+						game.get_Spieler()->jumpTime = game.get_Spieler()->jumpTime + 1;
+						if (game.get_Spieler()->jumpTime < MAX_JUMP_TIME && collision_oben == false)
+						{
+							game.get_Spieler()->speedPlayerY = game.get_Spieler()->speedPlayerY - PLAYER_ACC_UP;
+						}
 					}
 
 
@@ -240,12 +247,15 @@ public:
 				else {
 					game.w_pressed = false;
 					game.get_Spieler()->jumpTime = 0;
+					newjumpallowed = false;
 				}
 				//Beschleunigte Bewegung in x -------------------------------------------------------------------------
 
 					// Taste A
 				if (input().down(Gosu::KB_A) && collision_links == false) {
 					game.a_pressed = true;
+					game.facing_l = true;
+					game.facing_r = false;
 					game.get_Spieler()->speedPlayer = (game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXA) < MAX_SPEED) ?game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXA) : MAX_SPEED;
 					game.get_Spieler()->player_x =game.get_Spieler()->player_x -game.get_Spieler()->speedPlayer;
 					game.get_Spieler()->playerTimeXA =game.get_Spieler()->playerTimeXA + 1;
@@ -264,6 +274,8 @@ public:
 				// Taste D
 				if (input().down(Gosu::KB_D) && collision_rechts == false) {
 					game.d_pressed = true;
+					game.facing_l = false;
+					game.facing_r = true;
 					game.get_Spieler()->speedPlayer = (game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXD) < MAX_SPEED) ?game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXD) : MAX_SPEED;
 					// Zeile Drüber wenn beschl. kleiner als MAX_SPEED, dann beschleunigung, sonst MAX_SPEED (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
 					game.get_Spieler()->player_x =game.get_Spieler()->player_x +game.get_Spieler()->speedPlayer;
