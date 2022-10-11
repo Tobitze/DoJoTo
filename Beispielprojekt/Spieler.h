@@ -4,7 +4,7 @@ class Spieler
 public:
 
 	double player_start_x = 300;
-	double player_start_y = 456;
+	double player_start_y = 300;
 
 	double player_x;// Bewegung x-Achse
 	double player_y;// Bewegung y-achse
