@@ -89,35 +89,18 @@ public:
 					0.0,
 					0.5, 0.5);
 				//HUD
-				if (game.health == 3)
-				{
-					game.hudHP.draw_rot(120, 40, 100.0,
-						0.0,
-						0.5, 0.5);
+				switch (game.health) {
+				case 3:
+					game.hudHP.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5); break;
+				case 2:
+					game.hudHP2.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5); break;
+				case 1:
+					game.hudHP1.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5); break;
+				default:
+					game.hudHP0.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5);
+					game.GameOver.draw_rot(400, 300, 150.0, 0.0, 0.5, 0.5);
 				}
-				else if (game.health == 2)
-				{
-					game.hudHP2.draw_rot(120, 40, 100.0,
-						0.0,
-						0.5, 0.5);
-				}
-				else if (game.health == 1)
-				{
-					game.hudHP1.draw_rot(120, 40, 100.0,
-						0.0,
-						0.5, 0.5);
-				}
-				else if (game.health <= 0)
-				{
-					game.hudHP0.draw_rot(120, 40, 100.0,
-						0.0,
-						0.5, 0.5);
-					game.GameOver.draw_rot(400, 300, 150.0,
-						0.0,
-						0.5, 0.5);
 
-
-				}
 				//Player rendering
 				game.elem_P_d = game.listenstart_P_d;
 				while (game.elem_P_d->next != nullptr)
