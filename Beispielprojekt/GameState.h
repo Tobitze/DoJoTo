@@ -29,6 +29,15 @@ public:
 		std::shared_ptr<Gosu::Image> image;
 	};
 	std::shared_ptr<Player_data> erstelle_Player_data_ptr(double breite, double hoehe, std::shared_ptr<Player_data> next, std::shared_ptr<Gosu::Image> image, bool active, double scale_x = 1, double scale_y = 1);
+	struct Objekt_damage
+	{
+		double posx, posy, startx, starty, posz;
+		double breite, hoehe, scale_x, scale_y;
+		std::shared_ptr<Objekt_damage> next;
+		std::shared_ptr<Gosu::Image> image;
+	};
+	std::shared_ptr<Objekt_damage> erstelle_Objekt_damage_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_damage> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1);
+
 
 	int health = 3;
 
@@ -52,7 +61,7 @@ public:
 	Gosu::Image hudHP1;
 	Gosu::Image hudHP0;
 	Gosu::Image GameOver;
-	//Player, temp
+	//Player	//Aus dem Provisorium ist ein dauerhafter Zustand geworden xD
 	Gosu::Image rPlayertemp1;
 	Gosu::Image rPlayertemp2;
 	Gosu::Image rPlayertempA1;
@@ -89,8 +98,17 @@ public:
 	std::shared_ptr<Player_data> elem_P_d;
 	std::shared_ptr<Player_data> listenstart_P_d; //Hier immer letztes Element hinschreiben
 	
-	//std::shared_ptr<GameState::Objekt_fest> get_listenstart_O_f();
-	//std::shared_ptr<GameState::Player_data> get_listenstart_P_d();
+	//Liste für Objekt_damage
+
+	std::shared_ptr<Objekt_damage> ilistenproblemloeserobjektdamage;
+	std::shared_ptr<Objekt_damage> ikisteschaden;	//Reines Test-Objekt, kann auch wieder weg...
+	//Hier neue einfügen
+
+	std::shared_ptr<Objekt_damage> elem_O_d;
+	std::shared_ptr<Objekt_damage> listenstart_O_d; //Hier immer letztes Element hinschreiben
+
+
+
 
 
 	GameState();
@@ -101,10 +119,12 @@ public:
 
 #pragma region 1 //Kollsionskäse
 	double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2);// , Spieler* p1);
+	double distance_from_player(std::shared_ptr<GameState::Objekt_damage> o2);
 	bool kollision_rechts(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, std::shared_ptr<Spieler> p1);
 	bool kollision_links(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_oben(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_unten(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
+	bool kollsion_damage(std::shared_ptr<GameState::Objekt_damage> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);
 	void SpielerModelupdate(bool attack);
 #pragma endregion	
 };

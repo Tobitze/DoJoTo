@@ -14,13 +14,20 @@ bool collision_links = false;
 bool collision_oben = false;
 bool collision_unten = true;
 bool newjumpallowed = true;
+bool attack = false;
+bool collision_damage = false;
+int damage_timer = 0;
 
 
-const double MAX_SPEED = 5;			//Maximale Geschwindikkeit Spieler x-Richtung
-const double MAX_HEIGHT = 100;		// Maximale Sprunghöhe Spieler y-Richtung
+const double DAMAGE_TIME_CYCLE = 20;	//Zeitintervall, nachdem DAMAGE_COUNT Herzen abgezogen werden
+const double DAMAGE_COUNT = 1;			//Anzahl der Herzen welche man abgezogen bekommt
+const double PLAYER_VOIDKILL_DISTANCE = 2000;
+const int RENDER_DISTANCE = 5000;
+const double MAX_SPEED = 5;				//Maximale Geschwindikkeit Spieler x-Richtung
+const double MAX_HEIGHT = 100;			// Maximale Sprunghöhe Spieler y-Richtung
 const double MAX_JUMP_TIME = 14;		//Maximale Zeit, die w gedrückt werden kann, um Sprungdauer zu beeinflussen.
 const double PLAYER_ACC_UP = 0.5;		//Sprungkraft
-const double SCHWERKRAFT_G = 0.01;	//Schwerkraft
+const double SCHWERKRAFT_G = 0.01;		//Schwerkraft
 //#define debugSpielerX
 //#define debugSpielerY
 
@@ -62,12 +69,22 @@ public:
 				game.elem_O_f = game.listenstart_O_f; //Hier immer letztes Element hinschreiben!  (Weil wegen sonst wird der Player gerendert wo er net soll, weil der is ja starr)
 				while (game.elem_O_f->next != nullptr)
 				{
-					if (game.distance_from_player(game.elem_O_f) < 5000)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
+					if (game.distance_from_player(game.elem_O_f) < RENDER_DISTANCE)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
 					{
 						game.elem_O_f->image->draw(game.elem_O_f->posx, game.elem_O_f->posy, game.elem_O_f->posz);
 					}
 					game.elem_O_f = game.elem_O_f->next;
 				}
+				game.elem_O_d = game.listenstart_O_d;
+				while (game.elem_O_d->next != nullptr)
+				{
+					if (game.distance_from_player(game.elem_O_d) < RENDER_DISTANCE)  //Objekte werden nur gerendert wenn Sie näher als 5k Pixel sind
+					{
+						game.elem_O_d->image->draw(game.elem_O_d->posx, game.elem_O_d->posy, game.elem_O_d->posz);
+					}
+					game.elem_O_d = game.elem_O_d->next;
+				}
+
 				game.hintergrund.draw_rot(400, 320, 10.0,
 					0.0,
 					0.5, 0.5);
@@ -95,14 +112,12 @@ public:
 					game.hudHP0.draw_rot(120, 40, 100.0,
 						0.0,
 						0.5, 0.5);
-					game.GameOver.draw_rot(400, 300, 100.0,
+					game.GameOver.draw_rot(400, 300, 150.0,
 						0.0,
 						0.5, 0.5);
 
 
 				}
-				//game.rPlayertemp1.draw(p1.player_start_x,game.get_Spieler()->player_start_y, 100, 1, 1);
-				//game.rPlayertemp2.draw(p1.player_start_x,game.get_Spieler()->player_start_y, 100, 1, 1);    //Veraltet
 				//Player rendering
 				game.elem_P_d = game.listenstart_P_d;
 				while (game.elem_P_d->next != nullptr)
@@ -124,7 +139,8 @@ public:
 			collision_links = game.kollision_links(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_unten = game.kollision_unten(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
-			game.SpielerModelupdate(false);
+			collision_damage = game.kollsion_damage(game.listenstart_O_d, game.elem_P_d);
+			game.SpielerModelupdate(attack);
 
 				//HUD
 				if (input().down(Gosu::KB_K) && !game.pressed)
@@ -140,57 +156,44 @@ public:
 					restart(); //Neues Spiel erzeugen
 				}
 
-
-				//Reine Test-Features, können bei working Player weg
-				if (input().down(Gosu::KB_LEFT))
-				{
-					if (collision_links == false)
-					{
-
-						game.get_Spieler()->player_x = game.get_Spieler()->player_x - 5;
-					}
-				}
-				if (input().down(Gosu::KB_RIGHT))
-				{
-					if (collision_rechts == false)
-					{
-						game.get_Spieler()->player_x = game.get_Spieler()->player_x + 5;
-					}
-
-				}
-				if (input().down(Gosu::KB_UP))
-				{
-					if (collision_oben == false)
-					{
-						game.get_Spieler()->player_y =game.get_Spieler()->player_y - 5;
-					}
-				}
-				if (input().down(Gosu::KB_DOWN))
-				{
-					if (collision_unten == false)
-					{
-						game.get_Spieler()->player_y =game.get_Spieler()->player_y + 5;
-					}
-				}
-
-
+				attack = (input().down(Gosu::KB_SPACE)) ? true : false;		//Danke Gabriel :D
+				
 				//Haupt-Map-Move-Funktionen
 				game.elem_O_f = game.listenstart_O_f;
 				while (game.elem_O_f->next != nullptr)
 				{
-					if (game.distance_from_player(game.elem_O_f) < 10000)	//Renderdistanz
-					{
-						game.elem_O_f->posx = game.elem_O_f->startx - (game.get_Spieler()->player_x - game.get_Spieler()->player_start_x);
-						game.elem_O_f->posy = game.elem_O_f->starty - (game.get_Spieler()->player_y - game.get_Spieler()->player_start_y);
-						game.elem_O_f = game.elem_O_f->next;
-					}
+					game.elem_O_f->posx = game.elem_O_f->startx - (game.get_Spieler()->player_x - game.get_Spieler()->player_start_x);
+					game.elem_O_f->posy = game.elem_O_f->starty - (game.get_Spieler()->player_y - game.get_Spieler()->player_start_y);
+					game.elem_O_f = game.elem_O_f->next;
+				}
+				game.elem_O_d = game.listenstart_O_d;
+				while (game.elem_O_d->next != nullptr)
+				{
+					game.elem_O_d->posx = game.elem_O_d->startx - (game.get_Spieler()->player_x - game.get_Spieler()->player_start_x);
+					game.elem_O_d->posy = game.elem_O_d->starty - (game.get_Spieler()->player_y - game.get_Spieler()->player_start_y);
+					game.elem_O_d = game.elem_O_d->next;
 				}
 
-				if (game.get_Spieler()->player_y > 1000) //Player Killen und anhalten wenn er zu tief fällt
+
+				if (game.get_Spieler()->player_y > PLAYER_VOIDKILL_DISTANCE) //Player Killen und anhalten wenn er zu tief fällt
 				{
 					restart();
 					collision_unten = true;
 				}
+
+				if (collision_damage)
+				{
+					if (game.health >= 0 && damage_timer == 0)
+					{
+						game.health = game.health - DAMAGE_COUNT;
+						damage_timer = DAMAGE_TIME_CYCLE;
+					}
+					damage_timer--;
+				}
+				else {
+					damage_timer = DAMAGE_TIME_CYCLE;
+				}
+
 
 				/*------------------------------------------------------------------------------------------------------------
 																	Player

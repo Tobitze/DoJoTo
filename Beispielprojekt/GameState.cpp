@@ -60,6 +60,17 @@ GameState::GameState()
 	listenstart_P_d = iplayertempr2A; //Hier immer letztes Element hinschreiben
 	elem_P_d = listenstart_P_d;
 
+	//Liste für Objekt_damage
+
+	ilistenproblemloeserobjektdamage = erstelle_Objekt_damage_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);	//Never touch a working system
+	ikisteschaden = erstelle_Objekt_damage_ptr(80, 80, 100, 469, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(Kiste), 1, 1);
+	//Hier neue einfügen
+
+	elem_O_d = std::make_shared<Objekt_damage>();
+	listenstart_O_d = ikisteschaden; //Hier immer letztes Element hinschreiben
+
+
+
 };
 
 void GameState::SpielerModelupdate(bool attack) 
@@ -176,11 +187,35 @@ std::shared_ptr<GameState::Player_data> GameState::erstelle_Player_data_ptr(doub
 	return std::make_shared<GameState::Player_data>(temp);
 }
 
+std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_damage> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y)
+{
+	GameState::Objekt_damage temp;
+	//double breitetemp2 = (double)image->width();
+	temp.breite = breite * scale_x;
+	//temp.breite = breitetemp2;
+	temp.hoehe = hoehe * scale_y;
+	//temp.hoehe = (double)image->height();
+	temp.posx = posx;
+	temp.posy = posy;
+	temp.startx = posx;
+	temp.starty = posy;
+	temp.posz = posz;
+
+	temp.next = next;
+	temp.image = image;
+	temp.scale_x = scale_x;
+	temp.scale_y = scale_y;
+	return std::make_shared<GameState::Objekt_damage>(temp);
+}
 	
 
 	
 	 
 	double GameState::distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2)
+	{
+		return sqrt(pow((this->p1->player_x - o2->startx), 2) + pow((this->p1->player_y - o2->starty), 2));
+	}
+	double GameState::distance_from_player(std::shared_ptr<GameState::Objekt_damage> o2)
 	{
 		return sqrt(pow((this->p1->player_x - o2->startx), 2) + pow((this->p1->player_y - o2->starty), 2));
 	}
@@ -269,3 +304,23 @@ std::shared_ptr<GameState::Player_data> GameState::erstelle_Player_data_ptr(doub
 		}
 		return tmp;
 	}	
+	bool GameState::kollsion_damage(std::shared_ptr<GameState::Objekt_damage> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp)
+	{
+		std::shared_ptr<GameState::Objekt_damage> elem_O_d = listenstart;
+		bool tmp = false;
+		while (elem_O_d->next != nullptr)
+		{
+			if (distance_from_player(elem_O_d) < 5000)
+			{
+				if (this->p1->player_x < (elem_O_d->startx + elem_O_d->breite - 1) && (this->p1->player_x + iplayertemp->breite - 1) >(elem_O_d->startx))
+				{
+					if ((this->p1->player_y + iplayertemp->hoehe -1 ) > elem_O_d->starty && (this->p1->player_y) < (elem_O_d->starty + elem_O_d->hoehe - 1))
+					{
+						tmp = true;
+					}
+				}
+			}
+			elem_O_d = elem_O_d->next;
+		}
+		return tmp;
+	}
