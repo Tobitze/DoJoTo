@@ -263,9 +263,6 @@ void GameState::Lasershooter()
 			elem_O_f = elem_O_f->next;
 		}
 	}
-
-
-
 }
 
 
