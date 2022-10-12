@@ -60,18 +60,33 @@ GameState::GameState()
 	g1 = new Spieler();
 
 	ilistenproblenloeser = erstelle_Objekt_fest_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);					 //Einfach nicht hinterfragen
+	
+	//Boden
 	ibodenR = erstelle_Objekt_fest_ptr(474, 58, 476, 550, 100, ilistenproblenloeser, std::make_shared<Gosu::Image>(bodenR),1 ,1);
 	ibodenL = erstelle_Objekt_fest_ptr(474, 58, 0, 550, 100, ibodenR, std::make_shared<Gosu::Image>(bodenL), 1, 1);				 //Linked list über pointer
+	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_l2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -474, -30, 100, iBoden3, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+
+																																 //Objekte
 	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste), 1, 1);
+	//Plattformen
 	iPlattform1 = erstelle_Objekt_fest_ptr(200, 43, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
 	iPlattform2 = erstelle_Objekt_fest_ptr(200, 43, 700, 10, 100, iPlattform1, std::make_shared<Gosu::Image>(Plattform2), 1, 1);
+	//Wände
 	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iPlattform2, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	iWand_r2 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 150, iWand_r1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	iWand_l1 = erstelle_Objekt_fest_ptr(58, 473, 0, 90, 100, iWand_r2, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	iWand_l2 = erstelle_Objekt_fest_ptr(58, 473, 0, 0, 100, iWand_l1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
-	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_l2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
-	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -474, -30, 100, iBoden3, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iWand_r3 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iPlattform2, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand_r4 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 150, iWand_r1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand_l3 = erstelle_Objekt_fest_ptr(58, 473, 0, 90, 100, iWand_r2, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	iWand_l4 = erstelle_Objekt_fest_ptr(58, 473, 0, 0, 100, iWand_l1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	iBoden5 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_l2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iBoden6 = erstelle_Objekt_fest_ptr(474, 58, -474, -30, 100, iBoden3, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+
 	iWand_destr_test = erstelle_Objekt_fest_ptr(57, 99, 600, 400, 100, iBoden4, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
+
+
 
 	elem_O_f = std::make_shared<Objekt_fest>();
 	listenstart_O_f = iWand_destr_test; //Hier immer letztes Element hinschreiben

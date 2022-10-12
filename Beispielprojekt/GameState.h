@@ -119,22 +119,44 @@ public:
 	//Game Window
 
 	std::shared_ptr<Objekt_fest> ilistenproblenloeser;					 //Einfach nicht hinterfragen
-	std::shared_ptr<Objekt_fest> ibodenR;
-	std::shared_ptr<Objekt_fest> ibodenL;				 //Linked list über pointer
+																		 //Linked list über pointer
+	
+	//Objekte
+
 	std::shared_ptr<Objekt_fest> iKiste;
+
+	//Plattformen
 	std::shared_ptr<Objekt_fest> iPlattform1;
 	std::shared_ptr<Objekt_fest> iPlattform2;
-	std::shared_ptr<Objekt_fest> iWand_r1;
-	std::shared_ptr<Objekt_fest> iWand_r2;
+	
+	//Böden
+	std::shared_ptr<Objekt_fest> ibodenR;
+	std::shared_ptr<Objekt_fest> ibodenL;
 	std::shared_ptr<Objekt_fest> iBoden3;
 	std::shared_ptr<Objekt_fest> iBoden4;
 	std::shared_ptr<Objekt_fest> iBoden5;
+	
+	
+	std::shared_ptr<Objekt_fest> iBoden6;
+	std::shared_ptr<Objekt_fest> iBoden7;
+	std::shared_ptr<Objekt_fest> iBoden8;
+	
+
+//Wände links
 	std::shared_ptr<Objekt_fest> iWand_l1;
 	std::shared_ptr<Objekt_fest> iWand_l2;
-	std::shared_ptr<Objekt_fest> iWand_destr_test;
+	std::shared_ptr<Objekt_fest> iWand_l3;
+	std::shared_ptr<Objekt_fest> iWand_l4;
 
+//Wände rechts
+	std::shared_ptr<Objekt_fest> iWand_r1;
+	std::shared_ptr<Objekt_fest> iWand_r2;
+	std::shared_ptr<Objekt_fest> iWand_r3;
+	std::shared_ptr<Objekt_fest> iWand_r4;
+	std::shared_ptr<Objekt_fest> iWand_destr_test;
 	std::shared_ptr<Objekt_fest> elem_O_f;
 	std::shared_ptr<Objekt_fest> listenstart_O_f; //Hier immer letztes Element hinschreiben
+
 
 	//Liste für Player
 	std::shared_ptr<Player_data> ilistenproblenloeserplayer;
