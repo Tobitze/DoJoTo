@@ -12,9 +12,11 @@ GameState::GameState()
 	, bodenL("boden1.jpg")
 	, Wand("boden1.jpg")
 	, Wand_r1("Wand rechts.png")
+	, Wand_l1("Wand links.png")
 	, hintergrund("hintergrund.jfif")
 	, Kiste("Block.png")
 	, Plattform1("Plattform1.png")
+	, Plattform2("Plattform1.png")
 	//HUD
 	, hudHP("hud_hp.png")
 	, hudHP2("hud_hp-1.png")
@@ -33,6 +35,12 @@ GameState::GameState()
 	, lPlayertempA1("l-Dr.Salzig1-attack.png")
 	, lPlayertempA2("l-Dr.Salzig2-attack.png")
 	, Laserbild("Laser.png")
+	// Gegener
+	, MisterCoco("Mister Coco.png")
+	, Wand_destr_0("Wand_destr_r.png")
+	, Wand_destr_1("Wand_destr_r_1.png")
+	, Wand_destr_2("Wand_destr_r_2.png")
+	, Wand_destr_3("Wand_destr_r_3.png")
 	
 	//Sounds
 	, HintergrundSound("HintergrundSound.mp3")
@@ -55,11 +63,17 @@ GameState::GameState()
 	ibodenL = erstelle_Objekt_fest_ptr(474, 58, 0, 550, 100, ibodenR, std::make_shared<Gosu::Image>(bodenL), 1, 1);				 //Linked list über pointer
 	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste), 1, 1);
 	iPlattform1 = erstelle_Objekt_fest_ptr(200, 43, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
-	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iPlattform1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
-	iWand = erstelle_Objekt_fest_ptr(474, 58, 700, 500, 100, iWand_r1, std::make_shared<Gosu::Image>(Wand), 1, 1);
+	iPlattform2 = erstelle_Objekt_fest_ptr(200, 43, 700, 10, 100, iPlattform1, std::make_shared<Gosu::Image>(Plattform2), 1, 1);
+	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iPlattform2, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand_r2 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 150, iWand_r1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand_l1 = erstelle_Objekt_fest_ptr(58, 473, 0, 90, 100, iWand_r2, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	iWand_l2 = erstelle_Objekt_fest_ptr(58, 473, 0, 0, 100, iWand_l1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_l2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -474, -30, 100, iBoden3, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iWand_destr_test = erstelle_Objekt_fest_ptr(57, 99, 600, 400, 100, iBoden4, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = iWand_r1; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = iWand_destr_test; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
@@ -79,7 +93,7 @@ GameState::GameState()
 	//Liste für Objekt_damage
 
 	ilistenproblemloeserobjektdamage = erstelle_Objekt_damage_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);	//Never touch a working system
-	ikisteschaden = erstelle_Objekt_damage_ptr(80, 80, 100, 469, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(Kiste), 1, 1);
+	ikisteschaden = erstelle_Objekt_damage_ptr(80, 80, 90, 450, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(MisterCoco), 1, 1);
 	//Hier neue einfügen
 
 	elem_O_d = std::make_shared<Objekt_damage>();
@@ -96,9 +110,13 @@ void GameState::Rolle() //entrollen der schriftrolle
 		Scroll.draw_rot(400, 174, 150.0, 0.0, 0.5, 0.5);
 		i = i - 1;
 	}
-	else if (i <= (i / 2) && i > 0)
+	else if (i <= (i / 3) && i > 2*i/3)
 	{
 		Scroll2.draw_rot(400, 243, 150.0, 0.0, 0.5, 0.5);
+	}
+	else if (i <= (2*i / 3) && i > 0)
+	{
+		Scroll3.draw_rot(400, 291, 150.0, 0.0, 0.5, 0.5);
 	}
 	else if (i ==0)
 	{
@@ -163,7 +181,7 @@ void GameState::Lasershooter()
 	if (attack)
 	{
 		tl = (tl == 0) ? LASER_SHOOTING_TIMER : tl - 1;	//Danke Gabriel :D
-		if (tl == 1)
+		if (tl == LASER_SHOOTING_TIMER - 1)
 		{
 			if (facing_r)
 			{
@@ -171,7 +189,6 @@ void GameState::Lasershooter()
 			}
 			else {
 				Laservektor.push_back(erstelle_Laser((p1->player_start_x), p1->player_y + 19, facing_r));
-
 			}
 		}
 	}
@@ -189,6 +206,62 @@ void GameState::Lasershooter()
 		else {
 			Laservektor.at(i).posx = Laservektor.at(i).posx - LASER_SPEED;
 		}
+		if (distance_from_player(i) > LASER_RENDERDISTANCE)
+		{
+			Laservektor.erase(Laservektor.begin() + i);
+		}
+	}
+	std::shared_ptr<GameState::Objekt_fest> elem_O_f = listenstart_O_f;
+	bool crash = false;
+	for (size_t i = 0; i < Laservektor.size(); i++)	//Zweite schleife, sonst wird auf evtl. gelöschtes zugegriffen...
+	{
+		elem_O_f = listenstart_O_f;
+		crash = false;
+
+		while (elem_O_f->next != nullptr && crash == false)
+		{
+			if (elem_O_f->nohitbox == false)
+			{
+				if (Laservektor.at(i).posx < (elem_O_f->posx + elem_O_f->breite - 1) && (Laservektor.at(i).posx + 25) > (elem_O_f->posx))
+				{
+					if ((Laservektor.at(i).posy + 1) > elem_O_f->posy && (Laservektor.at(i).posy) < (elem_O_f->posy + elem_O_f->hoehe - 1))
+					{
+						//Theoretisch muss hier jede Laser - Objekt - Kollision behandelt werden
+						
+						Laservektor.erase(Laservektor.begin() + i);;
+						crash = true;	//Setzen des bools, um weitere ausführung der Schleife zu verhindern (Sonst wird auf gelöschtes zugegriffen...)
+						if (elem_O_f->destroyable)
+						{
+							switch (elem_O_f->destroy_state)
+							{
+							case 0:
+								elem_O_f->destroy_state = 1;
+								elem_O_f->image = std::make_shared<Gosu::Image>(Wand_destr_1);
+								break;
+							case 1:
+								elem_O_f->destroy_state = 2;
+								elem_O_f->image = std::make_shared<Gosu::Image>(Wand_destr_2);
+								break;
+							case 2:
+								elem_O_f->destroy_state = 3;
+								elem_O_f->image = std::make_shared<Gosu::Image>(Wand_destr_3);
+								break;
+							case 3:
+								elem_O_f->destroy_state = 4;
+								elem_O_f->startx = 100000;
+								elem_O_f->starty = 100000;
+								elem_O_f->posx = 100000;
+								elem_O_f->posy = 100000;
+								break;
+							default:
+								break;
+							}
+						}
+					}
+				}
+			}
+			elem_O_f = elem_O_f->next;
+		}
 	}
 }
 
@@ -203,7 +276,7 @@ Spieler* GameState::get_Gegner()
 	return this->g1;
 }
 
-std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y, bool hit)
+std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y, bool hit, bool destr, int destroy_state)
 {
 	GameState::Objekt_fest temp;
 	//double breitetemp2 = (double)image->width();
@@ -222,6 +295,8 @@ std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(doub
 	temp.image = image;
 	temp.scale_x = scale_x;
 	temp.scale_y = scale_y;
+	temp.destroyable = destr;
+	temp.destroy_state = destroy_state;
 	return std::make_shared<GameState::Objekt_fest>(temp);
 }
 	
@@ -281,6 +356,10 @@ GameState::Laser GameState::erstelle_Laser(double x, double y, bool d_r)
 	double GameState::distance_from_player(std::shared_ptr<GameState::Objekt_damage> o2)
 	{
 		return sqrt(pow((this->p1->player_x - o2->startx), 2) + pow((this->p1->player_y - o2->starty), 2));
+	}
+	double GameState::distance_from_player(int vektorlisteni)
+	{
+		return sqrt(pow((this->p1->player_x - Laservektor.at(vektorlisteni).posx), 2) + pow((this->p1->player_y - (Laservektor.at(vektorlisteni).posy)), 2));
 	}
 	bool GameState::kollision_rechts(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp)//, std::shared_ptr<Spieler> p1)//std::shared_ptr<GameState::Objekt_fest> listenstart_O_f, Spieler p1, std::shared_ptr<GameState::Player_data> iplayertemp)
 	{

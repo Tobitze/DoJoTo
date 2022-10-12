@@ -3,7 +3,8 @@
 
 const int IMAGE_CYCLE_TIME = 20;
 const int LASER_SHOOTING_TIMER = 20;
-const double LASER_SPEED = 10;
+const double LASER_SPEED = 10;		//Sollte nicht größer sein als Laser breit, sonst tunnelt er durch Objekte
+const double LASER_RENDERDISTANCE = 1000;
 
 class GameState {
 	Spieler* p1;
@@ -21,13 +22,14 @@ public:
 	{
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
-		bool nohitbox;
+		bool nohitbox, destroyable;
+		int destroy_state;
 		std::shared_ptr<Objekt_fest> next;
 		std::shared_ptr<Gosu::Image> image;
 		//Objekt_fest* next;
 		//Gosu::Image* image;
 	};
-	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1, bool hit = false);
+	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1, bool hit = false, bool destr = false, int destroy_state = 0);
 	struct Player_data
 	{
 		bool active;
@@ -57,7 +59,7 @@ public:
 	void Lasershooter();
 
 	int health = 3;
-	int i = 8; //entrollen der schriftrolle counter
+	int i = 12; //entrollen der schriftrolle counter
 
 	bool facing_r = true;
 	bool facing_l = false;
@@ -71,9 +73,11 @@ public:
 	Gosu::Image bodenL;
 	Gosu::Image Wand;
 	Gosu::Image Wand_r1; 
+	Gosu::Image Wand_l1;
 	Gosu::Image hintergrund;
 	Gosu::Image Kiste;
 	Gosu::Image Plattform1;
+	Gosu::Image Plattform2;
 	//HUD
 	Gosu::Image hudHP;
 	Gosu::Image hudHP2;
@@ -81,6 +85,7 @@ public:
 	Gosu::Image hudHP0;
 	Gosu::Image Scroll;
 	Gosu::Image Scroll2;
+	Gosu::Image Scroll3;
 	Gosu::Image GameOver;
 	//Player	//Aus dem Provisorium ist ein dauerhafter Zustand geworden xD
 	Gosu::Image rPlayertemp1;
@@ -91,8 +96,12 @@ public:
 	Gosu::Image lPlayertemp2;
 	Gosu::Image lPlayertempA1;
 	Gosu::Image lPlayertempA2;
-
+	Gosu::Image MisterCoco;
 	Gosu::Image Laserbild;
+	Gosu::Image Wand_destr_0;
+	Gosu::Image Wand_destr_1;
+	Gosu::Image Wand_destr_2;
+	Gosu::Image Wand_destr_3;
 
 	//Sounds
 	 
@@ -114,8 +123,15 @@ public:
 	std::shared_ptr<Objekt_fest> ibodenL;				 //Linked list über pointer
 	std::shared_ptr<Objekt_fest> iKiste;
 	std::shared_ptr<Objekt_fest> iPlattform1;
+	std::shared_ptr<Objekt_fest> iPlattform2;
 	std::shared_ptr<Objekt_fest> iWand_r1;
-	std::shared_ptr<Objekt_fest> iWand;
+	std::shared_ptr<Objekt_fest> iWand_r2;
+	std::shared_ptr<Objekt_fest> iBoden3;
+	std::shared_ptr<Objekt_fest> iBoden4;
+	std::shared_ptr<Objekt_fest> iBoden5;
+	std::shared_ptr<Objekt_fest> iWand_l1;
+	std::shared_ptr<Objekt_fest> iWand_l2;
+	std::shared_ptr<Objekt_fest> iWand_destr_test;
 
 	std::shared_ptr<Objekt_fest> elem_O_f;
 	std::shared_ptr<Objekt_fest> listenstart_O_f; //Hier immer letztes Element hinschreiben
@@ -156,6 +172,7 @@ public:
 #pragma region 1 //Kollsionskäse
 	double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2);// , Spieler* p1);
 	double distance_from_player(std::shared_ptr<GameState::Objekt_damage> o2);
+	double distance_from_player(int Vektorlisteni);
 	bool kollision_rechts(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, std::shared_ptr<Spieler> p1);
 	bool kollision_links(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_oben(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
