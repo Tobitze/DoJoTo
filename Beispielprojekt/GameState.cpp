@@ -128,12 +128,12 @@ void GameState::Lasershooter()
 	for (Laser L : Laservektor)
 	{ 
 		L.posx = L.startx + (p1->player_x - p1->player_x_alt);
-		L.posy = L.starty + p1->player_y;
+		L.posy = L.starty - (p1->player_y - p1->player_start_y);
 	}
 	if (attack)
 	{
 		tl = (tl == 0) ? LASER_SHOOTING_TIMER : tl - 1;	//Danke Gabriel :D
-		Laservektor.push_back(erstelle_Laser(p1->player_x, p1->player_start_y, true));
+		Laservektor.push_back(erstelle_Laser(p1->player_x, p1->player_y, true));
 	}
 	else {
 		tl = LASER_SHOOTING_TIMER;
