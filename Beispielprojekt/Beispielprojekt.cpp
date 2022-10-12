@@ -132,6 +132,7 @@ public:
 		void update() override
 		{
 			//while (game_start == true) {
+			//HintergrundSound.play(1, 1, true);
 			collision_rechts = game.kollision_rechts(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_links = game.kollision_links(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
@@ -203,6 +204,7 @@ public:
 
 				if (collision_oben == true && game.get_Spieler()->speedPlayerY < 0)
 				{
+					
 					game.get_Spieler()->speedPlayerY = 0;
 					game.get_Spieler()->jumpTime = MAX_JUMP_TIME;
 				}

@@ -93,6 +93,17 @@ public:
 
 	Gosu::Image Laserbild;
 
+	//Sounds
+	Gosu::Sample HintergrundSound;
+	Gosu::Sample SprungSound;
+	Gosu::Sample GewonnenSound;
+	Gosu::Sample VerlorenSound;
+	Gosu::Sample TuerSound;
+	Gosu::Sample SchadenSound;
+	Gosu::Sample WandSound;
+	Gosu::Sample SchadenGegnerSound;
+	Gosu::Sample LaserSound;
+
 	//Game Window
 
 	std::shared_ptr<Objekt_fest> ilistenproblenloeser;					 //Einfach nicht hinterfragen
