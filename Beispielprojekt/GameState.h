@@ -115,6 +115,7 @@ public:
 	//Gosu::Sample WandSound;
 	//Gosu::Sample SchadenGegnerSound;
 	//Gosu::Sample LaserSound;
+	Gosu::Sample TestSound;
 
 	//Game Window
 

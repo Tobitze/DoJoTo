@@ -53,7 +53,7 @@ GameState::GameState()
 	, WandSound("Wand.mp3")
 	, SchadenGegnerSound("Gegner_Schaden.mp3") 
 	, LaserSound("Laser.mp3")*/
-
+	, TestSound("Windows Critical Stop.wav")
 {
 
 	p1 = new Spieler();
@@ -206,6 +206,7 @@ void GameState::Lasershooter()
 			else {
 				Laservektor.push_back(erstelle_Laser((p1->player_start_x), p1->player_y + 19, facing_r));
 			}
+			TestSound.play();
 		}
 	}
 	else {
