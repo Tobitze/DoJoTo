@@ -132,7 +132,7 @@ public:
 		void update() override
 		{
 			//while (game_start == true) {
-			//HintergrundSound.play(1, 1, true);
+			 //game.Hintergrundsound;
 			collision_rechts = game.kollision_rechts(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_links = game.kollision_links(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
@@ -145,7 +145,6 @@ public:
 				{
 					game.pressed = true;
 					game.health = game.health - 1;
-
 				}
 				else if (!input().down(Gosu::KB_K)) { game.pressed = false; }
 
@@ -224,7 +223,7 @@ public:
 
 				game.get_Spieler()->player_y = game.get_Spieler()->player_y + game.get_Spieler()->speedPlayerY;		//Player um seinen Y_Speed entsprechend moven
 
-				if (input().down(Gosu::KB_W)) {
+				if (input().down(Gosu::KB_W) && game.health > 0) {
 
 					game.w_pressed = true;
 
@@ -256,7 +255,7 @@ public:
 
 					// Taste A
 				game.get_Spieler()->player_x_alt = game.get_Spieler()->player_x;	//Don't touch, sonst gehen die Laser nimmer
-				if (input().down(Gosu::KB_A) && collision_links == false) {
+				if (input().down(Gosu::KB_A) && collision_links == false && game.health > 0) {
 					game.a_pressed = true;
 					game.facing_l = true;
 					game.facing_r = false; 
@@ -276,7 +275,7 @@ public:
 					game.get_Spieler()->playerTimeXA = 0;
 				}
 				// Taste D
-				if (input().down(Gosu::KB_D) && collision_rechts == false) {
+				if (input().down(Gosu::KB_D) && collision_rechts == false && game.health > 0) {
 					game.d_pressed = true;
 					game.facing_l = false;
 					game.facing_r = true;

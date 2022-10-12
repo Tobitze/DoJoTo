@@ -23,12 +23,13 @@ public:
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
 		bool nohitbox, destroyable;
+		int destroy_state;
 		std::shared_ptr<Objekt_fest> next;
 		std::shared_ptr<Gosu::Image> image;
 		//Objekt_fest* next;
 		//Gosu::Image* image;
 	};
-	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1, bool hit = false, bool destr = false);
+	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1, bool hit = false, bool destr = false, int destroy_state = 0);
 	struct Player_data
 	{
 		bool active;
@@ -97,9 +98,15 @@ public:
 	Gosu::Image lPlayertempA2;
 	Gosu::Image MisterCoco;
 	Gosu::Image Laserbild;
+	Gosu::Image Wand_destr_0;
+	Gosu::Image Wand_destr_1;
+	Gosu::Image Wand_destr_2;
+	Gosu::Image Wand_destr_3;
 
 	//Sounds
-	Gosu::Sample HintergrundSound;
+	 
+		
+	Gosu::Song HintergrundSound;
 	Gosu::Sample SprungSound;
 	Gosu::Sample GewonnenSound;
 	Gosu::Sample VerlorenSound;
@@ -146,9 +153,10 @@ public:
 	std::shared_ptr<Objekt_fest> iWand_r2;
 	std::shared_ptr<Objekt_fest> iWand_r3;
 	std::shared_ptr<Objekt_fest> iWand_r4;
-
+	std::shared_ptr<Objekt_fest> iWand_destr_test;
 	std::shared_ptr<Objekt_fest> elem_O_f;
 	std::shared_ptr<Objekt_fest> listenstart_O_f; //Hier immer letztes Element hinschreiben
+
 
 	//Liste für Player
 	std::shared_ptr<Player_data> ilistenproblenloeserplayer;
