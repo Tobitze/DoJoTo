@@ -94,7 +94,7 @@ void GameState::Rolle() //entrollen der schriftrolle
 
 }
 
-void GameState::SpielerModelupdate(bool attack) 
+void GameState::SpielerModelupdate() 
 	{ 
 	elem_P_d = listenstart_P_d;
 	while (elem_P_d->next != nullptr)	//Alle Grafiken deaktivieren
