@@ -30,7 +30,7 @@ GameState::GameState()
 	, lPlayertemp2("l-Dr.Salzig2.png")
 	, lPlayertempA1("l-Dr.Salzig1-attack.png")
 	, lPlayertempA2("l-Dr.Salzig2-attack.png")
-	, Laser("Laser.png")
+	, Laserbild("Laser.png")
 {
 
 	p1 = new Spieler();
@@ -125,6 +125,11 @@ void GameState::SpielerModelupdate()
 
 void GameState::Lasershooter()
 {
+	for (Laser L : Laservektor)
+	{ 
+		L.posx = L.startx + (p1->player_x - p1->player_x_alt);
+		L.posy = L.starty + p1->player_y;
+	}
 	if (attack)
 	{
 		tl = (tl == 0) ? LASER_SHOOTING_TIMER : tl - 1;	//Danke Gabriel :D
@@ -210,6 +215,8 @@ GameState::Laser GameState::erstelle_Laser(double x, double y, bool d_r)
 	GameState::Laser temp;
 	temp.posx = x;
 	temp.posy = y;
+	temp.startx = x;
+	temp.starty = y;
 	temp.direction_right = d_r;
 	return temp;
 }

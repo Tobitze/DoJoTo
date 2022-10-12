@@ -45,6 +45,7 @@ public:
 	std::shared_ptr<Objekt_damage> erstelle_Objekt_damage_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_damage> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1);
 	struct Laser
 	{
+		double startx, starty;
 		double posx, posy;
 		bool direction_right;
 	};
@@ -86,7 +87,7 @@ public:
 	Gosu::Image lPlayertempA1;
 	Gosu::Image lPlayertempA2;
 
-	Gosu::Image Laser;
+	Gosu::Image Laserbild;
 
 	//Game Window
 

@@ -8,6 +8,7 @@ public:
 
 	double player_x;// Bewegung x-Achse
 	double player_y;// Bewegung y-achse
+	double player_x_alt;
 
 	double speedPlayer = 0; // Gescchwindigkeit x-Richtung
 	double speedPlayerY = 0; // Geschwindigkeit in y-Richtung
