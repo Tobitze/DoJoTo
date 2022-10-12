@@ -106,7 +106,7 @@ public:
 	//Sounds
 	 
 		
-	Gosu::Song HintergrundSound;
+	/*Gosu::Song HintergrundSound;
 	Gosu::Sample SprungSound;
 	Gosu::Sample GewonnenSound;
 	Gosu::Sample VerlorenSound;
@@ -114,7 +114,7 @@ public:
 	Gosu::Sample SchadenSound;
 	Gosu::Sample WandSound;
 	Gosu::Sample SchadenGegnerSound;
-	Gosu::Sample LaserSound;
+	Gosu::Sample LaserSound;*/
 
 	//Game Window
 
@@ -145,6 +145,7 @@ public:
 //Wände links
 	std::shared_ptr<Objekt_fest> iWand_l1;
 	std::shared_ptr<Objekt_fest> iWand_l2;
+
 	std::shared_ptr<Objekt_fest> iWand_l3;
 	std::shared_ptr<Objekt_fest> iWand_l4;
 
@@ -153,10 +154,12 @@ public:
 	std::shared_ptr<Objekt_fest> iWand_r2;
 	std::shared_ptr<Objekt_fest> iWand_r3;
 	std::shared_ptr<Objekt_fest> iWand_r4;
+
 	std::shared_ptr<Objekt_fest> iWand_destr_test;
+
+
 	std::shared_ptr<Objekt_fest> elem_O_f;
 	std::shared_ptr<Objekt_fest> listenstart_O_f; //Hier immer letztes Element hinschreiben
-
 
 	//Liste für Player
 	std::shared_ptr<Player_data> ilistenproblenloeserplayer;
