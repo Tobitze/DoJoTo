@@ -3,6 +3,7 @@
 
 const int IMAGE_CYCLE_TIME = 20;
 const int LASER_SHOOTING_TIMER = 20;
+const double LASER_SPEED = 10;
 
 class GameState {
 	Spieler* p1;
