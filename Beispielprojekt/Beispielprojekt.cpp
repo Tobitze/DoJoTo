@@ -14,7 +14,6 @@ bool collision_links = false;
 bool collision_oben = false;
 bool collision_unten = true;
 bool newjumpallowed = true;
-bool attack = false;
 bool collision_damage = false;
 int damage_timer = 0;
 
@@ -112,6 +111,14 @@ public:
 					}
 					game.elem_P_d = game.elem_P_d->next;
 				}
+
+				//Laser Rendering
+				for (GameState::Laser L : game.Laservektor)
+				{
+					game.hudHP0.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5);
+				}
+
+
 			//}
 		}
 
@@ -123,7 +130,7 @@ public:
 			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_unten = game.kollision_unten(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_damage = game.kollsion_damage(game.listenstart_O_d, game.elem_P_d);
-			game.SpielerModelupdate(attack);
+			game.SpielerModelupdate();
 
 				//HUD
 				if (input().down(Gosu::KB_K) && !game.pressed)
@@ -139,8 +146,9 @@ public:
 					restart(); //Neues Spiel erzeugen
 				}
 
-				attack = (input().down(Gosu::KB_SPACE)) ? true : false;		//Danke Gabriel :D
-				
+				game.attack = (input().down(Gosu::KB_SPACE)) ? true : false;		//Danke Gabriel :D
+				game.Lasershooter();
+
 				//Haupt-Map-Move-Funktionen
 				game.elem_O_f = game.listenstart_O_f;
 				while (game.elem_O_f->next != nullptr)

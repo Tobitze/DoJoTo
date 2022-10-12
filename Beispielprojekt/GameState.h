@@ -2,25 +2,31 @@
 #include "Spieler.h"
 
 const int IMAGE_CYCLE_TIME = 20;
+const int LASER_SHOOTING_TIMER = 20;
 
 class GameState {
 	Spieler* p1;
+	Spieler* g1;
 public:
 
-	int t = 0;
+	bool attack = false;
+	int t = 0;	//Just don't touch it
+	int tl = 0;
 	//static Spieler p1;
 	Spieler* get_Spieler();
+	Spieler* get_Gegner();
 
 	struct Objekt_fest
 	{
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
+		bool nohitbox;
 		std::shared_ptr<Objekt_fest> next;
 		std::shared_ptr<Gosu::Image> image;
 		//Objekt_fest* next;
 		//Gosu::Image* image;
 	};
-	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1);
+	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1, bool hit = false);
 	struct Player_data
 	{
 		bool active;
@@ -37,7 +43,16 @@ public:
 		std::shared_ptr<Gosu::Image> image;
 	};
 	std::shared_ptr<Objekt_damage> erstelle_Objekt_damage_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_damage> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1);
+	struct Laser
+	{
+		double posx, posy;
+		bool direction_right;
+	};
+	Laser erstelle_Laser(double x, double y, bool d_r);
 
+
+	std::vector<Laser> Laservektor;
+	void Lasershooter();
 
 	int health = 3;
 
@@ -70,6 +85,8 @@ public:
 	Gosu::Image lPlayertemp2;
 	Gosu::Image lPlayertempA1;
 	Gosu::Image lPlayertempA2;
+
+	Gosu::Image Laser;
 
 	//Game Window
 
@@ -125,6 +142,6 @@ public:
 	bool kollision_oben(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_unten(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollsion_damage(std::shared_ptr<GameState::Objekt_damage> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);
-	void SpielerModelupdate(bool attack);
+	void SpielerModelupdate();
 #pragma endregion	
 };

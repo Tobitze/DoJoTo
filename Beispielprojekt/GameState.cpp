@@ -30,9 +30,11 @@ GameState::GameState()
 	, lPlayertemp2("l-Dr.Salzig2.png")
 	, lPlayertempA1("l-Dr.Salzig1-attack.png")
 	, lPlayertempA2("l-Dr.Salzig2-attack.png")
+	, Laser("Laser.png")
 {
 
 	p1 = new Spieler();
+	g1 = new Spieler();
 
 	ilistenproblenloeser = erstelle_Objekt_fest_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);					 //Einfach nicht hinterfragen
 	ibodenR = erstelle_Objekt_fest_ptr(474, 58, 476, 550, 100, ilistenproblenloeser, std::make_shared<Gosu::Image>(bodenR),1 ,1);
@@ -73,7 +75,7 @@ GameState::GameState()
 
 };
 
-void GameState::SpielerModelupdate(bool attack) 
+void GameState::SpielerModelupdate() 
 	{ 
 	elem_P_d = listenstart_P_d;
 	while (elem_P_d->next != nullptr)	//Alle Grafiken deaktivieren
@@ -81,7 +83,7 @@ void GameState::SpielerModelupdate(bool attack)
 		elem_P_d->active = false;
 		elem_P_d = elem_P_d->next;
 	}
-	t = (t == 0) ? IMAGE_CYCLE_TIME : t - 1;	//Danke Grabriel :D
+	t = (t == 0) ? IMAGE_CYCLE_TIME : t - 1;	//Danke Gabriel :D
 	if (attack)
 	{
 		if (facing_l && t < (IMAGE_CYCLE_TIME / 2))
@@ -121,6 +123,17 @@ void GameState::SpielerModelupdate(bool attack)
 	}
 }
 
+void GameState::Lasershooter()
+{
+	if (attack)
+	{
+		tl = (tl == 0) ? LASER_SHOOTING_TIMER : tl - 1;	//Danke Gabriel :D
+		Laservektor.push_back(erstelle_Laser(p1->player_x, p1->player_start_y, true));
+	}
+	else {
+		tl = LASER_SHOOTING_TIMER;
+	}
+}
 
 
 Spieler* GameState::get_Spieler()
@@ -128,29 +141,12 @@ Spieler* GameState::get_Spieler()
 	return this->p1;
 }
 
+Spieler* GameState::get_Gegner()
+{
+	return this->g1;
+}
 
-
-//std::shared_ptr<Spieler> GameState::get_Spieler()
-//{
-//	return std::make_shared<Spieler>(this->p1);
-//}
-
-//Spieler& GameState::get_Spieler()
-//{
-//	return this->p1;
-//}
-
-//std::shared_ptr<GameState::Objekt_fest> GameState::get_listenstart_O_f()
-//{
-//	return this->iWand;
-//}
-//
-//std::shared_ptr<GameState::Player_data> GameState::get_listenstart_P_d()
-//{
-//	return this->listenstart_P_d;
-//}
-
-std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y)
+std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y, bool hit)
 {
 	GameState::Objekt_fest temp;
 	//double breitetemp2 = (double)image->width();
@@ -163,6 +159,7 @@ std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(doub
 	temp.startx = posx;
 	temp.starty = posy;
 	temp.posz = posz;
+	temp.nohitbox = hit;
 
 	temp.next = next;
 	temp.image = image;
@@ -208,7 +205,14 @@ std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(
 	return std::make_shared<GameState::Objekt_damage>(temp);
 }
 	
-
+GameState::Laser GameState::erstelle_Laser(double x, double y, bool d_r)
+{
+	GameState::Laser temp;
+	temp.posx = x;
+	temp.posy = y;
+	temp.direction_right = d_r;
+	return temp;
+}
 	
 	 
 	double GameState::distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2)
@@ -227,7 +231,7 @@ std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(
 		//auto elem_O_f = GameState::get_listenstart_O_f();   //listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != nullptr)
 		{
-			if (distance_from_player(elem_O_f) < 5000)
+			if (distance_from_player(elem_O_f) < 5000 && elem_O_f->nohitbox == false)
 			{
 				if ((this->p1->player_x + iplayertemp->breite + 3 + this->p1->speedPlayer) > elem_O_f->startx && (this->p1->player_x) < (elem_O_f->startx + elem_O_f->breite) - 5)
 				{
@@ -248,7 +252,7 @@ std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(
 		//elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != nullptr)
 		{
-			if (distance_from_player(elem_O_f) < 5000)
+			if (distance_from_player(elem_O_f) < 5000 && elem_O_f->nohitbox == false)
 			{
 				if ((this->p1->player_x - (3 + this->p1->speedPlayer)) < (elem_O_f->startx + elem_O_f->breite) && (this->p1->player_x + iplayertemp->breite) > (elem_O_f->startx + 5))
 				{
@@ -269,7 +273,7 @@ std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(
 		//elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != nullptr)
 		{
-			if (distance_from_player(elem_O_f) < 5000)
+			if (distance_from_player(elem_O_f) < 5000 && elem_O_f->nohitbox == false)
 			{
 				if (this->p1->player_x < (elem_O_f->startx + elem_O_f->breite) && (this->p1->player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
@@ -290,7 +294,7 @@ std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(
 		//elem_O_f = listenstart_O_f; //Hier immer letztes Element hinschreiben!
 		while (elem_O_f->next != nullptr)
 		{
-			if (distance_from_player(elem_O_f) < 5000)
+			if (distance_from_player(elem_O_f) < 5000 && elem_O_f->nohitbox == false)
 			{
 				if (this->p1->player_x < (elem_O_f->startx + elem_O_f->breite) && (this->p1->player_x + iplayertemp->breite) >(elem_O_f->startx))
 				{
@@ -310,7 +314,7 @@ std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(
 		bool tmp = false;
 		while (elem_O_d->next != nullptr)
 		{
-			if (distance_from_player(elem_O_d) < 5000)
+			if (distance_from_player(elem_O_d) < 5000 && elem_O_f->nohitbox == false)
 			{
 				if (this->p1->player_x < (elem_O_d->startx + elem_O_d->breite - 1) && (this->p1->player_x + iplayertemp->breite - 1) >(elem_O_d->startx))
 				{
