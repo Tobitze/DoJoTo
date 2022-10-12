@@ -95,7 +95,9 @@ public:
 	Gosu::Image Laserbild;
 
 	//Sounds
-	Gosu::Sample HintergrundSound;
+	 
+		
+	Gosu::Song HintergrundSound;
 	Gosu::Sample SprungSound;
 	Gosu::Sample GewonnenSound;
 	Gosu::Sample VerlorenSound;

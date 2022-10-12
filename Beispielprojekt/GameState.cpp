@@ -35,14 +35,14 @@ GameState::GameState()
 	, Laserbild("Laser.png")
 	
 	//Sounds
-	, HintergrundSound("Hintergrund.mp3")
+	, HintergrundSound("HintergrundSound.mp3")
 	, SprungSound("Sprung.mp3")
 	, GewonnenSound("Gewonnen.mp3")
 	, VerlorenSound("Verloren.mp3")
 	, TuerSound("Tuer.mp3")
 	, SchadenSound("Schaden.mp3")
 	, WandSound("Wand.mp3")
-	, SchadenGegnerSound("Gegner_Schaden.mp3")
+	, SchadenGegnerSound("Gegner_Schaden.mp3") 
 	, LaserSound("Laser.mp3")
 
 {
