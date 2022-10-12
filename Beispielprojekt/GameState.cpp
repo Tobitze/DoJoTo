@@ -37,6 +37,7 @@ GameState::GameState()
 	, Laserbild("Laser.png")
 	// Gegener
 	, MisterCoco("Mister Coco.png")
+
 	, Wand_destr_0("Wand_destr_r.png")
 	, Wand_destr_1("Wand_destr_r_1.png")
 	, Wand_destr_2("Wand_destr_r_2.png")
