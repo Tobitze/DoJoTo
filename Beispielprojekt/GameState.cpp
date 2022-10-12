@@ -37,6 +37,7 @@ GameState::GameState()
 	, Laserbild("Laser.png")
 	// Gegener
 	, MisterCoco("Mister Coco.png")
+
 	, Wand_destr_0("Wand_destr_r.png")
 	, Wand_destr_1("Wand_destr_r_1.png")
 	, Wand_destr_2("Wand_destr_r_2.png")
@@ -63,11 +64,11 @@ GameState::GameState()
 	//Boden
 	ibodenR = erstelle_Objekt_fest_ptr(474, 58, 476, 550, 100, ilistenproblenloeser, std::make_shared<Gosu::Image>(bodenR),1 ,1);
 	ibodenL = erstelle_Objekt_fest_ptr(474, 58, 0, 550, 100, ibodenR, std::make_shared<Gosu::Image>(bodenL), 1, 1);				 //Linked list über pointer
-	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_l2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, ibodenL, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -474, -30, 100, iBoden3, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 
 																																 //Objekte
-	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste), 1, 1);
+	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, iBoden4, std::make_shared<Gosu::Image>(Kiste), 1, 1);
 	//Plattformen
 	iPlattform1 = erstelle_Objekt_fest_ptr(200, 43, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
 	iPlattform2 = erstelle_Objekt_fest_ptr(200, 43, 700, 10, 100, iPlattform1, std::make_shared<Gosu::Image>(Plattform2), 1, 1);
