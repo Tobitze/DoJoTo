@@ -12,9 +12,11 @@ GameState::GameState()
 	, bodenL("boden1.jpg")
 	, Wand("boden1.jpg")
 	, Wand_r1("Wand rechts.png")
+	, Wand_l1("Wand links.png")
 	, hintergrund("hintergrund.jfif")
 	, Kiste("Block.png")
 	, Plattform1("Plattform1.png")
+	, Plattform2("Plattform1.png")
 	//HUD
 	, hudHP("hud_hp.png")
 	, hudHP2("hud_hp-1.png")
@@ -33,6 +35,8 @@ GameState::GameState()
 	, lPlayertempA1("l-Dr.Salzig1-attack.png")
 	, lPlayertempA2("l-Dr.Salzig2-attack.png")
 	, Laserbild("Laser.png")
+	// Gegener
+	, MisterCoco("Mister Coco.png")
 {
 
 	p1 = new Spieler();
@@ -43,11 +47,16 @@ GameState::GameState()
 	ibodenL = erstelle_Objekt_fest_ptr(474, 58, 0, 550, 100, ibodenR, std::make_shared<Gosu::Image>(bodenL), 1, 1);				 //Linked list über pointer
 	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste), 1, 1);
 	iPlattform1 = erstelle_Objekt_fest_ptr(200, 43, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
-	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iPlattform1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
-	iWand = erstelle_Objekt_fest_ptr(474, 58, 700, 500, 100, iWand_r1, std::make_shared<Gosu::Image>(Wand), 1, 1);
+	iPlattform2 = erstelle_Objekt_fest_ptr(200, 43, 700, 10, 100, iPlattform1, std::make_shared<Gosu::Image>(Plattform2), 1, 1);
+	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iPlattform2, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand_r2 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 150, iWand_r1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand_l1 = erstelle_Objekt_fest_ptr(58, 473, 0, 90, 100, iWand_r2, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	iWand_l2 = erstelle_Objekt_fest_ptr(58, 473, 0, 0, 100, iWand_l1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_l2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -474, -30, 100, iBoden3, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = iWand_r1; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = iBoden4; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
@@ -67,7 +76,7 @@ GameState::GameState()
 	//Liste für Objekt_damage
 
 	ilistenproblemloeserobjektdamage = erstelle_Objekt_damage_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);	//Never touch a working system
-	ikisteschaden = erstelle_Objekt_damage_ptr(80, 80, 100, 469, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(Kiste), 1, 1);
+	ikisteschaden = erstelle_Objekt_damage_ptr(80, 80, 90, 450, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(MisterCoco), 1, 1);
 	//Hier neue einfügen
 
 	elem_O_d = std::make_shared<Objekt_damage>();
@@ -84,9 +93,13 @@ void GameState::Rolle() //entrollen der schriftrolle
 		Scroll.draw_rot(400, 174, 150.0, 0.0, 0.5, 0.5);
 		i = i - 1;
 	}
-	else if (i <= (i / 2) && i > 0)
+	else if (i <= (i / 3) && i > 2*i/3)
 	{
 		Scroll2.draw_rot(400, 243, 150.0, 0.0, 0.5, 0.5);
+	}
+	else if (i <= (2*i / 3) && i > 0)
+	{
+		Scroll3.draw_rot(400, 291, 150.0, 0.0, 0.5, 0.5);
 	}
 	else if (i ==0)
 	{
