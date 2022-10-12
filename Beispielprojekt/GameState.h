@@ -94,7 +94,7 @@ public:
 	Gosu::Image lPlayertemp2;
 	Gosu::Image lPlayertempA1;
 	Gosu::Image lPlayertempA2;
-
+	Gosu::Image MisterCoco;
 	Gosu::Image Laserbild;
 
 	//Sounds
