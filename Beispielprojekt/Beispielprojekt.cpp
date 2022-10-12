@@ -119,9 +119,10 @@ public:
 				}
 
 				//Laser Rendering
-				for (GameState::Laser L : game.Laservektor)
+				for (size_t i = 0; i < game.Laservektor.size(); i++)
 				{
-					game.Laserbild.draw_rot(L.posx, L.posy, 100.0, 0.0, 0.5, 0.5);
+					game.Laserbild.draw_rot(game.Laservektor.at(i).posx, game.Laservektor.at(i).posy, 100.0, 0.0, 0.5, 0.5);
+					//std::cout << l.posx << "\t" << l.posy << "\n";
 				}
 
 
