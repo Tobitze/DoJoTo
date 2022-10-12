@@ -2,6 +2,7 @@
 #include <Gosu/AutoLink.hpp>
 #include <iostream>
 #include <math.h>
+
 //#include "Menu.cpp" //Also wenn, dann eh Menu.h ....		:P
 #include "GameState.h"
 
@@ -119,9 +120,9 @@ public:
 				}
 
 				//Laser Rendering
-				for (GameState::Laser L : game.Laservektor)
+				for (size_t i = 0; i < game.Laservektor.size(); i++)
 				{
-					game.Laserbild.draw_rot(L.posx, L.posy, 100.0, 0.0, 0.5, 0.5);
+					game.Laserbild.draw_rot(game.Laservektor.at(i).posx, game.Laservektor.at(i).posy, 100.0, 0.0, 0.5, 0.5);
 				}
 
 
@@ -131,6 +132,7 @@ public:
 		void update() override
 		{
 			//while (game_start == true) {
+			//HintergrundSound.play(1, 1, true);
 			collision_rechts = game.kollision_rechts(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_links = game.kollision_links(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
@@ -202,6 +204,7 @@ public:
 
 				if (collision_oben == true && game.get_Spieler()->speedPlayerY < 0)
 				{
+					
 					game.get_Spieler()->speedPlayerY = 0;
 					game.get_Spieler()->jumpTime = MAX_JUMP_TIME;
 				}
@@ -252,13 +255,13 @@ public:
 				//Beschleunigte Bewegung in x -------------------------------------------------------------------------
 
 					// Taste A
+				game.get_Spieler()->player_x_alt = game.get_Spieler()->player_x;	//Don't touch, sonst gehen die Laser nimmer
 				if (input().down(Gosu::KB_A) && collision_links == false) {
 					game.a_pressed = true;
 					game.facing_l = true;
-					game.facing_r = false;
-					game.get_Spieler()->player_x_alt = game.get_Spieler()->player_x;
+					game.facing_r = false; 
 					game.get_Spieler()->speedPlayer = (game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXA) < MAX_SPEED) ?game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXA) : MAX_SPEED;
-					game.get_Spieler()->player_x =game.get_Spieler()->player_x -game.get_Spieler()->speedPlayer;
+					game.get_Spieler()->player_x = game.get_Spieler()->player_x - game.get_Spieler()->speedPlayer;
 					game.get_Spieler()->playerTimeXA =game.get_Spieler()->playerTimeXA + 1;
 
 
@@ -279,8 +282,7 @@ public:
 					game.facing_r = true;
 					game.get_Spieler()->speedPlayer = (game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXD) < MAX_SPEED) ?game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXD) : MAX_SPEED;
 					// Zeile Drüber wenn beschl. kleiner als MAX_SPEED, dann beschleunigung, sonst MAX_SPEED (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
-					game.get_Spieler()->player_x_alt = game.get_Spieler()->player_x;
-					game.get_Spieler()->player_x =game.get_Spieler()->player_x +game.get_Spieler()->speedPlayer;
+					game.get_Spieler()->player_x =game.get_Spieler()->player_x + game.get_Spieler()->speedPlayer;
 					game.get_Spieler()->playerTimeXD =game.get_Spieler()->playerTimeXD + 1;
 
 #ifdef debugSpielerX 	
@@ -292,6 +294,10 @@ public:
 				else {
 					game.d_pressed = false;
 					game.get_Spieler()->playerTimeXD = 0;
+				}
+				if (!input().down(Gosu::KB_D) && !input().down(Gosu::KB_A))
+				{
+					game.get_Spieler()->speedPlayer = 0;
 				}
 				//------------------------------------------------------------------------------------------------------
 			//}

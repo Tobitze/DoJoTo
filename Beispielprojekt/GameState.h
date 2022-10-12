@@ -3,6 +3,7 @@
 
 const int IMAGE_CYCLE_TIME = 20;
 const int LASER_SHOOTING_TIMER = 20;
+const double LASER_SPEED = 10;
 
 class GameState {
 	Spieler* p1;
@@ -50,7 +51,7 @@ public:
 		bool direction_right;
 	};
 	Laser erstelle_Laser(double x, double y, bool d_r);
-
+	std::vector<Laser> getLaserVektor();
 
 	std::vector<Laser> Laservektor;
 	void Lasershooter();
@@ -96,8 +97,16 @@ public:
 
 	Gosu::Image Laserbild;
 
-	// Gegner
-	Gosu::Image MisterCoco;
+	//Sounds
+	Gosu::Sample HintergrundSound;
+	Gosu::Sample SprungSound;
+	Gosu::Sample GewonnenSound;
+	Gosu::Sample VerlorenSound;
+	Gosu::Sample TuerSound;
+	Gosu::Sample SchadenSound;
+	Gosu::Sample WandSound;
+	Gosu::Sample SchadenGegnerSound;
+	Gosu::Sample LaserSound;
 
 	//Game Window
 

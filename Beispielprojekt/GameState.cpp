@@ -37,6 +37,18 @@ GameState::GameState()
 	, Laserbild("Laser.png")
 	// Gegener
 	, MisterCoco("Mister Coco.png")
+	
+	//Sounds
+	, HintergrundSound("Hintergrund.mp3")
+	, SprungSound("Sprung.mp3")
+	, GewonnenSound("Gewonnen.mp3")
+	, VerlorenSound("Verloren.mp3")
+	, TuerSound("Tuer.mp3")
+	, SchadenSound("Schaden.mp3")
+	, WandSound("Wand.mp3")
+	, SchadenGegnerSound("Gegner_Schaden.mp3")
+	, LaserSound("Laser.mp3")
+
 {
 
 	p1 = new Spieler();
@@ -155,20 +167,41 @@ void GameState::SpielerModelupdate()
 	}
 }
 
+std::vector<GameState::Laser> GameState::getLaserVektor()
+{
+	return this->Laservektor;
+}
 void GameState::Lasershooter()
 {
-	for (Laser L : Laservektor)
-	{ 
-		L.posx = L.startx + (p1->player_x - p1->player_x_alt);
-		L.posy = L.starty - (p1->player_y - p1->player_start_y);
-	}
 	if (attack)
 	{
 		tl = (tl == 0) ? LASER_SHOOTING_TIMER : tl - 1;	//Danke Gabriel :D
-		Laservektor.push_back(erstelle_Laser(p1->player_x, p1->player_y, true));
+		if (tl == 1)
+		{
+			if (facing_r)
+			{
+				Laservektor.push_back(erstelle_Laser((35 + p1->player_start_x), p1->player_y + 19, facing_r));
+			}
+			else {
+				Laservektor.push_back(erstelle_Laser((p1->player_start_x), p1->player_y + 19, facing_r));
+
+			}
+		}
 	}
 	else {
 		tl = LASER_SHOOTING_TIMER;
+	}
+	for (size_t i = 0; i < Laservektor.size(); i++)
+	{
+		Laservektor.at(i).posx = Laservektor.at(i).posx + (p1->player_x_alt - p1->player_x);
+		Laservektor.at(i).posy = Laservektor.at(i).starty - (p1->player_y - p1->player_start_y);
+		if (Laservektor.at(i).direction_right)
+		{
+			Laservektor.at(i).posx = Laservektor.at(i).posx + LASER_SPEED;
+		}
+		else {
+			Laservektor.at(i).posx = Laservektor.at(i).posx - LASER_SPEED;
+		}
 	}
 }
 
