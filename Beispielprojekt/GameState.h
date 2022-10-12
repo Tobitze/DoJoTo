@@ -58,7 +58,7 @@ public:
 	void Lasershooter();
 
 	int health = 3;
-	int i = 8; //entrollen der schriftrolle counter
+	int i = 12; //entrollen der schriftrolle counter
 
 	bool facing_r = true;
 	bool facing_l = false;
@@ -72,9 +72,11 @@ public:
 	Gosu::Image bodenL;
 	Gosu::Image Wand;
 	Gosu::Image Wand_r1; 
+	Gosu::Image Wand_l1;
 	Gosu::Image hintergrund;
 	Gosu::Image Kiste;
 	Gosu::Image Plattform1;
+	Gosu::Image Plattform2;
 	//HUD
 	Gosu::Image hudHP;
 	Gosu::Image hudHP2;
@@ -82,6 +84,7 @@ public:
 	Gosu::Image hudHP0;
 	Gosu::Image Scroll;
 	Gosu::Image Scroll2;
+	Gosu::Image Scroll3;
 	Gosu::Image GameOver;
 	//Player	//Aus dem Provisorium ist ein dauerhafter Zustand geworden xD
 	Gosu::Image rPlayertemp1;
@@ -113,8 +116,14 @@ public:
 	std::shared_ptr<Objekt_fest> ibodenL;				 //Linked list über pointer
 	std::shared_ptr<Objekt_fest> iKiste;
 	std::shared_ptr<Objekt_fest> iPlattform1;
+	std::shared_ptr<Objekt_fest> iPlattform2;
 	std::shared_ptr<Objekt_fest> iWand_r1;
-	std::shared_ptr<Objekt_fest> iWand;
+	std::shared_ptr<Objekt_fest> iWand_r2;
+	std::shared_ptr<Objekt_fest> iBoden3;
+	std::shared_ptr<Objekt_fest> iBoden4;
+	std::shared_ptr<Objekt_fest> iBoden5;
+	std::shared_ptr<Objekt_fest> iWand_l1;
+	std::shared_ptr<Objekt_fest> iWand_l2;
 
 	std::shared_ptr<Objekt_fest> elem_O_f;
 	std::shared_ptr<Objekt_fest> listenstart_O_f; //Hier immer letztes Element hinschreiben
