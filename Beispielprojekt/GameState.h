@@ -3,7 +3,8 @@
 
 const int IMAGE_CYCLE_TIME = 20;
 const int LASER_SHOOTING_TIMER = 20;
-const double LASER_SPEED = 10;
+const double LASER_SPEED = 10;		//Sollte nicht größer sein als Laser breit, sonst tunnelt er durch Objekte
+const double LASER_RENDERDISTANCE = 1000;
 
 class GameState {
 	Spieler* p1;
@@ -21,13 +22,13 @@ public:
 	{
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
-		bool nohitbox;
+		bool nohitbox, destroyable;
 		std::shared_ptr<Objekt_fest> next;
 		std::shared_ptr<Gosu::Image> image;
 		//Objekt_fest* next;
 		//Gosu::Image* image;
 	};
-	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1, bool hit = false);
+	std::shared_ptr<Objekt_fest> erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1, bool hit = false, bool destr = false);
 	struct Player_data
 	{
 		bool active;
@@ -163,6 +164,7 @@ public:
 #pragma region 1 //Kollsionskäse
 	double distance_from_player(std::shared_ptr<GameState::Objekt_fest> o2);// , Spieler* p1);
 	double distance_from_player(std::shared_ptr<GameState::Objekt_damage> o2);
+	double distance_from_player(int Vektorlisteni);
 	bool kollision_rechts(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, std::shared_ptr<Spieler> p1);
 	bool kollision_links(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollision_oben(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);

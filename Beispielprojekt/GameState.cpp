@@ -176,7 +176,7 @@ void GameState::Lasershooter()
 	if (attack)
 	{
 		tl = (tl == 0) ? LASER_SHOOTING_TIMER : tl - 1;	//Danke Gabriel :D
-		if (tl == 1)
+		if (tl == LASER_SHOOTING_TIMER - 1)
 		{
 			if (facing_r)
 			{
@@ -184,7 +184,6 @@ void GameState::Lasershooter()
 			}
 			else {
 				Laservektor.push_back(erstelle_Laser((p1->player_start_x), p1->player_y + 19, facing_r));
-
 			}
 		}
 	}
@@ -202,7 +201,39 @@ void GameState::Lasershooter()
 		else {
 			Laservektor.at(i).posx = Laservektor.at(i).posx - LASER_SPEED;
 		}
+		if (distance_from_player(i) > LASER_RENDERDISTANCE)
+		{
+			Laservektor.erase(Laservektor.begin() + i);
+		}
 	}
+	std::shared_ptr<GameState::Objekt_fest> elem_O_f = listenstart_O_f;
+	bool crash = false;
+	for (size_t i = 0; i < Laservektor.size(); i++)	//Zweite schleife, sonst wird auf evtl. gelöschtes zugegriffen...
+	{
+		elem_O_f = listenstart_O_f;
+		crash = false;
+
+		while (elem_O_f->next != nullptr && crash == false)
+		{
+			if (elem_O_f->nohitbox == false)
+			{
+				if (Laservektor.at(i).posx < (elem_O_f->posx + elem_O_f->breite - 1) && (Laservektor.at(i).posx + 25) > (elem_O_f->posx))
+				{
+					if ((Laservektor.at(i).posy + 1) > elem_O_f->posy && (Laservektor.at(i).posy) < (elem_O_f->posy + elem_O_f->hoehe - 1))
+					{
+						//Theoretisch muss hier jede Laser - Objekt - Kollision behandelt werden
+						
+						Laservektor.erase(Laservektor.begin() + i);;
+						crash = true;	//Setzen des bools, um weitere ausführung der Schleife zu verhindern (Sonst wird auf gelöschtes zugegriffen...)
+					}
+				}
+			}
+			elem_O_f = elem_O_f->next;
+		}
+	}
+
+
+
 }
 
 
@@ -216,7 +247,7 @@ Spieler* GameState::get_Gegner()
 	return this->g1;
 }
 
-std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y, bool hit)
+std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y, bool hit, bool destr)
 {
 	GameState::Objekt_fest temp;
 	//double breitetemp2 = (double)image->width();
@@ -235,6 +266,7 @@ std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(doub
 	temp.image = image;
 	temp.scale_x = scale_x;
 	temp.scale_y = scale_y;
+	temp.destroyable = destr;
 	return std::make_shared<GameState::Objekt_fest>(temp);
 }
 	
@@ -294,6 +326,10 @@ GameState::Laser GameState::erstelle_Laser(double x, double y, bool d_r)
 	double GameState::distance_from_player(std::shared_ptr<GameState::Objekt_damage> o2)
 	{
 		return sqrt(pow((this->p1->player_x - o2->startx), 2) + pow((this->p1->player_y - o2->starty), 2));
+	}
+	double GameState::distance_from_player(int vektorlisteni)
+	{
+		return sqrt(pow((this->p1->player_x - Laservektor.at(vektorlisteni).posx), 2) + pow((this->p1->player_y - (Laservektor.at(vektorlisteni).posy)), 2));
 	}
 	bool GameState::kollision_rechts(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp)//, std::shared_ptr<Spieler> p1)//std::shared_ptr<GameState::Objekt_fest> listenstart_O_f, Spieler p1, std::shared_ptr<GameState::Player_data> iplayertemp)
 	{
