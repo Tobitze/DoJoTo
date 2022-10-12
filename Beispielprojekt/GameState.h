@@ -50,7 +50,7 @@ public:
 		bool direction_right;
 	};
 	Laser erstelle_Laser(double x, double y, bool d_r);
-
+	std::vector<Laser> getLaserVektor();
 
 	std::vector<Laser> Laservektor;
 	void Lasershooter();

@@ -154,20 +154,28 @@ void GameState::SpielerModelupdate()
 	}
 }
 
+std::vector<GameState::Laser> GameState::getLaserVektor()
+{
+	return this->Laservektor;
+}
 void GameState::Lasershooter()
 {
-	for (Laser L : Laservektor)
-	{ 
-		L.posx = L.startx + (p1->player_x - p1->player_x_alt);
-		L.posy = L.starty - (p1->player_y - p1->player_start_y);
-	}
 	if (attack)
 	{
 		tl = (tl == 0) ? LASER_SHOOTING_TIMER : tl - 1;	//Danke Gabriel :D
-		Laservektor.push_back(erstelle_Laser(p1->player_x, p1->player_y, true));
+		if (tl == 1)
+		{
+			Laservektor.push_back(erstelle_Laser((35 + p1->player_start_x), p1->player_y + 19, true));
+		}
 	}
 	else {
 		tl = LASER_SHOOTING_TIMER;
+	}
+	for (size_t i = 0; i < Laservektor.size(); i++)
+	{
+		Laservektor.at(i).posx = Laservektor.at(i).posx + (p1->player_x_alt - p1->player_x);
+		//std::cout << p1->player_x_alt << "\t" << p1->player_x << "\t" << Laservektor.at(i).posx << "\n";
+		Laservektor.at(i).posy = Laservektor.at(i).starty - (p1->player_y - p1->player_start_y);
 	}
 }
 
