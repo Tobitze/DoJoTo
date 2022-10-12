@@ -79,6 +79,7 @@ public:
 	Gosu::Image Plattform1;
 	Gosu::Image Plattform2;
 	//HUD
+	Gosu::Image hud;
 	Gosu::Image hudHP;
 	Gosu::Image hudHP2;
 	Gosu::Image hudHP1;

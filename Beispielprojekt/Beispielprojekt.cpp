@@ -88,16 +88,18 @@ public:
 				game.hintergrund.draw_rot(400, 320, 10.0,
 					0.0,
 					0.5, 0.5);
+				
 				//HUD
+				game.hud.draw(0, 0, 300.0, 1, 0.75);
 				switch (game.health) {
 				case 3:
-					game.hudHP.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5); break;
+					game.hudHP.draw_rot(120, 40, 400.0, 0.0, 0.5, 0.5); break;
 				case 2:
-					game.hudHP2.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5); break;
+					game.hudHP2.draw_rot(120, 40, 400.0, 0.0, 0.5, 0.5); break;
 				case 1:
-					game.hudHP1.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5); break;
+					game.hudHP1.draw_rot(120, 40, 400.0, 0.0, 0.5, 0.5); break;
 				default:
-					game.hudHP0.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5);
+					game.hudHP0.draw_rot(120, 40, 400.0, 0.0, 0.5, 0.5);
 					game.Rolle();
 					
 					/*game.Scroll.draw_rot(400, 174, 150.0, 0.0, 0.5, 0.5);

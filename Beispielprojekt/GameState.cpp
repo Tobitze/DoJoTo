@@ -18,6 +18,7 @@ GameState::GameState()
 	, Plattform1("Plattform1.png")
 	, Plattform2("Plattform1.png")
 	//HUD
+	, hud("HUD.png")
 	, hudHP("hud_hp.png")
 	, hudHP2("hud_hp-1.png")
 	, hudHP1("hud_hp-2.png")
