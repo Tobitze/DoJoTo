@@ -14,7 +14,6 @@ bool collision_links = false;
 bool collision_oben = false;
 bool collision_unten = true;
 bool newjumpallowed = true;
-bool attack = false;
 bool collision_damage = false;
 int damage_timer = 0;
 
@@ -118,6 +117,14 @@ public:
 					}
 					game.elem_P_d = game.elem_P_d->next;
 				}
+
+				//Laser Rendering
+				for (GameState::Laser L : game.Laservektor)
+				{
+					game.Laserbild.draw_rot(L.posx, L.posy, 100.0, 0.0, 0.5, 0.5);
+				}
+
+
 			//}
 		}
 
@@ -129,7 +136,7 @@ public:
 			collision_oben = game.kollision_oben(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_unten = game.kollision_unten(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
 			collision_damage = game.kollsion_damage(game.listenstart_O_d, game.elem_P_d);
-			game.SpielerModelupdate(attack);
+			game.SpielerModelupdate();
 
 				//HUD
 				if (input().down(Gosu::KB_K) && !game.pressed)
@@ -145,8 +152,9 @@ public:
 					restart(); //Neues Spiel erzeugen
 				}
 
-				attack = (input().down(Gosu::KB_SPACE)) ? true : false;		//Danke Gabriel :D
-				
+				game.attack = (input().down(Gosu::KB_SPACE)) ? true : false;		//Danke Gabriel :D
+				game.Lasershooter();
+
 				//Haupt-Map-Move-Funktionen
 				game.elem_O_f = game.listenstart_O_f;
 				while (game.elem_O_f->next != nullptr)
@@ -248,6 +256,7 @@ public:
 					game.a_pressed = true;
 					game.facing_l = true;
 					game.facing_r = false;
+					game.get_Spieler()->player_x_alt = game.get_Spieler()->player_x;
 					game.get_Spieler()->speedPlayer = (game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXA) < MAX_SPEED) ?game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXA) : MAX_SPEED;
 					game.get_Spieler()->player_x =game.get_Spieler()->player_x -game.get_Spieler()->speedPlayer;
 					game.get_Spieler()->playerTimeXA =game.get_Spieler()->playerTimeXA + 1;
@@ -270,6 +279,7 @@ public:
 					game.facing_r = true;
 					game.get_Spieler()->speedPlayer = (game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXD) < MAX_SPEED) ?game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->playerTimeXD) : MAX_SPEED;
 					// Zeile Drüber wenn beschl. kleiner als MAX_SPEED, dann beschleunigung, sonst MAX_SPEED (schnellschreibweise 'x?x:x' (ternärer operator) danke Gabriel :D
+					game.get_Spieler()->player_x_alt = game.get_Spieler()->player_x;
 					game.get_Spieler()->player_x =game.get_Spieler()->player_x +game.get_Spieler()->speedPlayer;
 					game.get_Spieler()->playerTimeXD =game.get_Spieler()->playerTimeXD + 1;
 
