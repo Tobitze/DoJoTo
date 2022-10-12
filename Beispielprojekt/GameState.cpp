@@ -37,6 +37,10 @@ GameState::GameState()
 	, Laserbild("Laser.png")
 	// Gegener
 	, MisterCoco("Mister Coco.png")
+	, Wand_destr_0("Wand_destr_r.png")
+	, Wand_destr_1("Wand_destr_r_1.png")
+	, Wand_destr_2("Wand_destr_r_2.png")
+	, Wand_destr_3("Wand_destr_r_3.png")
 	
 	//Sounds
 	, HintergrundSound("Hintergrund.mp3")
@@ -66,9 +70,10 @@ GameState::GameState()
 	iWand_l2 = erstelle_Objekt_fest_ptr(58, 473, 0, 0, 100, iWand_l1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_l2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -474, -30, 100, iBoden3, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iWand_destr_test = erstelle_Objekt_fest_ptr(57, 99, 600, 400, 100, iBoden4, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = iBoden4; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = iWand_destr_test; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
@@ -225,6 +230,33 @@ void GameState::Lasershooter()
 						
 						Laservektor.erase(Laservektor.begin() + i);;
 						crash = true;	//Setzen des bools, um weitere ausführung der Schleife zu verhindern (Sonst wird auf gelöschtes zugegriffen...)
+						if (elem_O_f->destroyable)
+						{
+							switch (elem_O_f->destroy_state)
+							{
+							case 0:
+								elem_O_f->destroy_state = 1;
+								elem_O_f->image = std::make_shared<Gosu::Image>(Wand_destr_1);
+								break;
+							case 1:
+								elem_O_f->destroy_state = 2;
+								elem_O_f->image = std::make_shared<Gosu::Image>(Wand_destr_2);
+								break;
+							case 2:
+								elem_O_f->destroy_state = 3;
+								elem_O_f->image = std::make_shared<Gosu::Image>(Wand_destr_3);
+								break;
+							case 3:
+								elem_O_f->destroy_state = 4;
+								elem_O_f->startx = 100000;
+								elem_O_f->starty = 100000;
+								elem_O_f->posx = 100000;
+								elem_O_f->posy = 100000;
+								break;
+							default:
+								break;
+							}
+						}
 					}
 				}
 			}
@@ -247,7 +279,7 @@ Spieler* GameState::get_Gegner()
 	return this->g1;
 }
 
-std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y, bool hit, bool destr)
+std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_fest> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y, bool hit, bool destr, int destroy_state)
 {
 	GameState::Objekt_fest temp;
 	//double breitetemp2 = (double)image->width();
@@ -267,6 +299,7 @@ std::shared_ptr<GameState::Objekt_fest> GameState::erstelle_Objekt_fest_ptr(doub
 	temp.scale_x = scale_x;
 	temp.scale_y = scale_y;
 	temp.destroyable = destr;
+	temp.destroy_state = destroy_state;
 	return std::make_shared<GameState::Objekt_fest>(temp);
 }
 	
