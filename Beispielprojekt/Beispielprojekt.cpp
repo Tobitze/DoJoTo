@@ -2,6 +2,7 @@
 #include <Gosu/AutoLink.hpp>
 #include <iostream>
 #include <math.h>
+
 //#include "Menu.cpp" //Also wenn, dann eh Menu.h ....		:P
 #include "GameState.h"
 

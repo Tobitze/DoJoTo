@@ -171,6 +171,7 @@
     <ClCompile Include="Beispielprojekt.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="Spieler.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Objekte_fest.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Spieler.h" />
     <ClInclude Include="Startup.h" />
   </ItemGroup>
