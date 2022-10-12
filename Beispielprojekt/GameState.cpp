@@ -20,6 +20,8 @@ GameState::GameState()
 	, hudHP2("hud_hp-1.png")
 	, hudHP1("hud_hp-2.png")
 	, hudHP0("hud_hp-3.png")
+	, Scroll("Scroll.png")
+	, Scroll2("Scroll2.png")
 	, GameOver("GameOver.png")
 	//Player (temp)
 	, rPlayertemp1("r-Dr.Salzig1.png")
@@ -47,14 +49,14 @@ GameState::GameState()
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
-	iplayertempr1 = erstelle_Player_data_ptr(53, 94, ilistenproblenloeserplayer, std::make_shared<Gosu::Image>(rPlayertemp1), true, 1, 1);
-	iplayertempr2 = erstelle_Player_data_ptr(53, 94, iplayertempr1, std::make_shared<Gosu::Image>(rPlayertemp2), false, 1, 1);
-	iplayertempl1 = erstelle_Player_data_ptr(53, 94, iplayertempr2, std::make_shared<Gosu::Image>(lPlayertemp1), false, 1, 1);
-	iplayertempl2 = erstelle_Player_data_ptr(53, 94, iplayertempl1, std::make_shared<Gosu::Image>(lPlayertemp2), false, 1, 1);
-	iplayertempl1A = erstelle_Player_data_ptr(53, 94, iplayertempl2, std::make_shared<Gosu::Image>(lPlayertempA1), false, 1, 1);
-	iplayertempl2A = erstelle_Player_data_ptr(53, 94, iplayertempl1A, std::make_shared<Gosu::Image>(lPlayertempA2), false, 1, 1);
-	iplayertempr1A = erstelle_Player_data_ptr(53, 94, iplayertempl2A, std::make_shared<Gosu::Image>(rPlayertempA1), false, 1, 1);
-	iplayertempr2A = erstelle_Player_data_ptr(53, 94, iplayertempr1A, std::make_shared<Gosu::Image>(rPlayertempA2), false, 1, 1);
+	iplayertempr1 = erstelle_Player_data_ptr(35, 94, ilistenproblenloeserplayer, std::make_shared<Gosu::Image>(rPlayertemp1), true, 1, 1);
+	iplayertempr2 = erstelle_Player_data_ptr(35, 94, iplayertempr1, std::make_shared<Gosu::Image>(rPlayertemp2), false, 1, 1);
+	iplayertempl1 = erstelle_Player_data_ptr(35, 94, iplayertempr2, std::make_shared<Gosu::Image>(lPlayertemp1), false, 1, 1);
+	iplayertempl2 = erstelle_Player_data_ptr(35, 94, iplayertempl1, std::make_shared<Gosu::Image>(lPlayertemp2), false, 1, 1);
+	iplayertempl1A = erstelle_Player_data_ptr(35, 94, iplayertempl2, std::make_shared<Gosu::Image>(lPlayertempA1), false, 1, 1);
+	iplayertempl2A = erstelle_Player_data_ptr(35, 94, iplayertempl1A, std::make_shared<Gosu::Image>(lPlayertempA2), false, 1, 1);
+	iplayertempr1A = erstelle_Player_data_ptr(35, 94, iplayertempl2A, std::make_shared<Gosu::Image>(rPlayertempA1), false, 1, 1);
+	iplayertempr2A = erstelle_Player_data_ptr(35, 94, iplayertempr1A, std::make_shared<Gosu::Image>(rPlayertempA2), false, 1, 1);
 
 	elem_P_d = std::make_shared<Player_data>();
 	listenstart_P_d = iplayertempr2A; //Hier immer letztes Element hinschreiben
@@ -72,6 +74,23 @@ GameState::GameState()
 
 
 };
+
+void GameState::Rolle() //entrollen der schriftrolle
+{
+	
+	if (i > (i/2)) {
+		Scroll.draw_rot(400, 174, 150.0, 0.0, 0.5, 0.5);
+		i = i - 1;
+	}
+	else if (i <= (i / 2) && i > 0)
+	{
+		Scroll2.draw_rot(400, 243, 150.0, 0.0, 0.5, 0.5);
+	}
+	else if (i ==0)
+	{
+		GameOver.draw_rot(400, 300, 150.0, 0.0, 0.5, 0.5); }
+
+}
 
 void GameState::SpielerModelupdate(bool attack) 
 	{ 

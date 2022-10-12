@@ -98,7 +98,13 @@ public:
 					game.hudHP1.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5); break;
 				default:
 					game.hudHP0.draw_rot(120, 40, 100.0, 0.0, 0.5, 0.5);
-					game.GameOver.draw_rot(400, 300, 150.0, 0.0, 0.5, 0.5);
+					game.Rolle();
+					
+					/*game.Scroll.draw_rot(400, 174, 150.0, 0.0, 0.5, 0.5);
+					
+						game.GameOver.draw_rot(400, 300, 150.0, 0.0, 0.5, 0.5);*/
+					
+					
 				}
 
 				//Player rendering

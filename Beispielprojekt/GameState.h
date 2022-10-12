@@ -40,6 +40,7 @@ public:
 
 
 	int health = 3;
+	int i = 8; //entrollen der schriftrolle counter
 
 	bool facing_r = true;
 	bool facing_l = false;
@@ -47,6 +48,7 @@ public:
 	bool w_pressed = false;// player sprung
 	bool a_pressed = false;// player links
 	bool d_pressed = false;// player rechts
+	void Rolle();
 
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
@@ -60,6 +62,8 @@ public:
 	Gosu::Image hudHP2;
 	Gosu::Image hudHP1;
 	Gosu::Image hudHP0;
+	Gosu::Image Scroll;
+	Gosu::Image Scroll2;
 	Gosu::Image GameOver;
 	//Player	//Aus dem Provisorium ist ein dauerhafter Zustand geworden xD
 	Gosu::Image rPlayertemp1;
