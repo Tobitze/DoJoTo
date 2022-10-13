@@ -6,7 +6,6 @@
 //#include "Menu.cpp" //Also wenn, dann eh Menu.h ....		:P
 #include "GameState.h"
 
-
 bool game_start = true;
 bool y_down = false; // sprung?
 bool x_down = false; // ist waagerecht gedrückt ?

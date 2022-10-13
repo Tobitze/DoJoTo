@@ -107,7 +107,7 @@ public:
 	//Sounds
 	 
 		
-	////Gosu::Song HintergrundSound;
+	Gosu::Song HintergrundSound;
 	//Gosu::Sample SprungSound;
 	//Gosu::Sample GewonnenSound;
 	//Gosu::Sample VerlorenSound;
