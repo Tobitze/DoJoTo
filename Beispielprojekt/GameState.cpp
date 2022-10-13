@@ -25,6 +25,7 @@ GameState::GameState()
 	, hudHP0("hud_hp-3.png")
 	, Scroll("Scroll.png")
 	, Scroll2("Scroll2.png")
+	, Scroll3("Scroll3.png")
 	, GameOver("GameOver.png")
 	//Player (temp)
 	, rPlayertemp1("r-Dr.Salzig1.png")
@@ -123,21 +124,23 @@ GameState::GameState()
 void GameState::Rolle() //entrollen der schriftrolle
 {
 	
-	if (i > (i/2)) {
-		Scroll.draw_rot(400, 174, 150.0, 0.0, 0.5, 0.5);
+	if (i > (3*s/4)) {
+		Scroll.draw_rot(400, 174, 450.0, 0.0, 0.5, 0.5);
 		i = i - 1;
 	}
-	else if (i <= (i / 3) && i > 2*i/3)
+	else if (i <= (3*s / 4) && i > (s/2))
 	{
-		Scroll2.draw_rot(400, 243, 150.0, 0.0, 0.5, 0.5);
+		Scroll2.draw_rot(400, 243, 450.0, 0.0, 0.5, 0.5);
+		i = i - 1;
 	}
-	else if (i <= (2*i / 3) && i > 0)
+	else if (i <= (s / 2) && i > (s/4))
 	{
-		Scroll3.draw_rot(400, 291, 150.0, 0.0, 0.5, 0.5);
+		Scroll3.draw_rot(400, 291, 450.0, 0.0, 0.5, 0.5);
+		i = i - 1;
 	}
-	else if (i ==0)
+	else if (i <= (s/4))
 	{
-		GameOver.draw_rot(400, 300, 150.0, 0.0, 0.5, 0.5); }
+		GameOver.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5); }
 
 }
 

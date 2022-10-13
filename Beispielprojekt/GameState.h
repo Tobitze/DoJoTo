@@ -60,7 +60,7 @@ public:
 
 	int health = 3;
 	int i = 12; //entrollen der schriftrolle counter
-
+	int s = i;
 	bool facing_r = true;
 	bool facing_l = false;
 	bool pressed = false;
