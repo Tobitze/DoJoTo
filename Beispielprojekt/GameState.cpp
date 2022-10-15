@@ -46,15 +46,15 @@ GameState::GameState()
 	, Wand_destr_3("Wand_destr_r_3.png")
 
 	//Sounds
-	 //, HintergrundSound("HintergrundSound.wav")
-/*, SprungSound("Sprung.wav")
-	, GewonnenSound("Gewonnen.wav")
+	//, HintergrundSound("HintergrundSound.wav")
+	, SprungSound("Sprung.wav")
+	//, GewonnenSound("Gewonnen.wav")
 	, VerlorenSound("Verloren.wav")
-	, TuerSound("Tuer.wav")
-	, SchadenSound("Schaden.wav")
-	, WandSound("Wand.wav")
+	//, TuerSound("Tuer.wav")
+	//, SchadenSound("Schaden.wav")
+	//, WandSound("Wand.wav")
 	, SchadenGegnerSound("Gegner_Schaden.wav")
-	, LaserSound("Laser.wav")*/
+	//, LaserSound("Laser.wav")
 	, TestSound("Windows Critical Stop.wav")
 {
 
