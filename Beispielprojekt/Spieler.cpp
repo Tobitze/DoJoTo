@@ -1,6 +1,7 @@
 #include <math.h>
 #include "Spieler.h"
 #include <memory>
+#include <stdlib.h>
 
 //Konstruktor
 Spieler::Spieler() 
@@ -11,6 +12,9 @@ Spieler::Spieler()
 	this->jumpTime = 0;
 	this->playerTimeXA = 0;
 	this->playerTimeXD = 0;
+	this->playeraction = 0;
+	this->speedPlayer = 0;
+	this->speedPlayerY = 0;
 }
 
 // Beschleunigung in x-Richtung 
@@ -45,4 +49,33 @@ void Spieler::reset()
 	this->player_y = this->player_start_y;
 	this->speedPlayer = 0;
 	this->speedPlayerY = 0;
+}
+
+void Spieler::KI() {
+	KI_timer = (KI_timer == 0) ? KI_ACTION_LOOP_TIMER : KI_timer - 1;		//Danke Gabriel :)
+	if (KI_timer < (KI_ACTION_LOOP_TIMER - GEGNER_MAX_JUMP_TIME) && this->playeraction == 3)
+	{
+		this->playeraction = 0;
+	}
+	if (KI_timer == 0)
+	{
+		int rd = rand() % 100;
+		if (rd > 50)
+		{
+			this->playeraction = 0;		//nix
+		}
+		else if (rd <= 50 && rd > 30)
+		{
+			this->playeraction = 1;		//links
+		}
+		else if (rd <= 30 && rd > 10)
+		{
+			this->playeraction = 2;		//rechts
+		}
+		else if (rd <= 10 && rd >= 0)
+		{
+			this->playeraction = 3;		//hoch
+		}
+	}
+	
 }
