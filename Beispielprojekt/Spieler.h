@@ -1,7 +1,7 @@
 #pragma once
 
 const int KI_ACTION_LOOP_TIMER = 100;
-const int GEGNER_MAX_JUMP_TIME = 10;
+const int GEGNER_MAX_JUMP_TIME = 40;
 
 
 class Spieler

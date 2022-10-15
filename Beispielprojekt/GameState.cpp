@@ -253,8 +253,7 @@ void GameState::Lasershooter()
 					if ((Laservektor.at(i).posy + 1) > elem_O_f->posy && (Laservektor.at(i).posy) < (elem_O_f->posy + elem_O_f->hoehe - 1))
 					{
 						//Theoretisch muss hier jede Laser - Objekt - Kollision behandelt werden
-
-						Laservektor.erase(Laservektor.begin() + i);;
+						Laservektor.erase(Laservektor.begin() + i);
 						crash = true;	//Setzen des bools, um weitere ausführung der Schleife zu verhindern (Sonst wird auf gelöschtes zugegriffen...)
 						if (elem_O_f->destroyable)
 						{
@@ -287,6 +286,17 @@ void GameState::Lasershooter()
 				}
 			}
 			elem_O_f = elem_O_f->next;
+		}
+		if (!crash)
+		{
+			if (Laservektor.at(i).posx < (iGegner->posx + iGegner->breite - 1) && (Laservektor.at(i).posx + 25) >(iGegner->posx))		//Und jz noch Kollision mir Mr. Coco prüfen
+			{
+				if ((Laservektor.at(i).posy + 1) > iGegner->posy && (Laservektor.at(i).posy) < (iGegner->posy + iGegner->hoehe - 1))
+				{
+					Laservektor.erase(Laservektor.begin() + i);
+					health_gegner = health_gegner - 1;
+				}
+			}
 		}
 	}
 }
@@ -547,7 +557,7 @@ bool GameState::kollision_oben_gegner(std::shared_ptr<GameState::Objekt_fest> li
 		//{
 			if (this->g1->player_x < (elem_O_f->startx + elem_O_f->breite) && (this->g1->player_x + iplayertemp->breite) >(elem_O_f->startx))
 			{
-				if ((this->g1->player_y + iplayertemp->hoehe) > elem_O_f->starty && (this->p1->player_y - (5 + abs(this->g1->speedPlayerY))) < (elem_O_f->starty + elem_O_f->hoehe))
+				if ((this->g1->player_y + iplayertemp->hoehe) > elem_O_f->starty && (this->p1->player_y - 5) < (elem_O_f->starty + elem_O_f->hoehe))
 				{
 					tmp = true;
 				}

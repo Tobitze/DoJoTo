@@ -16,6 +16,7 @@ bool collision_unten = true;
 bool newjumpallowed = true;
 bool collision_damage = false;
 int damage_timer = 0;
+bool gegner_dead = false;
 
 
 const double DAMAGE_TIME_CYCLE = 20;	//Zeitintervall, nachdem DAMAGE_COUNT Herzen abgezogen werden
@@ -194,10 +195,10 @@ public:
 			damage_timer = DAMAGE_TIME_CYCLE;
 		}
 		//----------------------------------------------MR COCO----------------------------------------------
-		if (game.distance_from_player(game.iGegner) < 1000)
+		if (game.distance_from_player(game.iGegner) < 1000 && !gegner_dead)
 		{
 			game.get_Gegner()->KI();	//Setzen der playeraction des Gegners
-			std::cout << game.get_Gegner()->playeraction << "\n";
+			//std::cout << game.get_Gegner()->playeraction << "\t" << game.kollision_oben_gegner(game.listenstart_O_f, game.iGegner) << "\n";
 			switch (game.get_Gegner()->playeraction)
 			{
 			case 0:		//Nix
@@ -217,7 +218,7 @@ public:
 			case 3:		//hoch
 				if (!game.kollision_oben_gegner(game.listenstart_O_f, game.iGegner))
 				{
-					game.iGegner->starty = game.iGegner->starty - GEGNER_SPEED;
+					game.iGegner->starty = game.iGegner->starty - (GEGNER_SPEED * 2);
 				}
 				break;
 			default:
@@ -249,9 +250,14 @@ public:
 		game.get_Gegner()->player_x = game.iGegner->startx;
 		game.get_Gegner()->player_y = game.iGegner->starty;
 
-		if (input().down(Gosu::KB_RIGHT))
+		if (game.health_gegner <= 0)
 		{
-			game.get_Gegner()->playeraction = 2;
+			gegner_dead = true;
+			game.iGegner->startx = 10000;
+			game.iGegner->starty = 10000;
+			game.iGegner->posx = 10000;
+			game.iGegner->posy = 10000;
+			//Playsound
 		}
 
 

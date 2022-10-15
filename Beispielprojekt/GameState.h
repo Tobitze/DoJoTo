@@ -67,6 +67,7 @@ public:
 	bool w_pressed = false;// player sprung
 	bool a_pressed = false;// player links
 	bool d_pressed = false;// player rechts
+	int health_gegner = 5;
 	void Rolle();
 
 	Gosu::Image bodenR;
