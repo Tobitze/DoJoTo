@@ -185,7 +185,9 @@ public:
 	std::shared_ptr<Objekt_fest> iTuer;
 	std::shared_ptr<Objekt_fest> iLava1;
 	std::shared_ptr<Objekt_fest> iLava2;
-
+	std::shared_ptr<Objekt_fest> iLava3;
+	std::shared_ptr<Objekt_fest> iLava4;
+	std::shared_ptr<Objekt_fest> iLava5;
 	std::shared_ptr<Objekt_fest> elem_O_f;
 	std::shared_ptr<Objekt_fest> listenstart_O_f; //Hier immer letztes Element hinschreiben
 

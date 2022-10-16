@@ -104,14 +104,19 @@ GameState::GameState()
 	//iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_destr_test2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, -414, -45, 100, iWand_destr_test2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	iLava1 = erstelle_Objekt_fest_ptr(50, 20, -464, -10, 100, iBoden3, std::make_shared<Gosu::Image>(Lava), 1, 1);
-	
+	iLava2 = erstelle_Objekt_fest_ptr(50, 20, -514, -10, 100, iLava1, std::make_shared<Gosu::Image>(Lava), 1, 1);
+	iLava3 = erstelle_Objekt_fest_ptr(50, 20, -564, -10, 100, iLava2, std::make_shared<Gosu::Image>(Lava), 1, 1);
+	iLava4 = erstelle_Objekt_fest_ptr(50, 20, -614, -10, 100, iLava3, std::make_shared<Gosu::Image>(Lava), 1, 1);
+	iLava5 = erstelle_Objekt_fest_ptr(50, 20, -664, -10, 100, iLava3, std::make_shared<Gosu::Image>(Lava), 1, 1);
+	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -1138, -45, 100, iLava5, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+
 	
 	
 	
 	iTuer = erstelle_Objekt_fest_ptr(45, 130, 200, 420, 150.0, iWand_destr_test2, std::make_shared<Gosu::Image>(Tuer), 1, 2);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = iLava1; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = iBoden4; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
@@ -133,8 +138,8 @@ GameState::GameState()
 	ilistenproblemloeserobjektdamage = erstelle_Objekt_damage_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);	//Never touch a working system
 	iGegner = erstelle_Objekt_damage_ptr(80, 80, 90, 400, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(MisterCoco), 1, 1);		//Außer den Breiten nix anfassen!
 	//Hier neue einfügen
-	iLava_G1 = erstelle_Objekt_damage_ptr(50, 20, -545, -40, 300, iGegner, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
-	iLava_G2 = erstelle_Objekt_damage_ptr(50, 20, -545, -40, 300, iLava_G1, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
+	iLava_G1 = erstelle_Objekt_damage_ptr(145, 58, -545, -40, 300, iGegner, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
+	iLava_G2 = erstelle_Objekt_damage_ptr(145, 58, -690, -40, 300, iLava_G1, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
 	elem_O_d = std::make_shared<Objekt_damage>();
 	listenstart_O_d = iLava_G2; //Hier immer letztes Element hinschreiben
 
