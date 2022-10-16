@@ -42,7 +42,7 @@ GameState::GameState()
 	, Wand_destr_2("Wand_destr_r_2.png")
 	, Wand_destr_3("Wand_destr_r_3.png")
 	
-	//Sounds
+/*	//Sounds
 	, HintergrundSound("HintergrundSound.mp3")
 	, SprungSound("Sprung.mp3")
 	, GewonnenSound("Gewonnen.mp3")
@@ -52,7 +52,7 @@ GameState::GameState()
 	, WandSound("Wand.mp3")
 	, SchadenGegnerSound("Gegner_Schaden.mp3") 
 	, LaserSound("Laser.mp3")
-
+*/
 {
 
 	p1 = new Spieler();

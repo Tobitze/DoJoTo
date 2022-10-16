@@ -105,7 +105,7 @@ public:
 
 	//Sounds
 	 
-		
+/*
 	Gosu::Song HintergrundSound;
 	Gosu::Sample SprungSound;
 	Gosu::Sample GewonnenSound;
@@ -115,7 +115,7 @@ public:
 	Gosu::Sample WandSound;
 	Gosu::Sample SchadenGegnerSound;
 	Gosu::Sample LaserSound;
-
+*/
 	//Game Window
 
 	std::shared_ptr<Objekt_fest> ilistenproblenloeser;					 //Einfach nicht hinterfragen
