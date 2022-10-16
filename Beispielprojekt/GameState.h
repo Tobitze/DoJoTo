@@ -59,6 +59,7 @@ public:
 	void Lasershooter();
 
 	int health = 3;
+	int keys = 0;
 	int i = 12; //entrollen der schriftrolle counter
 	int s = i;
 	bool facing_r = true;
@@ -80,6 +81,8 @@ public:
 	Gosu::Image Plattform1;
 	Gosu::Image Plattform2;
 	Gosu::Image spikesLng;
+	Gosu::Image Lava;
+	Gosu::Image Lava_G;
 	//HUD
 	Gosu::Image hud;
 	Gosu::Image hudHP;
@@ -90,6 +93,10 @@ public:
 	Gosu::Image Scroll2;
 	Gosu::Image Scroll3;
 	Gosu::Image GameOver;
+	Gosu::Image Keys0;
+	Gosu::Image Keys1;
+	Gosu::Image Keys2;
+
 	//Player	//Aus dem Provisorium ist ein dauerhafter Zustand geworden xD
 	Gosu::Image rPlayertemp1;
 	Gosu::Image rPlayertemp2;
@@ -109,9 +116,16 @@ public:
 
 	//Sounds
 
+	 
+		
+	//Gosu::Song HintergrundSound;
+	//Gosu::Sample SprungSound;
+
+
 
 	//Gosu::Sample HintergrundSound;
 	Gosu::Sample SprungSound;
+
 	//Gosu::Sample GewonnenSound;
 	Gosu::Sample VerlorenSound;
 	//Gosu::Sample TuerSound;
@@ -146,6 +160,9 @@ public:
 	std::shared_ptr<Objekt_fest> iBoden7;
 	std::shared_ptr<Objekt_fest> iBoden8;
 
+	std::shared_ptr<Objekt_damage> ispikesLong;
+
+
 
 	//Wände links
 	std::shared_ptr<Objekt_fest> iWand_l1;
@@ -153,6 +170,7 @@ public:
 
 	std::shared_ptr<Objekt_fest> iWand_l3;
 	std::shared_ptr<Objekt_fest> iWand_l4;
+	std::shared_ptr<Objekt_fest> iWand_l5;
 
 	//Wände rechts
 	std::shared_ptr<Objekt_fest> iWand_r1;
@@ -161,8 +179,10 @@ public:
 	std::shared_ptr<Objekt_fest> iWand_r4;
 
 	std::shared_ptr<Objekt_fest> iWand_destr_test;
+	std::shared_ptr<Objekt_fest> iWand_destr_test2;
 	std::shared_ptr<Objekt_fest> iTuer;
-
+	std::shared_ptr<Objekt_fest> iLava1;
+	std::shared_ptr<Objekt_fest> iLava2;
 
 	std::shared_ptr<Objekt_fest> elem_O_f;
 	std::shared_ptr<Objekt_fest> listenstart_O_f; //Hier immer letztes Element hinschreiben
@@ -186,7 +206,8 @@ public:
 	std::shared_ptr<Objekt_damage> ilistenproblemloeserobjektdamage;
 	std::shared_ptr<Objekt_damage> iGegner;	//Reines Test-Objekt, kann auch wieder weg...
 	//Hier neue einfügen
-
+	std::shared_ptr<Objekt_damage> iLava_G1;
+	std::shared_ptr<Objekt_damage> iLava_G2;
 	std::shared_ptr<Objekt_damage> elem_O_d;
 	std::shared_ptr<Objekt_damage> listenstart_O_d; //Hier immer letztes Element hinschreiben
 
