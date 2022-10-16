@@ -294,7 +294,7 @@ public:
 		if (input().down(Gosu::KB_W) && game.health > 0) {
 
 			game.w_pressed = true;
-
+			
 			//game.get_Spieler()->jumpTime = (game.get_Spieler()->jumpTime < MAX_JUMP_TIME ? game.get_Spieler()->jumpTime : MAX_JUMP_TIME); // wie größ ist die Übergebene Sprungzeit?
 			//game.get_Spieler()->heightPlayer = (game.get_Spieler()->PlayerSprung(game.get_Spieler()->jumpTime, MAX_HEIGHT,game.get_Spieler()->PlayerBeschleunigung(1,game.get_Spieler()->jumpTime), game.w_pressed));
 			//game.get_Spieler()->player_y =game.get_Spieler()->player_y -game.get_Spieler()->heightPlayer; // y ist invertiert im Vergleich zu koordinatensystemen
