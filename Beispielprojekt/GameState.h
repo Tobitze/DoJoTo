@@ -67,12 +67,13 @@ public:
 	bool w_pressed = false;// player sprung
 	bool a_pressed = false;// player links
 	bool d_pressed = false;// player rechts
+	int health_gegner = 5;
 	void Rolle();
 
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
 	Gosu::Image Wand;
-	Gosu::Image Wand_r1; 
+	Gosu::Image Wand_r1;
 	Gosu::Image Wand_l1;
 	Gosu::Image hintergrund;
 	Gosu::Image Kiste;
@@ -107,53 +108,53 @@ public:
 	Gosu::Image Tuer;
 
 	//Sounds
-	 
-		
-	//Gosu::Song HintergrundSound;
-	//Gosu::Sample SprungSound;
+
+
+	//Gosu::Sample HintergrundSound;
+	Gosu::Sample SprungSound;
 	//Gosu::Sample GewonnenSound;
-	//Gosu::Sample VerlorenSound;
+	Gosu::Sample VerlorenSound;
 	//Gosu::Sample TuerSound;
 	//Gosu::Sample SchadenSound;
 	//Gosu::Sample WandSound;
-	//Gosu::Sample SchadenGegnerSound;
+	Gosu::Sample SchadenGegnerSound;
 	//Gosu::Sample LaserSound;
 	Gosu::Sample TestSound;
 
 	//Game Window
 
 	std::shared_ptr<Objekt_fest> ilistenproblenloeser;					 //Einfach nicht hinterfragen
-																		 //Linked list über pointer
-	
-	//Objekte
+	//Linked list über pointer
+
+//Objekte
 
 	std::shared_ptr<Objekt_fest> iKiste;
 
 	//Plattformen
 	std::shared_ptr<Objekt_fest> iPlattform1;
 	std::shared_ptr<Objekt_fest> iPlattform2;
-	
+
 	//Böden
 	std::shared_ptr<Objekt_fest> ibodenR;
 	std::shared_ptr<Objekt_fest> ibodenL;
 	std::shared_ptr<Objekt_fest> iBoden3;
 	std::shared_ptr<Objekt_fest> iBoden4;
 	std::shared_ptr<Objekt_fest> iBoden5;
-	
-	
+
+
 	std::shared_ptr<Objekt_fest> iBoden6;
 	std::shared_ptr<Objekt_fest> iBoden7;
 	std::shared_ptr<Objekt_fest> iBoden8;
-	std::shared_ptr<Objekt_damage> ispikesLong;
 
-//Wände links
+
+	//Wände links
 	std::shared_ptr<Objekt_fest> iWand_l1;
 	std::shared_ptr<Objekt_fest> iWand_l2;
 
 	std::shared_ptr<Objekt_fest> iWand_l3;
 	std::shared_ptr<Objekt_fest> iWand_l4;
 
-//Wände rechts
+	//Wände rechts
 	std::shared_ptr<Objekt_fest> iWand_r1;
 	std::shared_ptr<Objekt_fest> iWand_r2;
 	std::shared_ptr<Objekt_fest> iWand_r3;
@@ -179,11 +180,11 @@ public:
 
 	std::shared_ptr<Player_data> elem_P_d;
 	std::shared_ptr<Player_data> listenstart_P_d; //Hier immer letztes Element hinschreiben
-	
+
 	//Liste für Objekt_damage
 
 	std::shared_ptr<Objekt_damage> ilistenproblemloeserobjektdamage;
-	std::shared_ptr<Objekt_damage> ikisteschaden;	//Reines Test-Objekt, kann auch wieder weg...
+	std::shared_ptr<Objekt_damage> iGegner;	//Reines Test-Objekt, kann auch wieder weg...
 	//Hier neue einfügen
 
 	std::shared_ptr<Objekt_damage> elem_O_d;
@@ -196,7 +197,7 @@ public:
 	GameState();
 
 
-	
+
 
 
 #pragma region 1 //Kollsionskäse
@@ -209,5 +210,9 @@ public:
 	bool kollision_unten(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);//, Spieler* p1);
 	bool kollsion_damage(std::shared_ptr<GameState::Objekt_damage> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp);
 	void SpielerModelupdate();
+	bool kollision_rechts_gegner(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Objekt_damage> iplayertemp);//, std::shared_ptr<Spieler> p1);
+	bool kollision_links_gegner(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Objekt_damage> iplayertemp);//, Spieler* p1);
+	bool kollision_oben_gegner(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Objekt_damage> iplayertemp);//, Spieler* p1);
+	bool kollision_unten_gegner(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Objekt_damage> iplayertemp);//, Spieler* p1);
 #pragma endregion	
 };
