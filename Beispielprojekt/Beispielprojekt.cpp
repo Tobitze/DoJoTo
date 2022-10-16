@@ -92,6 +92,14 @@ public:
 
 		//HUD
 		game.hud.draw(0, 0, 300.0, 1, 0.75);
+		switch (game.keys) {
+		case 2:
+			game.Keys2.draw(668, 10, 400); break;
+		case 1:
+			game.Keys1.draw(668, 10, 400); break;
+		case 0:
+			game.Keys0.draw(668, 10, 400); break;
+		}
 		switch (game.health) {
 		case 3:
 			game.hudHP.draw_rot(120, 40, 400.0, 0.0, 0.5, 0.5); break;

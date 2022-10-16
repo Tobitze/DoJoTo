@@ -17,6 +17,10 @@ GameState::GameState()
 	, Kiste("Block.png")
 	, Plattform1("Plattform1.png")
 	, Plattform2("Plattform1.png")
+	, spikesLng("spikes_lng.png")
+	, Tuer("Tuere.png")
+	, Lava("Lava.png")
+	, Lava_G("Lava1.png")
 	//HUD
 	, hud("HUD.png")
 	, hudHP("hud_hp.png")
@@ -27,6 +31,9 @@ GameState::GameState()
 	, Scroll2("Scroll2.png")
 	, Scroll3("Scroll3.png")
 	, GameOver("GameOver.png")
+	, Keys0("Schluessel_HUD0.png")
+	, Keys1("Schluessel_HUD1.png")
+	, Keys2("Schluessel_HUD2.png")
 	//Player (temp)
 	, rPlayertemp1("r-Dr.Salzig1.png")
 	, rPlayertemp2("r-Dr.Salzig2.png")
@@ -40,10 +47,10 @@ GameState::GameState()
 	// Gegener
 	, MisterCoco("Mister Coco.png")
 
-	, Wand_destr_0("Wand_destr_r.png")
-	, Wand_destr_1("Wand_destr_r_1.png")
-	, Wand_destr_2("Wand_destr_r_2.png")
-	, Wand_destr_3("Wand_destr_r_3.png")
+	, Wand_destr_0("Wand_destr_l.png")
+	, Wand_destr_1("Wand_destr_l_1.png")
+	, Wand_destr_2("Wand_destr_l_2.png")
+	, Wand_destr_3("Wand_destr_l_3.png")
 
 	//Sounds
 	//, HintergrundSound("HintergrundSound.wav")
@@ -66,15 +73,15 @@ GameState::GameState()
 	g1->player_start_y = 400;
 
 	ilistenproblenloeser = erstelle_Objekt_fest_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);					 //Einfach nicht hinterfragen
-
+	//Startraum\\
 	//Boden
 	ibodenR = erstelle_Objekt_fest_ptr(474, 58, 476, 550, 100, ilistenproblenloeser, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	ibodenL = erstelle_Objekt_fest_ptr(474, 58, 0, 550, 100, ibodenR, std::make_shared<Gosu::Image>(bodenL), 1, 1);				 //Linked list über pointer
-	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, ibodenL, std::make_shared<Gosu::Image>(bodenR), 1, 1);
-	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -474, -30, 100, iBoden3, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	
+	
 
 	//Objekte
-	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, iBoden4, std::make_shared<Gosu::Image>(Kiste), 1, 1);
+	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste), 1, 1);
 	//Plattformen
 	iPlattform1 = erstelle_Objekt_fest_ptr(200, 43, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
 	iPlattform2 = erstelle_Objekt_fest_ptr(200, 43, 700, 10, 100, iPlattform1, std::make_shared<Gosu::Image>(Plattform2), 1, 1);
@@ -87,15 +94,24 @@ GameState::GameState()
 	iWand_r4 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 150, iWand_r3, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	iWand_l3 = erstelle_Objekt_fest_ptr(58, 473, 0, 90, 100, iWand_r4, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	iWand_l4 = erstelle_Objekt_fest_ptr(58, 473, 0, 0, 100, iWand_l3, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
-	iBoden5 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_l4, std::make_shared<Gosu::Image>(bodenR), 1, 1);
-	iBoden6 = erstelle_Objekt_fest_ptr(474, 58, -474, -30, 100, iBoden5, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iWand_l5 = erstelle_Objekt_fest_ptr(58, 473, 0, -705, 100, iWand_l4, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 
-	iWand_destr_test = erstelle_Objekt_fest_ptr(57, 99, 600, 400, 100, iBoden6, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
+	iWand_destr_test = erstelle_Objekt_fest_ptr(57, 99, 0, -133, 100, iWand_l5, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
+	iWand_destr_test2 = erstelle_Objekt_fest_ptr(57, 99, 0, -232, 100, iWand_destr_test, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
 
-
+	//Lavaraum\\
+	//Böden
+	//iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_destr_test2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, -414, -45, 100, iWand_destr_test2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iLava1 = erstelle_Objekt_fest_ptr(50, 20, -464, -10, 100, iBoden3, std::make_shared<Gosu::Image>(Lava), 1, 1);
+	
+	
+	
+	
+	iTuer = erstelle_Objekt_fest_ptr(45, 130, 200, 420, 150.0, iWand_destr_test2, std::make_shared<Gosu::Image>(Tuer), 1, 2);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = iWand_destr_test; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = iLava1; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
@@ -117,9 +133,10 @@ GameState::GameState()
 	ilistenproblemloeserobjektdamage = erstelle_Objekt_damage_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);	//Never touch a working system
 	iGegner = erstelle_Objekt_damage_ptr(80, 80, 90, 400, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(MisterCoco), 1, 1);		//Außer den Breiten nix anfassen!
 	//Hier neue einfügen
-
+	iLava_G1 = erstelle_Objekt_damage_ptr(50, 20, -545, -40, 300, iGegner, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
+	iLava_G2 = erstelle_Objekt_damage_ptr(50, 20, -545, -40, 300, iLava_G1, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
 	elem_O_d = std::make_shared<Objekt_damage>();
-	listenstart_O_d = iGegner; //Hier immer letztes Element hinschreiben
+	listenstart_O_d = iLava_G2; //Hier immer letztes Element hinschreiben
 
 
 
