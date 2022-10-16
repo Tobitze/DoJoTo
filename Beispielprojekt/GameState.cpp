@@ -84,7 +84,7 @@ GameState::GameState()
 	iKiste = erstelle_Objekt_fest_ptr(80, 80, 700, 469, 100, ibodenL, std::make_shared<Gosu::Image>(Kiste), 1, 1);
 	//Plattformen
 	iPlattform1 = erstelle_Objekt_fest_ptr(200, 43, 300, 200, 100, iKiste, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
-	iPlattform2 = erstelle_Objekt_fest_ptr(200, 43, 700, 10, 100, iPlattform1, std::make_shared<Gosu::Image>(Plattform2), 1, 1);
+	iPlattform2 = erstelle_Objekt_fest_ptr(200, 43, 700, -140, 100, iPlattform1, std::make_shared<Gosu::Image>(Plattform2), 1, 1);
 	//Wände
 	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iPlattform2, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	iWand_r2 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 150, iWand_r1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
