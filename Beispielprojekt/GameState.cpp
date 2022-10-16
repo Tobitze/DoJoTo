@@ -17,6 +17,7 @@ GameState::GameState()
 	, Kiste("Block.png")
 	, Plattform1("Plattform1.png")
 	, Plattform2("Plattform1.png")
+	, spikesLng("spikes_lng.png")
 	//HUD
 	, hud("HUD.png")
 	, hudHP("hud_hp.png")
@@ -44,9 +45,10 @@ GameState::GameState()
 	, Wand_destr_1("Wand_destr_r_1.png")
 	, Wand_destr_2("Wand_destr_r_2.png")
 	, Wand_destr_3("Wand_destr_r_3.png")
+	, Tuer("Tuere.png")
 	
 	//Sounds
-	, HintergrundSound("HintergrundSound.wav")
+	//, HintergrundSound("HintergrundSound.wav")
 /*, SprungSound("Sprung.wav")
 	, GewonnenSound("Gewonnen.wav")
 	, VerlorenSound("Verloren.wav")
@@ -88,10 +90,10 @@ GameState::GameState()
 
 	iWand_destr_test = erstelle_Objekt_fest_ptr(57, 99, 600, 400, 100, iBoden6, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
 
-
+	iTuer = erstelle_Objekt_fest_ptr(45, 130, 200, 420, 150.0, iWand_destr_test, std::make_shared<Gosu::Image>(Tuer), 1, 2);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = iWand_destr_test; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = iTuer; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
@@ -112,10 +114,11 @@ GameState::GameState()
 
 	ilistenproblemloeserobjektdamage = erstelle_Objekt_damage_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);	//Never touch a working system
 	ikisteschaden = erstelle_Objekt_damage_ptr(80, 80, 90, 450, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(MisterCoco), 1, 1);
+	ispikesLong = erstelle_Objekt_damage_ptr(190, 19, 150, 450, 100, ikisteschaden, std::make_shared<Gosu::Image>(spikesLng), 1, 1);
 	//Hier neue einfügen
 
 	elem_O_d = std::make_shared<Objekt_damage>();
-	listenstart_O_d = ikisteschaden; //Hier immer letztes Element hinschreiben
+	listenstart_O_d = ispikesLong; //Hier immer letztes Element hinschreiben
 
 
 

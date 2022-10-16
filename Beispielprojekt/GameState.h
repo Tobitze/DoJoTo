@@ -78,6 +78,7 @@ public:
 	Gosu::Image Kiste;
 	Gosu::Image Plattform1;
 	Gosu::Image Plattform2;
+	Gosu::Image spikesLng;
 	//HUD
 	Gosu::Image hud;
 	Gosu::Image hudHP;
@@ -103,11 +104,12 @@ public:
 	Gosu::Image Wand_destr_1;
 	Gosu::Image Wand_destr_2;
 	Gosu::Image Wand_destr_3;
+	Gosu::Image Tuer;
 
 	//Sounds
 	 
 		
-	Gosu::Song HintergrundSound;
+	//Gosu::Song HintergrundSound;
 	//Gosu::Sample SprungSound;
 	//Gosu::Sample GewonnenSound;
 	//Gosu::Sample VerlorenSound;
@@ -142,7 +144,7 @@ public:
 	std::shared_ptr<Objekt_fest> iBoden6;
 	std::shared_ptr<Objekt_fest> iBoden7;
 	std::shared_ptr<Objekt_fest> iBoden8;
-	
+	std::shared_ptr<Objekt_damage> ispikesLong;
 
 //Wände links
 	std::shared_ptr<Objekt_fest> iWand_l1;
@@ -158,6 +160,7 @@ public:
 	std::shared_ptr<Objekt_fest> iWand_r4;
 
 	std::shared_ptr<Objekt_fest> iWand_destr_test;
+	std::shared_ptr<Objekt_fest> iTuer;
 
 
 	std::shared_ptr<Objekt_fest> elem_O_f;
