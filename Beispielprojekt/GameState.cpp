@@ -133,6 +133,7 @@ GameState::GameState()
 	
 	//Raum 3
 
+	//DeckeR31 = erstelle_Objekt_fest_ptr(58, 437, 0, -1053, 100, DeckeG14, std::make_shared<Gosu::Image>(BodenR), 1, 1);
 
 
 	
