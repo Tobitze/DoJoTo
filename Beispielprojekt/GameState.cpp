@@ -110,6 +110,9 @@ GameState::GameState()
 	iLava5 = erstelle_Objekt_fest_ptr(50, 20, -664, -10, 100, iLava3, std::make_shared<Gosu::Image>(Lava), 1, 1);
 	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -1138, -45, 100, iLava5, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	WandR2L1 = erstelle_Objekt_fest_ptr(58, 437, -1138, -465, 100, iBoden4, std::make_shared<Gosu::Image>(Wand_l1),1,1);
+	DeckeR21 = erstelle_Objekt_fest_ptr(58, 437, -1138, -465, 100, WandR2L1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	DeckeR22 = erstelle_Objekt_fest_ptr(58, 437, -690, -465, 100, DeckeR21, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+
 	
 
 
@@ -119,7 +122,7 @@ GameState::GameState()
 	iTuer = erstelle_Objekt_fest_ptr(45, 130, 200, 420, 150.0, iWand_destr_test2, std::make_shared<Gosu::Image>(Tuer), 1, 2);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = WandR2L1; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = DeckeR22; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
