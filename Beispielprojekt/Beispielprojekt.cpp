@@ -17,6 +17,7 @@ bool newjumpallowed = true;
 bool collision_damage = false;
 int damage_timer = 0;
 bool gegner_dead = false;
+bool jumpsoundallowed = true;
 
 
 const double DAMAGE_TIME_CYCLE = 20;	//Zeitintervall, nachdem DAMAGE_COUNT Herzen abgezogen werden
@@ -332,6 +333,11 @@ public:
 				if (game.get_Spieler()->jumpTime < MAX_JUMP_TIME && collision_oben == false)
 				{
 					game.get_Spieler()->speedPlayerY = game.get_Spieler()->speedPlayerY - PLAYER_ACC_UP;
+					if (jumpsoundallowed)
+					{
+						game.SprungSound.play(0.1);
+						jumpsoundallowed = false;
+					}
 				}
 			}
 
@@ -346,6 +352,7 @@ public:
 			game.w_pressed = false;
 			game.get_Spieler()->jumpTime = 0;
 			newjumpallowed = false;
+			jumpsoundallowed = true;
 		}
 		//Beschleunigte Bewegung in x -------------------------------------------------------------------------
 
