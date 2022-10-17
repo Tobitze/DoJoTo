@@ -162,6 +162,7 @@ public:
 	std::shared_ptr<Objekt_fest>DeckeG12;
 	
 	std::shared_ptr<Objekt_fest>WandG1R1;
+	std::shared_ptr<Objekt_fest>WandG1RZ1;
 	//Raum 3 - von Gang zu Bossraum 
 	std::shared_ptr<Objekt_fest>DeckeR31;
 	
