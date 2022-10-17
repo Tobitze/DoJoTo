@@ -99,7 +99,7 @@ GameState::GameState()
 	iWand_destr_test = erstelle_Objekt_fest_ptr(57, 99, 0, -133, 100, iWand_l5, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
 	iWand_destr_test2 = erstelle_Objekt_fest_ptr(57, 99, 0, -232, 100, iWand_destr_test, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
 
-	//Lavaraum\\
+	//Lavaraum\\ Entspricht raum 2
 	//Böden
 	//iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_destr_test2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, -414, -45, 100, iWand_destr_test2, std::make_shared<Gosu::Image>(bodenR), 1, 1);

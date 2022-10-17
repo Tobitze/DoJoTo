@@ -144,6 +144,49 @@ public:
 
 //Objekte
 
+//nach Räumen sortiert
+	//Raum 1 - Spawn 
+	
+	//Raum 2 - Lava und Schlüssel
+	std::shared_ptr<Objekt_fest> DeckeR21;
+	std::shared_ptr<Objekt_fest> DeckeR22;
+	std::shared_ptr<Objekt_fest> DeckeR23;
+
+	std::shared_ptr<Objekt_fest> WandR2L1;
+	//Gang zu Raum 3 - über Raum 1 (mit Fake ausgang)
+	std::shared_ptr<Objekt_fest>BodenG11;
+	std::shared_ptr<Objekt_fest>BodenG12;
+	std::shared_ptr<Objekt_fest>BodenG13;
+
+	std::shared_ptr<Objekt_fest>DeckeG11;
+	std::shared_ptr<Objekt_fest>DeckeG12;
+	
+	std::shared_ptr<Objekt_fest>WandG1R1;
+	//Raum 3 - von Gang zu Bossraum 
+	std::shared_ptr<Objekt_fest>DeckeR31;
+	
+	std::shared_ptr<Objekt_fest>BodenR31;
+	
+	std::shared_ptr<Objekt_fest>WandR3R1;
+	std::shared_ptr<Objekt_fest>WandR3R2;
+	std::shared_ptr<Objekt_fest>WandR3L1;
+	std::shared_ptr<Objekt_fest>WandR3L2;
+	//Raum 4 - Schlüssel 2
+	std::shared_ptr<Objekt_fest>DeckeR41;
+	
+	std::shared_ptr<Objekt_fest>BodenR41;
+	
+	std::shared_ptr<Objekt_fest>WandR4R1;
+	//Bossraum - hinter der Tür (Unten Rechts)
+	std::shared_ptr<Objekt_fest>BodenB11;
+	std::shared_ptr<Objekt_fest>BodenB12;
+
+	std::shared_ptr<Objekt_fest>DeckeB11;
+	std::shared_ptr<Objekt_fest>DeckeB12;
+
+	std::shared_ptr<Objekt_fest>WandB1L1;
+
+	//Alles andere
 	std::shared_ptr<Objekt_fest> iKiste;
 
 	//Plattformen
@@ -173,6 +216,7 @@ public:
 	std::shared_ptr<Objekt_fest> iWand_l3;
 	std::shared_ptr<Objekt_fest> iWand_l4;
 	std::shared_ptr<Objekt_fest> iWand_l5;
+
 
 	//Wände rechts
 	std::shared_ptr<Objekt_fest> iWand_r1;
