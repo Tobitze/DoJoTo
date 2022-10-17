@@ -114,6 +114,7 @@ public:
 	Gosu::Image Wand_destr_2;
 	Gosu::Image Wand_destr_3;
 	Gosu::Image Tuer;
+	Gosu::Image Tuer_offen;
 
 	//Sounds
 
