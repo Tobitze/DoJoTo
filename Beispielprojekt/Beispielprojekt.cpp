@@ -143,6 +143,20 @@ public:
 
 	void update() override
 	{
+		if (game.distance_from_player(game.KeyR21) < 50)
+		{
+			game.keys = game.keys + 1;	//Wegen Linked list kann ich sie net removen. Aus dem Auge, aus dem Sinn...
+			game.KeyR21->startx = 10000;
+			game.KeyR21->starty = 10000;
+			//Playsound plop?
+		}
+		if (game.distance_from_player(game.KeyR41) < 50)
+		{
+			game.keys = game.keys + 1;
+			game.KeyR41->startx = 10000;
+			game.KeyR41->starty = 10000;
+		}
+
 		//while (game_start == true) {
 		 //game.Hintergrundsound;
 		collision_rechts = game.kollision_rechts(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());

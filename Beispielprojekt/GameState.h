@@ -12,8 +12,6 @@ class GameState {
 public:
 
 	bool attack = false;
-	bool key_1 = false;
-	bool key_2 = false;
 	int t = 0;	//Just don't touch it
 	int tl = 0;
 	//static Spieler p1;
