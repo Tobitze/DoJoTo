@@ -85,6 +85,7 @@ public:
 	Gosu::Image spikesLng;
 	Gosu::Image Lava;
 	Gosu::Image Lava_G;
+	Gosu::Image Key;
 	//HUD
 	Gosu::Image hud;
 	Gosu::Image hudHP;
