@@ -69,10 +69,10 @@ GameState::GameState()
 
 	p1 = new Spieler();
 	g1 = new Spieler();
-	g1->player_x = 90;		//Start-Koords Mr Coco
-	g1->player_y = 400;
-	g1->player_start_x = 90;		//Start-Koords Mr Coco
-	g1->player_start_y = 400;
+	g1->player_x = 3000;		//Start-Koords Mr Coco
+	g1->player_y = 0;
+	g1->player_start_x = 3000;		//Start-Koords Mr Coco
+	g1->player_start_y = 0;
 
 	ilistenproblenloeser = erstelle_Objekt_fest_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);					 //Einfach nicht hinterfragen
 	//Startraum\\
@@ -180,7 +180,7 @@ GameState::GameState()
 	//Liste für Objekt_damage
 
 	ilistenproblemloeserobjektdamage = erstelle_Objekt_damage_ptr(0, 0, 0, 0, 0, nullptr, nullptr, 1, 1);	//Never touch a working system
-	iGegner = erstelle_Objekt_damage_ptr(80, 80, 90, 400, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(MisterCoco), 1, 1);		//Außer den Breiten nix anfassen!
+	iGegner = erstelle_Objekt_damage_ptr(80, 80, 3000, 0, 100, ilistenproblemloeserobjektdamage, std::make_shared<Gosu::Image>(MisterCoco), 1, 1);		//Außer den Breiten nix anfassen!
 	//Hier neue einfügen
 	iLava_G1 = erstelle_Objekt_damage_ptr(145, 58, -545, -40, 300, iGegner, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
 	iLava_G2 = erstelle_Objekt_damage_ptr(145, 58, -690, -40, 300, iLava_G1, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
