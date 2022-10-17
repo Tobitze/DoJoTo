@@ -96,11 +96,11 @@ public:
 		game.hud.draw(0, 0, 300.0, 1, 0.75);
 		switch (game.keys) {
 		case 2:
-			game.Keys2.draw(668, 10, 400); break;
+			game.Keys2.draw(658, 10, 400); break;
 		case 1:
-			game.Keys1.draw(668, 10, 400); break;
+			game.Keys1.draw(658, 10, 400); break;
 		case 0:
-			game.Keys0.draw(668, 10, 400); break;
+			game.Keys0.draw(658, 10, 400); break;
 		}
 		switch (game.health) {
 		case 3:
@@ -142,7 +142,7 @@ public:
 		{
 			game.Laserbild.draw_rot(game.Laservektor.at(i).posx, game.Laservektor.at(i).posy, 100.0, 0.0, 0.5, 0.5);
 		}
-
+		
 
 		//}
 	}
@@ -178,12 +178,8 @@ public:
 		game.SpielerModelupdate();
 
 		//HUD
-		if (input().down(Gosu::KB_K) && !game.pressed)
-		{
-			game.pressed = true;
-			game.health = game.health - 1;
-		}
-		else if (!input().down(Gosu::KB_K)) { game.pressed = false; }
+		
+		
 
 		if (input().down(Gosu::KB_F) && game.health <= 0) //Respawn
 		{
@@ -286,11 +282,13 @@ public:
 
 		if (game.health_gegner <= 0)
 		{
+			//game.Rolle2();
 			gegner_dead = true;
 			game.iGegner->startx = 10000;
 			game.iGegner->starty = 10000;
 			game.iGegner->posx = 10000;
 			game.iGegner->posy = 10000;
+			
 			//Playsound
 		}
 

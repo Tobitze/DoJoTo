@@ -13,13 +13,14 @@ GameState::GameState()
 	, Wand("boden1.jpg")
 	, Wand_r1("Wand rechts.png")
 	, Wand_l1("Wand links.png")
+	, Boden_HG("boden_hg.png")
 	, hintergrund("hintergrund.jfif")
 	, Kiste("Block.png")
 	, Plattform1("Plattform1.png")
 	, Plattform2("Plattform1.png")
 	, spikesLng("spikes_lng.png")
 	, Tuer("Tuere.png")
-	, Tuer_offen("Tuere.png")		//Hier Grafik für Tür offen implementieren!
+	, Tuer_offen("Tuere_offen.png")		//Hier Grafik für Tür offen implementieren!
 	, Lava("Lava.png")
 	, Lava_G("Lava1.png")
 	, Key("Schluessel.png")
@@ -34,6 +35,7 @@ GameState::GameState()
 	, Scroll("Scroll.png")
 	, Scroll2("Scroll2.png")
 	, Scroll3("Scroll3.png")
+	, Scroll4("Mister Coco schild.png")
 	, GameOver("GameOver.png")
 	, Keys0("Schluessel_HUD0.png")
 	, Keys1("Schluessel_HUD1.png")
@@ -228,6 +230,29 @@ void GameState::Rolle(bool end, bool death) //entrollen der schriftrolle
 			}
 		}
 	}
+}
+void GameState::Rolle2() //entrollen der schriftrolle
+{
+
+	if (j > (3 * u / 4)) {
+		Scroll.draw_rot(400, 174, 450.0, 0.0, 0.5, 0.5);
+		j = j - 1;
+	}
+	else if (j <= (3 * u / 4) && i > (u / 2))
+	{
+		Scroll2.draw_rot(400, 243, 450.0, 0.0, 0.5, 0.5);
+		j = j - 1;
+	}
+	else if (j <= (u / 2) && j > (u / 4))
+	{
+		Scroll3.draw_rot(400, 291, 450.0, 0.0, 0.5, 0.5);
+		j = j - 1;
+	}
+	else if (j <= (u / 4))
+	{
+		Scroll4.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+	}
+
 }
 
 void GameState::SpielerModelupdate()
