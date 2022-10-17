@@ -160,6 +160,8 @@ public:
 
 	std::shared_ptr<Objekt_fest>DeckeG11;
 	std::shared_ptr<Objekt_fest>DeckeG12;
+	std::shared_ptr<Objekt_fest>DeckeG13;
+	std::shared_ptr<Objekt_fest>DeckeG14;
 	
 	std::shared_ptr<Objekt_fest>WandG1R1;
 	std::shared_ptr<Objekt_fest>WandG1RZ1;
