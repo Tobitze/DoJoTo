@@ -19,6 +19,7 @@ GameState::GameState()
 	, Plattform2("Plattform1.png")
 	, spikesLng("spikes_lng.png")
 	, Tuer("Tuere.png")
+	, Tuer_offen("Tuere.png")		//Hier Grafik für Tür offen implementieren!
 	, Lava("Lava.png")
 	, Lava_G("Lava1.png")
 	, Key("Schluessel.png")
