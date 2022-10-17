@@ -84,6 +84,8 @@ public:
 	Gosu::Image Lava;
 	Gosu::Image Lava_G;
 	Gosu::Image Key;
+	Gosu::Image Altklausur0;
+	Gosu::Image Altklausur1;
 	//HUD
 	Gosu::Image hud;
 	Gosu::Image hudHP;
@@ -204,6 +206,7 @@ public:
 
 	std::shared_ptr<Objekt_fest>WandB1L1;
 
+	std::shared_ptr<Objekt_fest>Altklausur;
 	//Alles andere
 	std::shared_ptr<Objekt_fest> iKiste;
 
