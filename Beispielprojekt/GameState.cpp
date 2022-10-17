@@ -133,7 +133,8 @@ GameState::GameState()
 	
 	//Raum 3
 
-	//DeckeR31 = erstelle_Objekt_fest_ptr(58, 437, 0, -1053, 100, DeckeG14, std::make_shared<Gosu::Image>(BodenR), 1, 1);
+	DeckeR31 = erstelle_Objekt_fest_ptr(474, 58, 2255, -700, 100, WandG1L1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	WandR3L1 = erstelle_Objekt_fest_ptr(58, 437, 2255, -400, 100, DeckeR31, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 
 
 	
@@ -142,7 +143,7 @@ GameState::GameState()
 	iTuer = erstelle_Objekt_fest_ptr(45, 130, 200, 420, 150.0, iWand_destr_test2, std::make_shared<Gosu::Image>(Tuer), 1, 2);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = WandG1L1; //Hier immer letztes Element hinschreiben	<-----------------------		REMINDER FÜR DORIAN		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	listenstart_O_f = WandR3L1; //Hier immer letztes Element hinschreiben	<-----------------------		REMINDER FÜR DORIAN		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);

@@ -177,6 +177,9 @@ public:
 	std::shared_ptr<Objekt_fest>WandR3R2;
 	std::shared_ptr<Objekt_fest>WandR3L1;
 	std::shared_ptr<Objekt_fest>WandR3L2;
+	std::shared_ptr<Objekt_fest>WandR3LZ1;
+	std::shared_ptr<Objekt_fest>WandR3LZ2;
+	std::shared_ptr<Objekt_fest> iTuer;
 	//Raum 4 - Schlüssel 2
 	std::shared_ptr<Objekt_fest>DeckeR41;
 	
@@ -233,7 +236,7 @@ public:
 
 	std::shared_ptr<Objekt_fest> iWand_destr_test;
 	std::shared_ptr<Objekt_fest> iWand_destr_test2;
-	std::shared_ptr<Objekt_fest> iTuer;
+
 	std::shared_ptr<Objekt_fest> iLava1;
 	std::shared_ptr<Objekt_fest> iLava2;
 	std::shared_ptr<Objekt_fest> iLava3;
