@@ -185,7 +185,7 @@ public:
 	
 	std::shared_ptr<Objekt_fest>BodenR41;
 	
-	std::shared_ptr<Objekt_fest>WandR4R1;
+	std::shared_ptr<Objekt_fest>WandR4L1;
 	std::shared_ptr<Objekt_fest> KeyR41;
 	//Bossraum - hinter der Tür (Unten Rechts)
 	std::shared_ptr<Objekt_fest>BodenB11;

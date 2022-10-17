@@ -111,9 +111,8 @@ GameState::GameState()
 	iLava5 = erstelle_Objekt_fest_ptr(50, 20, -664, -10, 100, iLava3, std::make_shared<Gosu::Image>(Lava), 1, 1);
 	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -1138, -45, 100, iLava5, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	WandR2L1 = erstelle_Objekt_fest_ptr(58, 437, -1138, -465, 100, iBoden4, std::make_shared<Gosu::Image>(Wand_l1),1,1);
-	KeyR21 = erstelle_Objekt_fest_ptr(58, 437, -1000, -300, 100, WandR2L1, std::make_shared<Gosu::Image>(Key), 1, 1, true);
-	KeyR41 = erstelle_Objekt_fest_ptr(58, 437, -1000, -100, 100, KeyR21, std::make_shared<Gosu::Image>(Key), 1, 1, true);
-	DeckeR21 = erstelle_Objekt_fest_ptr(474, 58, -1138, -465, 100, KeyR41, std::make_shared<Gosu::Image>(bodenR), 1, 1); // Falsche Bilder sniff :C
+	KeyR21 = erstelle_Objekt_fest_ptr(58, 437, -1000, -100, 100, WandR2L1, std::make_shared<Gosu::Image>(Key), 1, 1, true);
+	DeckeR21 = erstelle_Objekt_fest_ptr(474, 58, -1138, -465, 100, KeyR21, std::make_shared<Gosu::Image>(bodenR), 1, 1); // Falsche Bilder sniff :C
 	DeckeR22 = erstelle_Objekt_fest_ptr(474, 58, -690, -465, 100, DeckeR21, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	DeckeR23 = erstelle_Objekt_fest_ptr(474, 58, -450, -465, 100, DeckeR22, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 
@@ -134,16 +133,30 @@ GameState::GameState()
 	//Raum 3
 
 	DeckeR31 = erstelle_Objekt_fest_ptr(474, 58, 2255, -700, 100, WandG1L1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
-	WandR3L1 = erstelle_Objekt_fest_ptr(58, 437, 2255, -400, 100, DeckeR31, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	WandR3L1 = erstelle_Objekt_fest_ptr(58, 437, 2255, -380, 100, DeckeR31, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	WandR3LZ1 = erstelle_Objekt_fest_ptr(58, 99, 2255, 37, 100, WandR3L1, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1,false,true);
+	WandR3LZ2 = erstelle_Objekt_fest_ptr(58, 99, 2255, 126, 100, WandR3LZ1, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
+	BodenR31 = erstelle_Objekt_fest_ptr(474, 58, 2255, 215, 100, WandR3LZ2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	iTuer = erstelle_Objekt_fest_ptr(45, 138, 2684, 87, 100, BodenR31, std::make_shared<Gosu::Image>(Tuer), 1, 1);
+	WandR3R1 = erstelle_Objekt_fest_ptr(58, 437 , 2671, -383, 100, iTuer, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	WandR3R2 = erstelle_Objekt_fest_ptr(58, 437, 2671, -700, 100, WandR3R1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 
+	//Raum 4
+	DeckeR41 = erstelle_Objekt_fest_ptr(474, 58, 1781, -222, 100, WandR3R2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	WandR4L1 = erstelle_Objekt_fest_ptr(58, 437, 1781, -222, 100, DeckeR41, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	BodenR41 = erstelle_Objekt_fest_ptr(474, 58, 1781, 215, 100, WandR4L1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	KeyR41 = erstelle_Objekt_fest_ptr(58, 437, 2000, 0, 100, BodenR41, std::make_shared<Gosu::Image>(Key), 1, 1, true);
 
+	//Bossraum
+	BodenB11 = erstelle_Objekt_fest_ptr(474, 58, 2729, 215, 100, KeyR41, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	BodenB12 = erstelle_Objekt_fest_ptr(474, 58, 3203, 215, 100, BodenB11, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	WandB1L1 = erstelle_Objekt_fest_ptr(58, 437, 3619, -222, 100, BodenB12, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	DeckeB11 = erstelle_Objekt_fest_ptr(474, 58, 3203, -222, 100, WandB1L1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	DeckeB12 = erstelle_Objekt_fest_ptr(474, 58, 2729, -222, 100, DeckeB11, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	
-	
-	
-	iTuer = erstelle_Objekt_fest_ptr(45, 130, 200, 420, 150.0, iWand_destr_test2, std::make_shared<Gosu::Image>(Tuer), 1, 2);
-
+	//liste Konstruktor
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = WandR3L1; //Hier immer letztes Element hinschreiben	<-----------------------		REMINDER FÜR DORIAN		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	listenstart_O_f = DeckeB12; //Hier immer letztes Element hinschreiben	<-----------------------		REMINDER FÜR DORIAN		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
