@@ -31,6 +31,7 @@ const double SCHWERKRAFT_G = 0.01;		//Schwerkraft
 const double GEGNER_SPEED = 2;
 //#define debugSpielerX
 //#define debugSpielerY
+#define debugmodus
 
 class GameWindow : public Gosu::Window
 {
@@ -376,6 +377,26 @@ public:
 		}
 		//------------------------------------------------------------------------------------------------------
 	//}
+
+
+#ifdef debugmodus
+		if (input().down(Gosu::KB_UP))
+		{
+			game.get_Spieler()->player_y = game.get_Spieler()->player_y - 10;
+		}
+		if (input().down(Gosu::KB_DOWN))
+		{
+			game.get_Spieler()->player_y = game.get_Spieler()->player_y + 10;
+		}
+		if (input().down(Gosu::KB_RIGHT))
+		{
+			game.get_Spieler()->player_x = game.get_Spieler()->player_x + 10;
+		}
+		if (input().down(Gosu::KB_LEFT))
+		{
+			game.get_Spieler()->player_x = game.get_Spieler()->player_x - 10;
+		}
+#endif
 	}
 };
 
