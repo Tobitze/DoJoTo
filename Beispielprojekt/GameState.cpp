@@ -435,7 +435,7 @@ double GameState::distance_from_player(std::shared_ptr<GameState::Objekt_damage>
 }
 double GameState::distance_from_player(int vektorlisteni)
 {
-	return sqrt(pow((this->p1->player_x - Laservektor.at(vektorlisteni).posx), 2) + pow((this->p1->player_y - (Laservektor.at(vektorlisteni).posy)), 2));
+	return sqrt(pow((this->p1->player_start_x - Laservektor.at(vektorlisteni).posx), 2) + pow((this->p1->player_start_y - (Laservektor.at(vektorlisteni).posy)), 2));
 }
 bool GameState::kollision_rechts(std::shared_ptr<GameState::Objekt_fest> listenstart, std::shared_ptr<GameState::Player_data> iplayertemp)//, std::shared_ptr<Spieler> p1)//std::shared_ptr<GameState::Objekt_fest> listenstart_O_f, Spieler p1, std::shared_ptr<GameState::Player_data> iplayertemp)
 {
