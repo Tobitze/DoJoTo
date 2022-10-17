@@ -111,7 +111,7 @@ public:
 			game.hudHP1.draw_rot(120, 40, 400.0, 0.0, 0.5, 0.5); break;
 		default:
 			game.hudHP0.draw_rot(120, 40, 400.0, 0.0, 0.5, 0.5);
-			game.Rolle();
+			game.Rolle(false);
 
 			/*game.Scroll.draw_rot(400, 174, 150.0, 0.0, 0.5, 0.5);
 
@@ -119,6 +119,8 @@ public:
 
 
 		}
+		//if (game.distance_from_player(game.)
+
 
 		//Player rendering
 		game.elem_P_d = game.listenstart_P_d;
@@ -335,7 +337,7 @@ public:
 					game.get_Spieler()->speedPlayerY = game.get_Spieler()->speedPlayerY - PLAYER_ACC_UP;
 					if (jumpsoundallowed)
 					{
-						game.SprungSound.play(0.1);
+						//game.SprungSound.play(0.1);
 						jumpsoundallowed = false;
 					}
 				}

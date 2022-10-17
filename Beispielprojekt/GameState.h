@@ -69,7 +69,7 @@ public:
 	bool a_pressed = false;// player links
 	bool d_pressed = false;// player rechts
 	int health_gegner = 5;
-	void Rolle();
+	void Rolle(bool end);
 
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
@@ -115,6 +115,7 @@ public:
 	Gosu::Image Wand_destr_3;
 	Gosu::Image Tuer;
 	Gosu::Image Tuer_offen;
+	Gosu::Image Endsreen;
 
 	//Sounds
 

@@ -191,9 +191,12 @@ GameState::GameState()
 
 };
 
-void GameState::Rolle() //entrollen der schriftrolle
+void GameState::Rolle(bool end) //entrollen der schriftrolle
 {
-
+	if (i == s)
+	{
+		VerlorenSound.play(0.1);
+	}
 	if (i > (3 * s / 4)) {
 		Scroll.draw_rot(400, 174, 450.0, 0.0, 0.5, 0.5);
 		i = i - 1;
@@ -210,7 +213,13 @@ void GameState::Rolle() //entrollen der schriftrolle
 	}
 	else if (i <= (s / 4))
 	{
-		GameOver.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+		if (!end)
+		{
+			GameOver.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+		}
+		else {
+			Endsreen.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+		}
 	}
 
 }
