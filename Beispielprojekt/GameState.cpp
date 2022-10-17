@@ -114,12 +114,17 @@ GameState::GameState()
 	DeckeR22 = erstelle_Objekt_fest_ptr(474, 58, -690, -465, 100, DeckeR21, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	DeckeR23 = erstelle_Objekt_fest_ptr(474, 58, -450, -465, 100, DeckeR22, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 
+
 	//Gang zu Raum 3
 
 	BodenG11 = erstelle_Objekt_fest_ptr(474, 58, 890, -383, 100, DeckeR23, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	BodenG12 = erstelle_Objekt_fest_ptr(474, 58, 1364, -383, 100, BodenG11, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	BodenG13 = erstelle_Objekt_fest_ptr(474, 58, 1838, -383, 100, BodenG12, std::make_shared<Gosu::Image>(bodenR), 1, 1);
-	WandG1RZ1 = erstelle_Objekt_fest_ptr(57, 99, 2255, -540, 100, BodenG13, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
+	WandG1RZ1 = erstelle_Objekt_fest_ptr(57, 99, 2255, -480, 100, BodenG13, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
+	WandG1RZ2 = erstelle_Objekt_fest_ptr(57, 99, 2255, -579, 100, WandG1RZ1, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
+	WandG1R1 = erstelle_Objekt_fest_ptr(58, 437, 2255, -1053, 100, WandG1RZ2, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	DeckeG11 = erstelle_Objekt_fest_ptr(474, 58, 1781, -1053, 100, WandG1R1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	
 	
 
 
@@ -129,7 +134,7 @@ GameState::GameState()
 	iTuer = erstelle_Objekt_fest_ptr(45, 130, 200, 420, 150.0, iWand_destr_test2, std::make_shared<Gosu::Image>(Tuer), 1, 2);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = WandG1RZ1; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = DeckeG11; //Hier immer letztes Element hinschreiben
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
