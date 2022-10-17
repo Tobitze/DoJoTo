@@ -129,7 +129,7 @@ GameState::GameState()
 	iTuer = erstelle_Objekt_fest_ptr(45, 130, 200, 420, 150.0, iWand_destr_test2, std::make_shared<Gosu::Image>(Tuer), 1, 2);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = WandG1RZ1; //Hier immer letztes Element hinschreiben
+	listenstart_O_f = WandG1RZ1; //Hier immer letztes Element hinschreiben	<-----------------------		REMINDER FÜR DORIAN		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
