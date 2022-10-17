@@ -110,7 +110,9 @@ GameState::GameState()
 	iLava5 = erstelle_Objekt_fest_ptr(50, 20, -664, -10, 100, iLava3, std::make_shared<Gosu::Image>(Lava), 1, 1);
 	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -1138, -45, 100, iLava5, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	WandR2L1 = erstelle_Objekt_fest_ptr(58, 437, -1138, -465, 100, iBoden4, std::make_shared<Gosu::Image>(Wand_l1),1,1);
-	DeckeR21 = erstelle_Objekt_fest_ptr(474, 58, -1138, -465, 100, WandR2L1, std::make_shared<Gosu::Image>(bodenR), 1, 1); // Falsche Bilder sniff :C
+	KeyR21 = erstelle_Objekt_fest_ptr(58, 437, -1000, -300, 100, WandR2L1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	KeyR41 = erstelle_Objekt_fest_ptr(58, 437, -1000, -200, 100, WandR2L1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	DeckeR21 = erstelle_Objekt_fest_ptr(474, 58, -1138, -465, 100, KeyR21, std::make_shared<Gosu::Image>(bodenR), 1, 1); // Falsche Bilder sniff :C
 	DeckeR22 = erstelle_Objekt_fest_ptr(474, 58, -690, -465, 100, DeckeR21, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	DeckeR23 = erstelle_Objekt_fest_ptr(474, 58, -450, -465, 100, DeckeR22, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 
@@ -126,7 +128,9 @@ GameState::GameState()
 	DeckeG12 = erstelle_Objekt_fest_ptr(474, 58, 833, -1053, 100, DeckeG11, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	DeckeG13 = erstelle_Objekt_fest_ptr(474, 58, 359, -1053, 100, DeckeG12, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	DeckeG14 = erstelle_Objekt_fest_ptr(474, 58, 0, -1053, 100, DeckeG13, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	WandG1L1 = erstelle_Objekt_fest_ptr(58, 437, 0, -1053, 100, DeckeG14, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	
+	//Raum 3
 
 
 
@@ -136,7 +140,7 @@ GameState::GameState()
 	iTuer = erstelle_Objekt_fest_ptr(45, 130, 200, 420, 150.0, iWand_destr_test2, std::make_shared<Gosu::Image>(Tuer), 1, 2);
 
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = DeckeG14; //Hier immer letztes Element hinschreiben	<-----------------------		REMINDER FÜR DORIAN		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	listenstart_O_f = WandG1L1; //Hier immer letztes Element hinschreiben	<-----------------------		REMINDER FÜR DORIAN		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
