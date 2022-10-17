@@ -119,7 +119,10 @@ public:
 
 
 		}
-		//if (game.distance_from_player(game.)
+		if (game.distance_from_player(game.Altklausur) < 50)
+		{
+			game.Rolle(true);
+		}
 
 
 		//Player rendering

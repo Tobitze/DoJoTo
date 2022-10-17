@@ -117,7 +117,7 @@ public:
 	Gosu::Image Wand_destr_3;
 	Gosu::Image Tuer;
 	Gosu::Image Tuer_offen;
-	Gosu::Image Endsreen;
+	Gosu::Image Endscreen;
 
 	//Sounds
 

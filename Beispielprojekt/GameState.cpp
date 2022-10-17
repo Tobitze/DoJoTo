@@ -38,6 +38,7 @@ GameState::GameState()
 	, Keys0("Schluessel_HUD0.png")
 	, Keys1("Schluessel_HUD1.png")
 	, Keys2("Schluessel_HUD2.png")
+	, Endscreen("Mister Coco schild.png")
 	//Player (temp)
 	, rPlayertemp1("r-Dr.Salzig1.png")
 	, rPlayertemp2("r-Dr.Salzig2.png")
@@ -159,7 +160,7 @@ GameState::GameState()
 	WandB1L1 = erstelle_Objekt_fest_ptr(58, 437, 3619, -222, 100, BodenB12, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	DeckeB11 = erstelle_Objekt_fest_ptr(474, 58, 3203, -222, 100, WandB1L1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	DeckeB12 = erstelle_Objekt_fest_ptr(474, 58, 2729, -222, 100, DeckeB11, std::make_shared<Gosu::Image>(bodenR), 1, 1);
-	Altklausur = erstelle_Objekt_fest_ptr(400, 400, 3450, 115, 100, DeckeB12, std::make_shared<Gosu::Image>(Altklausur0), 1,1);
+	Altklausur = erstelle_Objekt_fest_ptr(400, 400, 3450, 115, 100, DeckeB12, std::make_shared<Gosu::Image>(Altklausur0), 1,1, true);
 	
 	//liste Konstruktor
 	elem_O_f = std::make_shared<Objekt_fest>();
@@ -221,7 +222,7 @@ void GameState::Rolle(bool end) //entrollen der schriftrolle
 			GameOver.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
 		}
 		else {
-			Endsreen.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+			Endscreen.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
 		}
 	}
 
