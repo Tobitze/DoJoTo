@@ -143,6 +143,18 @@ public:
 
 	void update() override
 	{
+		if (game.distance_from_player(name) < 50)
+		{
+			game.keys = game.keys + 1;
+			name killen;
+			//Playsound plop?
+		}
+		if (game.distance_from_player(name) < 50)
+		{
+			game.keys = game.keys + 1;
+			name killen;
+		}
+
 		//while (game_start == true) {
 		 //game.Hintergrundsound;
 		collision_rechts = game.kollision_rechts(game.listenstart_O_f, game.elem_P_d);// , game.get_Spieler());
