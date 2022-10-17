@@ -55,7 +55,7 @@ public:
 		: Window(800, 600)
 		, game()
 	{
-		set_caption("Dr. Salzig und Mister Coco");
+		set_caption("Dr. Salzig jagt Mister Coco");
 	};
 	//}
 
