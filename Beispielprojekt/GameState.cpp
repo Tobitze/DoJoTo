@@ -110,8 +110,8 @@ GameState::GameState()
 	iLava5 = erstelle_Objekt_fest_ptr(50, 20, -664, -10, 100, iLava3, std::make_shared<Gosu::Image>(Lava), 1, 1);
 	iBoden4 = erstelle_Objekt_fest_ptr(474, 58, -1138, -45, 100, iLava5, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	WandR2L1 = erstelle_Objekt_fest_ptr(58, 437, -1138, -465, 100, iBoden4, std::make_shared<Gosu::Image>(Wand_l1),1,1);
-	KeyR21 = erstelle_Objekt_fest_ptr(58, 437, -1000, -300, 100, WandR2L1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
-	KeyR41 = erstelle_Objekt_fest_ptr(58, 437, -1000, -200, 100, WandR2L1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	KeyR21 = erstelle_Objekt_fest_ptr(58, 437, -1000, -300, 100, WandR2L1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1, true);
+	KeyR41 = erstelle_Objekt_fest_ptr(58, 437, -1000, -200, 100, WandR2L1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1, true);
 	DeckeR21 = erstelle_Objekt_fest_ptr(474, 58, -1138, -465, 100, KeyR21, std::make_shared<Gosu::Image>(bodenR), 1, 1); // Falsche Bilder sniff :C
 	DeckeR22 = erstelle_Objekt_fest_ptr(474, 58, -690, -465, 100, DeckeR21, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	DeckeR23 = erstelle_Objekt_fest_ptr(474, 58, -450, -465, 100, DeckeR22, std::make_shared<Gosu::Image>(bodenR), 1, 1);
