@@ -62,6 +62,8 @@ public:
 	int keys = 0;
 	int i = 12; //entrollen der schriftrolle counter
 	int s = i;
+	int j = 12;
+	int u = j;
 	bool facing_r = true;
 	bool facing_l = false;
 	bool pressed = false;
@@ -70,9 +72,11 @@ public:
 	bool d_pressed = false;// player rechts
 	int health_gegner = 5;
 	void Rolle();
+	void Rolle2();
 
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
+	Gosu::Image Boden_HG;
 	Gosu::Image Wand;
 	Gosu::Image Wand_r1;
 	Gosu::Image Wand_l1;
@@ -93,6 +97,7 @@ public:
 	Gosu::Image Scroll;
 	Gosu::Image Scroll2;
 	Gosu::Image Scroll3;
+	Gosu::Image Scroll4;
 	Gosu::Image GameOver;
 	Gosu::Image Keys0;
 	Gosu::Image Keys1;
