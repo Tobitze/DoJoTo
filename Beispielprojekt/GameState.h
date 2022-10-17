@@ -141,7 +141,7 @@ public:
 	//Linked list über pointer
 
 //Objekte
-
+	
 //nach Räumen sortiert
 	//Raum 1 - Spawn 
 	
@@ -151,6 +151,8 @@ public:
 	std::shared_ptr<Objekt_fest> DeckeR23;
 
 	std::shared_ptr<Objekt_fest> WandR2L1;
+
+	std::shared_ptr<Objekt_fest> KeyR21;
 	//Gang zu Raum 3 - über Raum 1 (mit Fake ausgang)
 	std::shared_ptr<Objekt_fest>BodenG11;
 	std::shared_ptr<Objekt_fest>BodenG12;
@@ -158,10 +160,13 @@ public:
 
 	std::shared_ptr<Objekt_fest>DeckeG11;
 	std::shared_ptr<Objekt_fest>DeckeG12;
+	std::shared_ptr<Objekt_fest>DeckeG13;
+	std::shared_ptr<Objekt_fest>DeckeG14;
 	
 	std::shared_ptr<Objekt_fest>WandG1R1;
 	std::shared_ptr<Objekt_fest>WandG1RZ1;
 	std::shared_ptr<Objekt_fest>WandG1RZ2;
+	std::shared_ptr<Objekt_fest>WandG1L1;
 	//Raum 3 - von Gang zu Bossraum 
 	std::shared_ptr<Objekt_fest>DeckeR31;
 	
@@ -177,6 +182,7 @@ public:
 	std::shared_ptr<Objekt_fest>BodenR41;
 	
 	std::shared_ptr<Objekt_fest>WandR4R1;
+	std::shared_ptr<Objekt_fest> KeyR41;
 	//Bossraum - hinter der Tür (Unten Rechts)
 	std::shared_ptr<Objekt_fest>BodenB11;
 	std::shared_ptr<Objekt_fest>BodenB12;
