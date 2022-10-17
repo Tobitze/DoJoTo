@@ -195,37 +195,39 @@ GameState::GameState()
 
 };
 
-void GameState::Rolle(bool end) //entrollen der schriftrolle
+void GameState::Rolle(bool end, bool death) //entrollen der schriftrolle
 {
-	if (i == s)
+	if (end && death || !end)
 	{
-		VerlorenSound.play(0.1);
-	}
-	if (i > (3 * s / 4)) {
-		Scroll.draw_rot(400, 174, 450.0, 0.0, 0.5, 0.5);
-		i = i - 1;
-	}
-	else if (i <= (3 * s / 4) && i > (s / 2))
-	{
-		Scroll2.draw_rot(400, 243, 450.0, 0.0, 0.5, 0.5);
-		i = i - 1;
-	}
-	else if (i <= (s / 2) && i > (s / 4))
-	{
-		Scroll3.draw_rot(400, 291, 450.0, 0.0, 0.5, 0.5);
-		i = i - 1;
-	}
-	else if (i <= (s / 4))
-	{
-		if (!end)
+		if (i == s)
 		{
-			GameOver.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+			VerlorenSound.play(0.1);
 		}
-		else {
-			Endscreen.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+		if (i > (3 * s / 4)) {
+			Scroll.draw_rot(400, 174, 450.0, 0.0, 0.5, 0.5);
+			i = i - 1;
+		}
+		else if (i <= (3 * s / 4) && i > (s / 2))
+		{
+			Scroll2.draw_rot(400, 243, 450.0, 0.0, 0.5, 0.5);
+			i = i - 1;
+		}
+		else if (i <= (s / 2) && i > (s / 4))
+		{
+			Scroll3.draw_rot(400, 291, 450.0, 0.0, 0.5, 0.5);
+			i = i - 1;
+		}
+		else if (i <= (s / 4))
+		{
+			if (!end)
+			{
+				GameOver.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+			}
+			else if (end && death) {
+				Endscreen.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+			}
 		}
 	}
-
 }
 
 void GameState::SpielerModelupdate()

@@ -111,7 +111,7 @@ public:
 			game.hudHP1.draw_rot(120, 40, 400.0, 0.0, 0.5, 0.5); break;
 		default:
 			game.hudHP0.draw_rot(120, 40, 400.0, 0.0, 0.5, 0.5);
-			game.Rolle(false);
+			game.Rolle(false, gegner_dead);
 
 			/*game.Scroll.draw_rot(400, 174, 150.0, 0.0, 0.5, 0.5);
 
@@ -121,7 +121,7 @@ public:
 		}
 		if (game.distance_from_player(game.Altklausur) < 50)
 		{
-			game.Rolle(true);
+			game.Rolle(true, gegner_dead);
 		}
 
 
