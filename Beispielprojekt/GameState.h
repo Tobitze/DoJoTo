@@ -169,6 +169,9 @@ public:
 	std::shared_ptr<Objekt_fest>WandG1RZ1;
 	std::shared_ptr<Objekt_fest>WandG1RZ2;
 	std::shared_ptr<Objekt_fest>WandG1L1;
+
+	std::shared_ptr<Objekt_fest> KisteG11;
+	std::shared_ptr<Objekt_fest> KisteG12;
 	//Raum 3 - von Gang zu Bossraum 
 	std::shared_ptr<Objekt_fest>DeckeR31;
 	
@@ -181,6 +184,9 @@ public:
 	std::shared_ptr<Objekt_fest>WandR3LZ1;
 	std::shared_ptr<Objekt_fest>WandR3LZ2;
 	std::shared_ptr<Objekt_fest> iTuer;
+
+	std::shared_ptr<Objekt_fest> PlattformR3L1;
+	std::shared_ptr<Objekt_fest> PlattformR3R1;
 	//Raum 4 - Schlüssel 2
 	std::shared_ptr<Objekt_fest>DeckeR41;
 	

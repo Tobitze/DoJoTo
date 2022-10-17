@@ -103,7 +103,6 @@ GameState::GameState()
 
 	//Lavaraum\\ Entspricht raum 2
 	//Böden
-	//iBoden3 = erstelle_Objekt_fest_ptr(474, 58, 0, -30, 100, iWand_destr_test2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	iBoden3 = erstelle_Objekt_fest_ptr(474, 58, -414, -45, 100, iWand_destr_test2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	iLava1 = erstelle_Objekt_fest_ptr(50, 20, -464, -10, 100, iBoden3, std::make_shared<Gosu::Image>(Lava), 1, 1);
 	iLava2 = erstelle_Objekt_fest_ptr(50, 20, -514, -10, 100, iLava1, std::make_shared<Gosu::Image>(Lava), 1, 1);
@@ -130,10 +129,11 @@ GameState::GameState()
 	DeckeG13 = erstelle_Objekt_fest_ptr(474, 58, 359, -1053, 100, DeckeG12, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	DeckeG14 = erstelle_Objekt_fest_ptr(474, 58, 0, -1053, 100, DeckeG13, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	WandG1L1 = erstelle_Objekt_fest_ptr(58, 437, 0, -1053, 100, DeckeG14, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	KisteG11 = erstelle_Objekt_fest_ptr(80, 80, 1300, -500, 100, WandG1L1, std::make_shared<Gosu::Image>(Kiste), 1, 1);
+	KisteG12 = erstelle_Objekt_fest_ptr(80, 80, 1600, -800, 100, KisteG11, std::make_shared<Gosu::Image>(Kiste), 1, 1);
 	
 	//Raum 3
-
-	DeckeR31 = erstelle_Objekt_fest_ptr(474, 58, 2255, -700, 100, WandG1L1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	DeckeR31 = erstelle_Objekt_fest_ptr(474, 58, 2255, -700, 100, KisteG12, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	WandR3L1 = erstelle_Objekt_fest_ptr(58, 437, 2255, -380, 100, DeckeR31, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	WandR3LZ1 = erstelle_Objekt_fest_ptr(58, 99, 2255, 37, 100, WandR3L1, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1,false,true);
 	WandR3LZ2 = erstelle_Objekt_fest_ptr(58, 99, 2255, 126, 100, WandR3LZ1, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);
@@ -141,9 +141,12 @@ GameState::GameState()
 	iTuer = erstelle_Objekt_fest_ptr(45, 138, 2684, 87, 100, BodenR31, std::make_shared<Gosu::Image>(Tuer), 1, 1);
 	WandR3R1 = erstelle_Objekt_fest_ptr(58, 437 , 2671, -383, 100, iTuer, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	WandR3R2 = erstelle_Objekt_fest_ptr(58, 437, 2671, -700, 100, WandR3R1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	PlattformR3L1 = erstelle_Objekt_fest_ptr(200, 43, 2500, -250, 100, WandR3R2, std::make_shared<Gosu::Image>(Plattform1), 1, 1);
+	PlattformR3R1 = erstelle_Objekt_fest_ptr(200, 43, 2255, 40, 100, PlattformR3L1, std::make_shared<Gosu::Image>(Plattform2), 1, 1);
+
 
 	//Raum 4
-	DeckeR41 = erstelle_Objekt_fest_ptr(474, 58, 1781, -222, 100, WandR3R2, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	DeckeR41 = erstelle_Objekt_fest_ptr(474, 58, 1781, -222, 100, PlattformR3R1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	WandR4L1 = erstelle_Objekt_fest_ptr(58, 437, 1781, -222, 100, DeckeR41, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	BodenR41 = erstelle_Objekt_fest_ptr(474, 58, 1781, 215, 100, WandR4L1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	KeyR41 = erstelle_Objekt_fest_ptr(58, 437, 2000, 0, 100, BodenR41, std::make_shared<Gosu::Image>(Key), 1, 1, true);
