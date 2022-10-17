@@ -23,6 +23,8 @@ GameState::GameState()
 	, Lava("Lava.png")
 	, Lava_G("Lava1.png")
 	, Key("Schluessel.png")
+	, Altklausur0("Matherfucking_holy_Altklausur_0.png")
+	, Altklausur1("Matherfucking_holy_Altklausur_1.png")
 	//HUD
 	, hud("HUD.png")
 	, hudHP("hud_hp.png")
@@ -89,11 +91,11 @@ GameState::GameState()
 	iPlattform2 = erstelle_Objekt_fest_ptr(200, 43, 700, -140, 100, iPlattform1, std::make_shared<Gosu::Image>(Plattform2), 1, 1);
 	//Wände
 	iWand_r1 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iPlattform2, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
-	iWand_r2 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 150, iWand_r1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand_r2 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 100, iWand_r1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	iWand_l1 = erstelle_Objekt_fest_ptr(58, 473, 0, 90, 100, iWand_r2, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	iWand_l2 = erstelle_Objekt_fest_ptr(58, 473, 0, 0, 100, iWand_l1, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	iWand_r3 = erstelle_Objekt_fest_ptr(58, 473, 890, 90, 100, iWand_l2, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
-	iWand_r4 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 150, iWand_r3, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	iWand_r4 = erstelle_Objekt_fest_ptr(58, 473, 890, -383, 100, iWand_r3, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	iWand_l3 = erstelle_Objekt_fest_ptr(58, 473, 0, 90, 100, iWand_r4, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	iWand_l4 = erstelle_Objekt_fest_ptr(58, 473, 0, 0, 100, iWand_l3, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	iWand_l5 = erstelle_Objekt_fest_ptr(58, 473, 0, -705, 100, iWand_l4, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
@@ -157,10 +159,11 @@ GameState::GameState()
 	WandB1L1 = erstelle_Objekt_fest_ptr(58, 437, 3619, -222, 100, BodenB12, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	DeckeB11 = erstelle_Objekt_fest_ptr(474, 58, 3203, -222, 100, WandB1L1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	DeckeB12 = erstelle_Objekt_fest_ptr(474, 58, 2729, -222, 100, DeckeB11, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	Altklausur = erstelle_Objekt_fest_ptr(400, 400, 3450, 115, 100, DeckeB12, std::make_shared<Gosu::Image>(Altklausur0), 1,1);
 	
 	//liste Konstruktor
 	elem_O_f = std::make_shared<Objekt_fest>();
-	listenstart_O_f = DeckeB12; //Hier immer letztes Element hinschreiben	<-----------------------		REMINDER FÜR DORIAN		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	listenstart_O_f = Altklausur; //Hier immer letztes Element hinschreiben	<-----------------------		REMINDER FÜR DORIAN		<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	//Liste für Player
 	ilistenproblenloeserplayer = erstelle_Player_data_ptr(0, 0, nullptr, nullptr, false, 1, 1);
@@ -260,6 +263,14 @@ void GameState::SpielerModelupdate()
 		{
 			iplayertempr2->active = true;
 		}
+	}
+	if (t < (IMAGE_CYCLE_TIME / 2)) 
+	{
+		this->Altklausur->image = std::make_shared<Gosu::Image>(Altklausur0);
+	}
+	if (t >= (IMAGE_CYCLE_TIME / 2))
+	{
+		this->Altklausur->image = std::make_shared<Gosu::Image>(Altklausur1);
 	}
 }
 
