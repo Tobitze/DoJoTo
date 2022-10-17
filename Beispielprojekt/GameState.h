@@ -71,8 +71,7 @@ public:
 	bool a_pressed = false;// player links
 	bool d_pressed = false;// player rechts
 	int health_gegner = 5;
-	void Rolle();
-	void Rolle2();
+	void Rolle(bool end);
 
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
@@ -88,6 +87,8 @@ public:
 	Gosu::Image Lava;
 	Gosu::Image Lava_G;
 	Gosu::Image Key;
+	Gosu::Image Altklausur0;
+	Gosu::Image Altklausur1;
 	//HUD
 	Gosu::Image hud;
 	Gosu::Image hudHP;
@@ -120,6 +121,7 @@ public:
 	Gosu::Image Wand_destr_3;
 	Gosu::Image Tuer;
 	Gosu::Image Tuer_offen;
+	Gosu::Image Endscreen;
 
 	//Sounds
 
@@ -174,6 +176,9 @@ public:
 	std::shared_ptr<Objekt_fest>WandG1RZ1;
 	std::shared_ptr<Objekt_fest>WandG1RZ2;
 	std::shared_ptr<Objekt_fest>WandG1L1;
+
+	std::shared_ptr<Objekt_fest> KisteG11;
+	std::shared_ptr<Objekt_fest> KisteG12;
 	//Raum 3 - von Gang zu Bossraum 
 	std::shared_ptr<Objekt_fest>DeckeR31;
 	
@@ -186,6 +191,9 @@ public:
 	std::shared_ptr<Objekt_fest>WandR3LZ1;
 	std::shared_ptr<Objekt_fest>WandR3LZ2;
 	std::shared_ptr<Objekt_fest> iTuer;
+
+	std::shared_ptr<Objekt_fest> PlattformR3L1;
+	std::shared_ptr<Objekt_fest> PlattformR3R1;
 	//Raum 4 - Schlüssel 2
 	std::shared_ptr<Objekt_fest>DeckeR41;
 	
@@ -202,6 +210,7 @@ public:
 
 	std::shared_ptr<Objekt_fest>WandB1L1;
 
+	std::shared_ptr<Objekt_fest>Altklausur;
 	//Alles andere
 	std::shared_ptr<Objekt_fest> iKiste;
 
