@@ -60,7 +60,7 @@ public:
 
 	int health = 3;
 	int keys = 0;
-	int i = 12; //entrollen der schriftrolle counter
+	int i = 24; //entrollen der schriftrolle counter
 	int s = i;
 	int j = 12;
 	int u = j;
@@ -85,6 +85,7 @@ public:
 	Gosu::Image Plattform1;
 	Gosu::Image Plattform2;
 	Gosu::Image spikesLng;
+	Gosu::Image spikessrt;
 	Gosu::Image Lava;
 	Gosu::Image Lava_G;
 	Gosu::Image Key;
@@ -231,7 +232,7 @@ public:
 	std::shared_ptr<Objekt_fest> iBoden7;
 	std::shared_ptr<Objekt_fest> iBoden8;
 
-	std::shared_ptr<Objekt_damage> ispikesLong;
+
 
 
 
@@ -283,6 +284,11 @@ public:
 	std::shared_ptr<Objekt_damage> iLava_G1;
 	std::shared_ptr<Objekt_damage> iLava_G2;
 	std::shared_ptr<Objekt_damage> elem_O_d;
+	std::shared_ptr<Objekt_damage> ispikes0;
+	std::shared_ptr<Objekt_damage> ispikes1;
+	std::shared_ptr<Objekt_damage> ispikes2;
+	std::shared_ptr<Objekt_damage> ispikes3;
+
 	std::shared_ptr<Objekt_damage> listenstart_O_d; //Hier immer letztes Element hinschreiben
 
 

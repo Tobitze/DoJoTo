@@ -19,6 +19,7 @@ GameState::GameState()
 	, Plattform1("Plattform1.png")
 	, Plattform2("Plattform1.png")
 	, spikesLng("spikes_lng.png")
+	, spikessrt("spikes_srt.png")
 	, Tuer("Tuere.png")
 	, Tuer_offen("Tuere_offen.png")		//Hier Grafik für Tür offen implementieren!
 	, Lava("Lava.png")
@@ -190,8 +191,12 @@ GameState::GameState()
 	//Hier neue einfügen
 	iLava_G1 = erstelle_Objekt_damage_ptr(145, 58, -545, -40, 300, iGegner, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
 	iLava_G2 = erstelle_Objekt_damage_ptr(145, 58, -690, -40, 300, iLava_G1, std::make_shared<Gosu::Image>(Lava_G), 1, 1);
+	ispikes0 = erstelle_Objekt_damage_ptr(76, 19, 1970, 200, 300, iLava_G2, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	ispikes1 = erstelle_Objekt_damage_ptr(76, 19, -750, -60, 300, ispikes0, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	ispikes2 = erstelle_Objekt_damage_ptr(76, 19, 1500, -400, 300, ispikes1, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	ispikes3 = erstelle_Objekt_damage_ptr(76, 19, 3300, 200, 300, ispikes2, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
 	elem_O_d = std::make_shared<Objekt_damage>();
-	listenstart_O_d = iLava_G2; //Hier immer letztes Element hinschreiben
+	listenstart_O_d = ispikes3; //Hier immer letztes Element hinschreiben
 
 
 
@@ -201,23 +206,21 @@ void GameState::Rolle(bool end, bool death) //entrollen der schriftrolle
 {
 	if (end && death || !end)
 	{
+		i = i - 1;
 		if (i == s)
 		{
 			VerlorenSound.play(0.1);
 		}
 		if (i > (3 * s / 4)) {
 			Scroll.draw_rot(400, 174, 450.0, 0.0, 0.5, 0.5);
-			i = i - 1;
 		}
 		else if (i <= (3 * s / 4) && i > (s / 2))
 		{
 			Scroll2.draw_rot(400, 243, 450.0, 0.0, 0.5, 0.5);
-			i = i - 1;
 		}
 		else if (i <= (s / 2) && i > (s / 4))
 		{
 			Scroll3.draw_rot(400, 291, 450.0, 0.0, 0.5, 0.5);
-			i = i - 1;
 		}
 		else if (i <= (s / 4))
 		{
