@@ -181,7 +181,7 @@ public:
 		
 		
 
-		if (input().down(Gosu::KB_F) && game.health <= 0) //Respawn
+		if (input().down(Gosu::KB_F) && (game.health <= 0 || game.gamefinished)) //Respawn
 		{
 			restart(); //Neues Spiel erzeugen
 		}
@@ -323,7 +323,7 @@ public:
 
 		game.get_Spieler()->player_y = game.get_Spieler()->player_y + game.get_Spieler()->speedPlayerY;		//Player um seinen Y_Speed entsprechend moven
 
-		if (input().down(Gosu::KB_W) && game.health > 0) {
+		if (input().down(Gosu::KB_W) && game.health > 0 && !game.gamefinished) {
 
 			game.w_pressed = true;
 			
@@ -361,7 +361,7 @@ public:
 
 			// Taste A
 		game.get_Spieler()->player_x_alt = game.get_Spieler()->player_x;	//Don't touch, sonst gehen die Laser nimmer
-		if (input().down(Gosu::KB_A) && collision_links == false && game.health > 0) {
+		if (input().down(Gosu::KB_A) && collision_links == false && game.health > 0 && !game.gamefinished) {
 			game.a_pressed = true;
 			game.facing_l = true;
 			game.facing_r = false;
@@ -381,7 +381,7 @@ public:
 			game.get_Spieler()->playerTimeXA = 0;
 		}
 		// Taste D
-		if (input().down(Gosu::KB_D) && collision_rechts == false && game.health > 0) {
+		if (input().down(Gosu::KB_D) && collision_rechts == false && game.health > 0 && !game.gamefinished) {
 			game.d_pressed = true;
 			game.facing_l = false;
 			game.facing_r = true;

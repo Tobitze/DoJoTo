@@ -71,6 +71,7 @@ public:
 	bool a_pressed = false;// player links
 	bool d_pressed = false;// player rechts
 	int health_gegner = 5;
+	bool gamefinished = false;
 	void Rolle(bool end, bool death);
 
 	Gosu::Image bodenR;

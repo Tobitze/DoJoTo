@@ -227,6 +227,7 @@ void GameState::Rolle(bool end, bool death) //entrollen der schriftrolle
 			}
 			else if (end && death) {
 				Endscreen.draw_rot(400, 300, 450.0, 0.0, 0.5, 0.5);
+				gamefinished = true;
 			}
 		}
 	}
