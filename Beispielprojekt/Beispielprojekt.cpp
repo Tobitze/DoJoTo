@@ -32,7 +32,7 @@ const double SCHWERKRAFT_G = 0.01;		//Schwerkraft
 const double GEGNER_SPEED = 2;
 //#define debugSpielerX
 //#define debugSpielerY
-#define debugmodus
+//#define debugmodus
 
 class GameWindow : public Gosu::Window
 {
@@ -208,7 +208,8 @@ public:
 
 		if (game.get_Spieler()->player_y > PLAYER_VOIDKILL_DISTANCE) //Player Killen und anhalten wenn er zu tief fällt
 		{
-			restart();
+			//restart();
+			game.health = 0;
 			collision_unten = true;
 		}
 
