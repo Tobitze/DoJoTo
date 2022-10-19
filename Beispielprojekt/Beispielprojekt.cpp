@@ -284,10 +284,8 @@ public:
 		{
 			//game.Rolle2();
 			gegner_dead = true;
-			game.iGegner->startx = 10000;
-			game.iGegner->starty = 10000;
-			game.iGegner->posx = 10000;
-			game.iGegner->posy = 10000;
+			game.iGegner->image = std::make_shared<Gosu::Image>(game.MisterCocodead);
+			game.iGegner->nohitbox = true;
 			
 			//Playsound
 		}
