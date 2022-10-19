@@ -206,8 +206,15 @@ GameState::GameState()
 	ispikes1 = erstelle_Objekt_damage_ptr(76, 19, -750, -60, 300, ispikes0, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
 	ispikes2 = erstelle_Objekt_damage_ptr(76, 19, 1500, -400, 300, ispikes1, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
 	ispikes3 = erstelle_Objekt_damage_ptr(76, 19, 3300, 200, 300, ispikes2, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	SpikesA11 = erstelle_Objekt_damage_ptr(76, 19, -76, -484, 300, ispikes2, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	SpikesA12 = erstelle_Objekt_damage_ptr(76, 19, -152, -484, 300, SpikesA11, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	SpikesA13 = erstelle_Objekt_damage_ptr(76, 19, -228, -484, 300, SpikesA12, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	SpikesA14 = erstelle_Objekt_damage_ptr(76, 19, -304, -484, 300, SpikesA13, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	SpikesA15 = erstelle_Objekt_damage_ptr(76, 19, -380, -484, 300, SpikesA14, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	SpikesA16 = erstelle_Objekt_damage_ptr(76, 19, -456, -484, 300, SpikesA15, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
+	SpikesA17 = erstelle_Objekt_damage_ptr(76, 19, -532, -484, 300, SpikesA16, std::make_shared<Gosu::Image>(spikessrt), 1, 1);
 	elem_O_d = std::make_shared<Objekt_damage>();
-	listenstart_O_d = ispikes3; //Hier immer letztes Element hinschreiben
+	listenstart_O_d = SpikesA17; //Hier immer letztes Element hinschreiben
 
 
 

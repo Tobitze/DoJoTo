@@ -195,6 +195,13 @@ public:
 	std::shared_ptr<Objekt_fest> WandA1L1;
 	std::shared_ptr<Objekt_fest> WandA1L2;
 	std::shared_ptr<Objekt_fest> WandA1L3;
+	std::shared_ptr<Objekt_damage> SpikesA11;
+	std::shared_ptr<Objekt_damage> SpikesA12;
+	std::shared_ptr<Objekt_damage> SpikesA13;
+	std::shared_ptr<Objekt_damage> SpikesA14;
+	std::shared_ptr<Objekt_damage> SpikesA15;
+	std::shared_ptr<Objekt_damage> SpikesA16;
+	std::shared_ptr<Objekt_damage> SpikesA17;
 	//Raum 3 - von Gang zu Bossraum 
 	std::shared_ptr<Objekt_fest>DeckeR31;
 	
