@@ -162,7 +162,7 @@ public:
 			game.KeyR41->startx = 10000;
 			game.KeyR41->starty = 10000;
 		}
-		if (game.distance_from_player(game.iTuer) < 50 && game.keys >= 2)
+		if (game.distance_from_player(game.iTuer) < 70 && game.keys >= 2)
 		{
 			game.iTuer->nohitbox = true;
 			game.iTuer->image = std::make_shared<Gosu::Image>(game.Tuer_offen);
