@@ -55,7 +55,7 @@ public:
 		: Window(800, 600)
 		, game()
 	{
-		set_caption("Dr. Salzig und Mister Coco");
+		set_caption("Dr. Salzig jagt Mister Coco");
 	};
 	//}
 
@@ -283,11 +283,13 @@ public:
 		if (game.health_gegner <= 0)
 		{
 			//game.Rolle2();
+			if (gegner_dead == false)
+			{
+				game.iGegner->starty = game.iGegner->starty + 60;
+			}
 			gegner_dead = true;
-			game.iGegner->startx = 10000;
-			game.iGegner->starty = 10000;
-			game.iGegner->posx = 10000;
-			game.iGegner->posy = 10000;
+			game.iGegner->image = std::make_shared<Gosu::Image>(game.MisterCocodead);
+			game.iGegner->nohitbox = true;
 			
 			//Playsound
 		}

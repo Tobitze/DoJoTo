@@ -42,10 +42,11 @@ public:
 	{
 		double posx, posy, startx, starty, posz;
 		double breite, hoehe, scale_x, scale_y;
+		bool nohitbox;
 		std::shared_ptr<Objekt_damage> next;
 		std::shared_ptr<Gosu::Image> image;
 	};
-	std::shared_ptr<Objekt_damage> erstelle_Objekt_damage_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_damage> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1);
+	std::shared_ptr<Objekt_damage> erstelle_Objekt_damage_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<Objekt_damage> next, std::shared_ptr<Gosu::Image> image, double scale_x = 1, double scale_y = 1, bool hit = false);
 	struct Laser
 	{
 		double startx, starty;
@@ -73,6 +74,7 @@ public:
 	int health_gegner = 5;
 	bool gamefinished = false;
 	void Rolle(bool end, bool death);
+
 
 	Gosu::Image bodenR;
 	Gosu::Image bodenL;
@@ -116,6 +118,7 @@ public:
 	Gosu::Image lPlayertempA1;
 	Gosu::Image lPlayertempA2;
 	Gosu::Image MisterCoco;
+	Gosu::Image MisterCocodead;
 	Gosu::Image Laserbild;
 	Gosu::Image Wand_destr_0;
 	Gosu::Image Wand_destr_1;

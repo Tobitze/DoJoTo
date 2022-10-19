@@ -54,6 +54,7 @@ GameState::GameState()
 	, Laserbild("Laser.png")
 	// Gegener
 	, MisterCoco("Mister Coco.png")
+	, MisterCocodead("Mister Coco-tot.png")
 
 	, Wand_destr_0("Wand_destr_l.png")
 	, Wand_destr_1("Wand_destr_l_1.png")
@@ -458,7 +459,7 @@ std::shared_ptr<GameState::Player_data> GameState::erstelle_Player_data_ptr(doub
 	return std::make_shared<GameState::Player_data>(temp);
 }
 
-std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_damage> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y)
+std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(double breite, double hoehe, double posx, double posy, double posz, std::shared_ptr<GameState::Objekt_damage> next, std::shared_ptr<Gosu::Image> image, double scale_x, double scale_y, bool hit)
 {
 	GameState::Objekt_damage temp;
 	//double breitetemp2 = (double)image->width();
@@ -471,7 +472,7 @@ std::shared_ptr<GameState::Objekt_damage> GameState::erstelle_Objekt_damage_ptr(
 	temp.startx = posx;
 	temp.starty = posy;
 	temp.posz = posz;
-
+	temp.nohitbox = hit;
 	temp.next = next;
 	temp.image = image;
 	temp.scale_x = scale_x;
@@ -594,7 +595,7 @@ bool GameState::kollsion_damage(std::shared_ptr<GameState::Objekt_damage> listen
 	bool tmp = false;
 	while (elem_O_d->next != nullptr)
 	{
-		if (distance_from_player(elem_O_d) < 5000 && elem_O_f->nohitbox == false)
+		if (distance_from_player(elem_O_d) < 5000 && elem_O_d->nohitbox == false)
 		{
 			if (this->p1->player_x < (elem_O_d->startx + elem_O_d->breite - 1) && (this->p1->player_x + iplayertemp->breite - 1) >(elem_O_d->startx))
 			{
