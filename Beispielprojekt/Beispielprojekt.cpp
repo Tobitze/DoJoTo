@@ -283,6 +283,10 @@ public:
 		if (game.health_gegner <= 0)
 		{
 			//game.Rolle2();
+			if (gegner_dead == false)
+			{
+				game.iGegner->starty = game.iGegner->starty + 60;
+			}
 			gegner_dead = true;
 			game.iGegner->image = std::make_shared<Gosu::Image>(game.MisterCocodead);
 			game.iGegner->nohitbox = true;
