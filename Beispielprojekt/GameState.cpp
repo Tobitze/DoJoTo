@@ -138,8 +138,18 @@ GameState::GameState()
 	KisteG11 = erstelle_Objekt_fest_ptr(80, 80, 1300, -500, 100, WandG1L1, std::make_shared<Gosu::Image>(Kiste), 1, 1);
 	KisteG12 = erstelle_Objekt_fest_ptr(80, 80, 1600, -800, 100, KisteG11, std::make_shared<Gosu::Image>(Kiste), 1, 1);
 	
+	//Anti Geheimgang
+	WandA1R1 = erstelle_Objekt_fest_ptr(58, 437, 1781, -1490, 100, KisteG12, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	DeckeA11 = erstelle_Objekt_fest_ptr(474, 58, 1307, -1490, 100, WandA1R1, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	DeckeA12 = erstelle_Objekt_fest_ptr(474, 58, 833, -1490, 100, DeckeA11, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	DeckeA13 = erstelle_Objekt_fest_ptr(474, 58, 359, -1490, 100, DeckeA12, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	DeckeA14 = erstelle_Objekt_fest_ptr(474, 58, -115, -1490, 100, DeckeA13, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	DeckeA15 = erstelle_Objekt_fest_ptr(474, 58, -589, -1490, 100, DeckeA14, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	WandA1L1 = erstelle_Objekt_fest_ptr(58, 437, -589, -1490, 100, DeckeA15, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
+	WandA1L2 = erstelle_Objekt_fest_ptr(58, 437, -589, -1053, 100, WandA1L1, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
+	WandA1L3 = erstelle_Objekt_fest_ptr(58, 437, -589, -900, 100, WandA1L2, std::make_shared<Gosu::Image>(Wand_r1), 1, 1);
 	//Raum 3
-	DeckeR31 = erstelle_Objekt_fest_ptr(474, 58, 2255, -700, 100, KisteG12, std::make_shared<Gosu::Image>(bodenR), 1, 1);
+	DeckeR31 = erstelle_Objekt_fest_ptr(474, 58, 2255, -700, 100, WandA1L3, std::make_shared<Gosu::Image>(bodenR), 1, 1);
 	WandR3L1 = erstelle_Objekt_fest_ptr(58, 437, 2255, -380, 100, DeckeR31, std::make_shared<Gosu::Image>(Wand_l1), 1, 1);
 	WandR3LZ1 = erstelle_Objekt_fest_ptr(58, 99, 2255, 37, 100, WandR3L1, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1,false,true);
 	WandR3LZ2 = erstelle_Objekt_fest_ptr(58, 99, 2255, 126, 100, WandR3LZ1, std::make_shared<Gosu::Image>(Wand_destr_0), 1, 1, false, true);

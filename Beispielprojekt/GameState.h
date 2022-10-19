@@ -181,6 +181,17 @@ public:
 
 	std::shared_ptr<Objekt_fest> KisteG11;
 	std::shared_ptr<Objekt_fest> KisteG12;
+	//Anti Geheimgang
+	std::shared_ptr<Objekt_fest> DeckeA11;
+	std::shared_ptr<Objekt_fest> DeckeA12;
+	std::shared_ptr<Objekt_fest> DeckeA13;
+	std::shared_ptr<Objekt_fest> DeckeA14;
+	std::shared_ptr<Objekt_fest> DeckeA15;
+	
+	std::shared_ptr<Objekt_fest> WandA1R1;
+	std::shared_ptr<Objekt_fest> WandA1L1;
+	std::shared_ptr<Objekt_fest> WandA1L2;
+	std::shared_ptr<Objekt_fest> WandA1L3;
 	//Raum 3 - von Gang zu Bossraum 
 	std::shared_ptr<Objekt_fest>DeckeR31;
 	
