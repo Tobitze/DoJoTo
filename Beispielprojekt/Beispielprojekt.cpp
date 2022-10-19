@@ -62,6 +62,7 @@ public:
 	void restart()
 	{
 		game.get_Spieler()->reset();
+		gegner_dead = false;
 		game = GameState();
 	}
 
